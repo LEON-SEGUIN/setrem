@@ -29,10 +29,6 @@ const mots = segments.flatMap(({ texte, accent }) =>
     </p>
 
     <div class="mission__row">
-      <a class="btn btn--light mission__cta reveal" href="/qui-sommes-nous">
-        <span class="mission__cta-icon" aria-hidden="true">↳</span>
-        Découvrir SETREM
-      </a>
       {/* L'appui ne reformule pas la déclaration : il l'ouvre sur la
           gamme et les marchés. « A suivi et anticipé les évolutions du
           marché » (l'ancien site) ne disait rien et revenait sur quatre
@@ -103,24 +99,10 @@ const mots = segments.flatMap(({ texte, accent }) =>
     }
   }
 
-  /* ---- CTA + complément ---- */
+  /* ---- Le complément ---- */
 
   .mission__row {
     margin-top: var(--space-6);
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: var(--space-8);
-  }
-
-  .mission__cta-icon {
-    display: grid;
-    place-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: var(--radius-sm);
-    background: var(--blue-50);
-    color: var(--accent);
   }
 
   .mission__aside {
@@ -130,10 +112,6 @@ const mots = segments.flatMap(({ texte, accent }) =>
   }
 
   @media (max-width: 900px) {
-    .mission__row {
-      flex-direction: column;
-    }
-
     .mission__lede {
       max-width: none;
     }
