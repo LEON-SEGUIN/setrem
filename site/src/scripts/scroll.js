@@ -9,6 +9,7 @@
 
 import { lenis } from './smooth-scroll.js';
 import { initRail } from './rail.js';
+import { initWave } from './wave.js';
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -496,6 +497,7 @@ const motionTick = initMotion();
 const pinTick = initPins();
 const readTick = initReadingProgress();
 const railTick = initRail();
+const waveTick = initWave();
 initReveals();
 initTabs();
 
@@ -504,13 +506,14 @@ initTabs();
    la foulée : même frame, aucun décalage d'une image entre le scroll et
    ce qu'il pilote. Un seul rAF pour toute la page. */
 
-if (lenis || motionTick || pinTick || readTick || railTick) {
+if (lenis || motionTick || pinTick || readTick || railTick || waveTick) {
   const frame = (time) => {
     lenis?.raf(time);
     motionTick?.();
     pinTick?.();
     readTick?.();
     railTick?.(time);
+    waveTick?.(time);
     requestAnimationFrame(frame);
   };
   requestAnimationFrame(frame);

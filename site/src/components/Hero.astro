@@ -10,6 +10,12 @@
 ---
 
 <section class="hero" aria-label="Introduction" data-hero>
+  <!-- La vague de soie : nappe WebGL au bas du hero (wave.js), dans
+       les aciers et bleus du logo — décorative, tout au fond, sous la
+       brume et le contenu. Vide sans JS : la page ne perd que la
+       beauté, jamais du contenu. -->
+  <canvas class="hero__wave" data-wave aria-hidden="true"></canvas>
+
   <!-- Brume argentée qui suit le curseur (souris uniquement, pilotée
        par scroll.js) — décorative, sous le symbole et le texte -->
   <div class="hero__mist" aria-hidden="true" data-mist></div>
@@ -220,6 +226,32 @@
         color-mix(in srgb, var(--blue-200) 16%, transparent) 68%,
         transparent 92%
       );
+  }
+
+  /* ---- La vague de soie ----
+     Peinte par wave.js. En z négatif dans le contexte isolé du hero :
+     au-dessus du fond, sous le symbole, le texte et les coins. Le
+     fondu du haut est une ceinture de sécurité — la silhouette est
+     déjà découpée dans le shader, le texte ne la touche jamais. */
+
+  .hero__wave {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    height: clamp(260px, 46svh, 520px);
+    pointer-events: none;
+    mask-image: linear-gradient(to bottom, transparent, #000 22%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 22%);
+    /* Même profondeur de scène que le reste au départ : la nappe
+       remonte moins vite que le contenu, c'est elle le fond */
+    translate: 0 calc(var(--hq, 0) * -4vh);
+  }
+
+  html.js .hero__wave {
+    animation: fig-in 1.8s var(--ease-out) 1.15s both;
   }
 
   /* ---- Le point de brume au curseur ----
@@ -558,6 +590,12 @@
   @media (max-width: 900px) {
     .hero {
       gap: var(--space-6);
+    }
+
+    /* Le contenu descend plus bas dans le hero mobile : la nappe se
+       fait plus basse pour rester sous la baseline */
+    .hero__wave {
+      height: clamp(180px, 34svh, 320px);
     }
 
     .hero__mark {
