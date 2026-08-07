@@ -1,0 +1,69 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SplitSection from '../../components/SplitSection.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import CTABand from '../../components/CTABand.astro';
+import { autresSolutions } from '../../data/solutions';
+import ecranImg from '../../assets/img/ecran-automatisme.webp';
+
+const autres = autresSolutions('automatisme').map((s) => ({
+  href: `/nos-solutions/${s.slug}`,
+  titre: s.titre,
+  texte: s.texte,
+  image: s.image,
+  alt: s.alt,
+}));
+---
+
+<PageLayout
+  title="Automatisme — logiciel de conduite automatique | SETREM"
+  description="Un logiciel de conduite automatique développé pour l'extrusion : séquences de démarrage et d'arrêt de l'extrudeur, contrôle total pendant la production."
+  path="/nos-solutions/automatisme"
+>
+  <PageHero
+    kicker="Nos solutions"
+    titre="Automatisme"
+    lede="Conduire un extrudeur, c'est tenir ensemble un débit, une température et une pression. Le logiciel SETREM s'en charge."
+  />
+
+  <section class="band sheet" aria-label="Le logiciel de conduite">
+    <div class="container">
+      <SplitSection
+        kicker="Un logiciel innovant de conduite automatique"
+        titre="Démarrage, production, arrêt : la ligne sous contrôle."
+        image={ecranImg}
+        alt="Écran du logiciel de conduite de production SETREM"
+      >
+        <p>
+          Ce programme permet la mise en place des séquences de démarrage et
+          d'arrêt de l'extrudeur, ainsi qu'un contrôle total pendant la
+          production.
+        </p>
+        {/* Le paragraphe « SETREM, le service aussi » était repris ici mot
+            pour mot depuis /nos-solutions, où il est à sa place : il n'a
+            rien à voir avec le logiciel de conduite. Retiré. */}
+        <!-- TODO: contenu client — l'automatisme tient en 50 mots sur le
+             site actuel. À recueillir pour étoffer : supervision, gestion
+             des recettes, enregistrement des paramètres de production,
+             alarmes, télémaintenance. -->
+        <p>
+          <a href="/nos-solutions">
+            Voir les autres équipements de la ligne →
+          </a>
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">Le reste de la ligne</h2>
+      </div>
+      <LinkCards items={autres} cols={4} cta="Voir l'équipement" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>

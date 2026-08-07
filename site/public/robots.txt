@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+# URLs techniques de l'ancien CMS — à désindexer (scrape/URLS.md)
+Disallow: /modeles
+Disallow: /user/
+Disallow: /rgpd/
+Disallow: /contact/merci
+
+Sitemap: https://www.setrem.com/sitemap-index.xml

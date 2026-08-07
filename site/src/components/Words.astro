@@ -1,0 +1,91 @@
+---
+// Révélation mot à mot — le geste de la section Mission de l'accueil,
+// rendu réutilisable pour les titres des pages intérieures.
+// Chaque mot monte derrière son propre masque, en cascade.
+// Le texte est découpé au build : sans JS il s'affiche entier, sans
+// masque ni décalage, et les lecteurs d'écran lisent une phrase normale
+// (les <span> ne coupent pas le flux de texte).
+interface Props {
+  texte: string;
+  /** Portion à passer en accent — doit apparaître telle quelle dans `texte` */
+  accent?: string;
+  /** Balise portante (h2 par défaut) */
+  as?: 'h1' | 'h2' | 'h3' | 'p';
+  class?: string;
+  id?: string;
+  /** Décalage entre deux mots, en ms */
+  pas?: number;
+}
+
+const {
+  texte,
+  accent,
+  as: Tag = 'h2',
+  class: klass,
+  id,
+  pas = 34,
+} = Astro.props;
+
+const i = accent ? texte.indexOf(accent) : -1;
+const segments =
+  i >= 0
+    ? [
+        { t: texte.slice(0, i), a: false },
+        { t: accent!, a: true },
+        { t: texte.slice(i + accent!.length), a: false },
+      ].filter((s) => s.t.trim())
+    : [{ t: texte, a: false }];
+
+const mots = segments.flatMap(({ t, a }) =>
+  t
+    .trim()
+    .split(/\s+/)
+    .map((mot) => ({ mot, a }))
+);
+---
+
+<Tag class:list={['words', klass]} id={id} data-words style={`--pas: ${pas}ms`}>
+  {
+    /* Aucun retour à la ligne dans ce gabarit : une espace rendue à
+       l'intérieur du masque s'ajouterait au margin-right du mot et
+       doublerait l'approche. */
+    mots.map(({ mot, a }, n) => (
+      <span class:list={['words__w', { 'words__w--accent': a }]}><span class="words__in" style={`--wi: ${n}`}>{mot}</span></span>
+    ))
+  }
+</Tag>
+
+<style>
+  .words__w {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    /* L'espace inter-mots vit hors du masque, sinon il est rogné */
+    margin-right: 0.26em;
+  }
+
+  .words__w--accent {
+    color: var(--accent);
+  }
+
+  .words__in {
+    display: inline-block;
+  }
+
+  html.js .words__in {
+    translate: 0 115%;
+    transition: translate 0.65s var(--ease-out);
+    transition-delay: calc(var(--wi) * var(--pas, 34ms));
+  }
+
+  html.js [data-words].is-visible .words__in {
+    translate: 0 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.js .words__in {
+      translate: 0 0;
+      transition: none;
+    }
+  }
+</style>

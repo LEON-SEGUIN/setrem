@@ -1,0 +1,64 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+
+// Volumes réels de la gamme PBR — scrape (article PBR)
+const gammePbr = [
+  ['PBR160', '25'],
+  ['PBR220', '79'],
+  ['PBR350', '297'],
+  ['PBR420', '510'],
+  ['PBR500', '925'],
+  ['PBR620', '1 758'],
+];
+---
+
+<ArticleLayout slug="nos-preconditionneurs-pbr">
+  <p>
+    Le premier type, bien connu des industriels, permet une hydratation
+    d'environ 5 à 7&nbsp;% d'eau, injectée sous forme d'eau et/ou de vapeur.
+    La température peut atteindre les 90&nbsp;°C, le temps de rétention
+    n'excédant pas les 30&nbsp;secondes en général — bien qu'il soit
+    possible d'augmenter ce temps avec un volume plus important.
+  </p>
+  <p>
+    Selon les applications, le préconditionneur monorotor est parfois
+    suffisant. Cependant, lorsque les fonctions de mélange et de pré-cuisson
+    sont nécessaires, il est préférable de travailler avec les
+    préconditionneurs birotors. Il n'est pas rare d'obtenir des temps de
+    rétention de 3&nbsp;minutes avec des humidités de l'ordre de 25 à
+    27&nbsp;%. La qualité de mélange est notamment à mettre au profit de la
+    configuration des pales des deux arbres : chacun a sa propre fonction,
+    l'un mélange avec des petites pales, l'autre retient le produit avec des
+    pales de plus grande surface.
+  </p>
+  <p>
+    Le mélange avec l'eau est facilité par les injecteurs qui forment un
+    spray ; d'autres injections sont prévues, telles que les slurrys ou
+    l'huile, afin de garantir l'homogénéité du mélange avant extrusion.
+  </p>
+
+  <h2>La gamme PBR</h2>
+  <div class="table-scroll">
+    <table class="table-data">
+      <caption class="visually-hidden">
+        Volumes des préconditionneurs PBR en litres
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Type</th>
+          <th scope="col">Volume (litres)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          gammePbr.map(([type, volume]) => (
+            <tr>
+              <th scope="row" class="model-ref">{type}</th>
+              <td>{volume}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</ArticleLayout>

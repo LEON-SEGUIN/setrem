@@ -1,0 +1,43 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<PageLayout
+  title="Page introuvable (404) — SETREM"
+  description="La page que vous cherchez n'existe pas ou a été déplacée."
+  path="/404"
+  noindex
+>
+  <PageHero
+    kicker="Erreur 404"
+    titre="Oups ! Page introuvable."
+    lede="Il semble que la page que vous cherchez n'existe pas ou a été déplacée."
+    compact
+  />
+
+  <section class="band sheet band--tight" aria-label="Options">
+    <div class="container">
+      <div class="prose prose--flow reveal">
+        <p>Voici quelques options pour vous aider à trouver ce que vous cherchez :</p>
+        <ul>
+          <li>vérifiez l'URL pour vous assurer qu'elle est correcte,</li>
+          <li>retournez à la page d'accueil pour explorer nos autres contenus.</li>
+        </ul>
+        <p>
+          Si vous avez toujours des problèmes, n'hésitez pas à nous
+          contacter via notre <a href="/contact">formulaire de contact</a>.
+        </p>
+      </div>
+      <p class="retour reveal" style="--ri: 1">
+        <a class="btn btn--dark" href="/">Retour à l'accueil</a>
+      </p>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .retour {
+    margin-top: var(--space-8);
+  }
+</style>

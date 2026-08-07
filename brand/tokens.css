@@ -1,0 +1,149 @@
+/* ============================================================
+   SETREM — Design tokens
+   Voir brand/BRAND.md · contrastes vérifiés par contrast-check.py
+   ============================================================ */
+
+:root {
+  /* ---- Couleurs du logo — ne jamais modifier ---- */
+  --logo-blue:  #004C91;
+  --logo-steel: #78878F;
+
+  /* ---- Bleu (primaire) — blue-600 = bleu du logo ---- */
+  --blue-50:   #E6EFF7;
+  --blue-100:  #C2D8EC;
+  --blue-200:  #94BADC;
+  --blue-300:  #5E97C9;
+  --blue-400:  #2E75B3;
+  --blue-500:  #0A5C9E;
+  --blue-600:  #004C91;
+  --blue-700:  #003F79;
+  --blue-800:  #003261;
+  --blue-900:  #00223F;
+
+  /* ---- Teal (accent) ---- */
+  --teal-100:  #D5F0EC;
+  --teal-200:  #A9E0D8;
+  --teal-300:  #7FD4CA;
+  --teal-400:  #3FB3A6;   /* accent sur fond sombre */
+  --teal-500:  #0F8A7E;
+  --teal-600:  #0A7268;   /* accent principal */
+  --teal-700:  #086057;   /* hover */
+
+  /* ---- Acier (neutres) — teinte froide, jamais de gris pur ---- */
+  --steel-50:   #F7F9FA;
+  --steel-100:  #EDF1F3;
+  --steel-200:  #DDE3E7;
+  --steel-300:  #C6CFD5;
+  --steel-400:  #A3B0B8;
+  --steel-500:  #7E8D95;
+  --steel-600:  #5D6B6F;
+  --steel-700:  #4E5B61;
+  --steel-800:  #3A4449;
+  --steel-900:  #232B2F;
+  --steel-950:  #141A1D;
+
+  /* ---- Rôles : utiliser ceux-ci dans les composants ---- */
+  --surface:        var(--steel-100);   /* fond dominant */
+  --surface-raised: #FFFFFF;
+  --surface-sunken: var(--steel-200);
+  --surface-dark:   var(--steel-950);   /* sections sombres ponctuelles */
+
+  --text:           var(--steel-900);
+  --text-body:      var(--steel-800);
+  --text-muted:     var(--steel-700);
+  --text-subtle:    var(--steel-600);   /* le plus clair admis en texte */
+
+  --border:         var(--steel-300);   /* décoratif */
+  --border-strong:  var(--steel-500);   /* champs, contrôles */
+
+  --accent:         var(--blue-600);
+  --accent-hover:   var(--blue-700);
+  --highlight:      var(--teal-600);    /* données, états actifs, chiffres-clés */
+  --highlight-hover:var(--teal-700);
+  --focus-ring:     var(--teal-600);
+
+  /* ---- Typographie ---- */
+  --font-display: "Archivo", system-ui, sans-serif;
+  --font-text:    "Inter", system-ui, sans-serif;
+
+  --text-display: clamp(2.75rem, 1.6rem + 4.6vw, 5.5rem);
+  --text-h1:      clamp(2rem,    1.4rem + 2.6vw, 3.5rem);
+  --text-h2:      clamp(1.5rem,  1.2rem + 1.4vw, 2.25rem);
+  --text-h3:      clamp(1.25rem, 1.1rem + 0.7vw, 1.5rem);
+  --text-base:    1.0625rem;   /* 17px */
+  --text-small:   0.875rem;
+  --text-micro:   0.75rem;
+
+  --leading-tight:  1.05;
+  --leading-snug:   1.2;
+  --leading-normal: 1.6;
+  --leading-loose:  1.75;   /* articles longs */
+
+  --tracking-tight: -0.025em;
+  --tracking-wide:   0.08em;   /* labels capitales, références modèles */
+
+  /* ---- Espacement (base 4px) ---- */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --section:  clamp(4rem, 2rem + 8vw, 9rem);
+
+  /* ---- Rayons, ombres ---- */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  /* Réservé aux étiquettes flottant sur une photo : le contraste avec
+     les angles vifs du reste du système les fait lire comme des
+     marqueurs, pas comme des boutons. */
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(35, 43, 47, 0.06);
+  --shadow-md: 0 2px 8px rgba(35, 43, 47, 0.08);
+  --shadow-lg: 0 8px 32px rgba(35, 43, 47, 0.12);
+
+  /* ---- Motion ---- */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-linear: linear;          /* rotations continues */
+  /* Courbe symétrique : pour ce qui fait l'aller-retour (dérive d'une
+     photo) ou ce qui doit s'installer sans à-coup (survol d'une carte).
+     --ease-out y est mauvais : il consomme 80 % de la course dans le
+     premier quart du temps, ça claque. */
+  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 450ms;
+  --duration-slower: 700ms;       /* survols amples, réactions de surface */
+
+  /* ---- Mise en page ---- */
+  --measure:   68ch;    /* largeur de lecture */
+  --container: 1280px;
+  --gutter:    clamp(1rem, 0.5rem + 2vw, 3rem);
+}
+
+/* ---- Accessibilité ---- */
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Données techniques alignées en colonnes */
+table, .u-data {
+  font-variant-numeric: tabular-nums;
+}

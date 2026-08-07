@@ -1,0 +1,193 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SplitSection from '../../components/SplitSection.astro';
+import PinnedSteps from '../../components/PinnedSteps.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import CTABand from '../../components/CTABand.astro';
+import { autresSolutions } from '../../data/solutions';
+import { modeles } from '../../data/capacites';
+import extrudeursImg from '../../assets/img/extrudeurs-solutions.webp';
+import futImg from '../../assets/img/fut-extrudeur.webp';
+
+const autres = autresSolutions('extrudeurs').map((s) => ({
+  href: `/nos-solutions/${s.slug}`,
+  titre: s.titre,
+  texte: s.texte,
+  image: s.image,
+  alt: s.alt,
+}));
+
+// L'anatomie de la machine, dans l'ordre où la matière la traverse.
+// Textes du client (scrape/SYNTHESE.md §3), redécoupés en chapitres :
+// c'était une liste numérotée dans un bloc texte — c'est le contenu le
+// plus mécanique de la page, il méritait le plein écran.
+const anatomie = [
+  {
+    nav: 'Trémie',
+    titre: 'La trémie',
+    texte:
+      "Tout en assurant un stockage suffisant de la formule, elle garantit une parfaite extraction du produit.",
+  },
+  {
+    nav: 'Doseur',
+    titre: 'Le doseur',
+    texte:
+      "Il régule le flux de matières premières. Selon les applications, il peut être simple vis ou bi-vis.",
+  },
+  {
+    nav: 'Préconditionneur',
+    titre: 'Le préconditionneur',
+    texte:
+      "Monorotor ou birotor, en amont de l'extrudeur : augmentation du débit, régularité du fonctionnement, usure réduite, hydratation homogène, temps de rétention de 3 minutes, appétence et gélatinisation des amidons accrues.",
+  },
+  {
+    nav: 'Fourreau',
+    titre: 'Les éléments modulaires',
+    texte:
+      "Le fourreau se compose de différents modèles de vis, d'écluses et de chambres en acier à haute résistance, à double enveloppe pour être réchauffées ou refroidies.",
+  },
+  {
+    nav: 'Cutter',
+    titre: 'Le cutter',
+    texte:
+      "Couteaux interchangeables pour une qualité de coupe optimale, articulé et solidaire de la machine. Son ouverture facile rend la filière très accessible, et les filières SETREM produisent de nombreuses formes d'aliments.",
+  },
+];
+---
+
+<PageLayout
+  title="Extrudeurs monovis — la gamme S50 à Z300 | SETREM"
+  description="Six extrudeurs monovis de 22 à 250 kW, à sec ou semi-humide. Trémie, doseur, préconditionneur, fourreau modulaire, cutter : l'anatomie d'un extrudeur."
+  path="/nos-solutions/extrudeurs"
+>
+  <PageHero
+    kicker="Nos solutions"
+    titre="Extrudeurs monovis"
+    lede="Six modèles, de 22 à 250 kW et de 3 à 9 chambres. Une seule vis, pour le petfood comme pour la protéine végétale texturée."
+  />
+
+  <section class="band sheet" aria-label="L'extrudeur monovis">
+    <div class="container">
+      {/* Emplacement unique de la fiche produit : process couverts,
+          amplitude de capacité et les quatre arguments du client (repris
+          tels quels du site et de la plaquette). Ils figuraient aussi sur
+          /qui-sommes-nous, en version tronquée à trois — les autres pages
+          renvoient ici plutôt que de recopier. */}
+      <SplitSection
+        kicker="Le cœur de la ligne"
+        titre="Adaptés au process à sec comme au semi-humide."
+        image={extrudeursImg}
+        alt="Extrudeurs monovis SETREM alignés en atelier"
+      >
+        <p>
+          Aussi bien adaptés au process à sec qu'au process semi-humide, les
+          extrudeurs monovis permettent de fabriquer les produits les plus
+          élaborés. SETREM propose des lignes complètes, avec des capacités
+          de 40&nbsp;kg/h à 9&nbsp;t/h.
+        </p>
+        <ul>
+          <li>Souplesse et robustesse d'utilisation</li>
+          <li>Faible coût de fonctionnement</li>
+          <li>Qualité des produits extrudés</li>
+          <li>Rentabilité maximum</li>
+        </ul>
+      </SplitSection>
+    </div>
+  </section>
+
+  <PinnedSteps
+    id="anatomie"
+    titre="L'anatomie d'un extrudeur SETREM, organe par organe"
+    eyebrow="Les éléments mécaniques fonctionnels"
+    image={futImg}
+    alt="Fourreau d'un extrudeur monovis SETREM, chambres et vis apparentes"
+    steps={anatomie}
+  />
+
+  <section class="band" aria-labelledby="gamme-titre">
+    <div class="container">
+      <div class="band__head">
+        <p class="eyebrow">La gamme</p>
+        <h2 class="band__title reveal" id="gamme-titre">
+          Du S50 au Z300.
+        </h2>
+      </div>
+      <ul class="gamme-grid">
+        {
+          modeles.map((m, i) => (
+            <li class="gamme-grid__card reveal" style={`--ri: ${i}`}>
+              <span class="model-ref gamme-grid__ref">{m.ref}</span>
+              <span class="gamme-grid__kw">{m.kw} kW</span>
+              <span class="gamme-grid__chambres">{m.chambres} chambres</span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="gamme-grid__note reveal">
+        <a href="/nos-solutions/tableau-des-capacites-des-equipements">
+          Voir le tableau des capacités, application par application →
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">Le reste de la ligne</h2>
+      </div>
+      <LinkCards items={autres} cols={4} cta="Voir l'équipement" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>
+
+<style>
+  .gamme-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .gamme-grid__card {
+    display: grid;
+    gap: var(--space-1);
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-sm);
+    border-top: 3px solid var(--blue-600);
+  }
+
+  .gamme-grid__ref {
+    font-size: var(--text-h3);
+    color: var(--blue-800);
+  }
+
+  .gamme-grid__kw {
+    font-weight: 600;
+    font-size: var(--text-small);
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .gamme-grid__chambres {
+    font-size: var(--text-micro);
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .gamme-grid__note {
+    margin-top: var(--space-6);
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+
+  @media (max-width: 900px) {
+    .gamme-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

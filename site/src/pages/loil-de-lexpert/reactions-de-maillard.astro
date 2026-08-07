@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import figMaillard from '../../assets/img/fig-maillard-temperature.webp';
+---
+
+<ArticleLayout slug="reactions-de-maillard">
+  <p>
+    Les protéines et les sucres réagissent ensemble pour former des complexes
+    indigestibles dans le rumen : les protéines by-pass. Ces corps de
+    Maillard sont dissous grâce au pH acide de la caillette ; les acides
+    aminés qu'ils contiennent redeviennent donc pleinement disponibles pour
+    être absorbés dans l'intestin.
+  </p>
+  <p>
+    Les réactions de Maillard se produisent en présence d'acides aminés et de
+    sucres à des températures entre 0 et 150&nbsp;°C, un pH entre 6 et 10 et
+    à une humidité d'environ 15&nbsp;%. Comme le montre le graphique
+    ci-dessous, la température influe fortement sur la vitesse de réaction.
+  </p>
+  <figure>
+    <Image
+      src={figMaillard}
+      alt="Graphique : influence de la température sur la vitesse de la réaction de Maillard"
+      widths={[600, 900]}
+      sizes="(max-width: 900px) 100vw, 700px"
+      loading="lazy"
+    />
+    <figcaption>
+      Influence de la température sur la réaction de Maillard.
+    </figcaption>
+  </figure>
+  <p>
+    Lors d'une cuisson-extrusion, il est donc possible de régler les
+    paramètres — température et temps de passage du mélange — afin de
+    provoquer ou non des réactions de Maillard. Il est intéressant de
+    faciliter ces réactions pour la production d'aliments ruminants, mais il
+    sera important de les limiter au maximum pour la production d'aliments
+    volailles par exemple : les corps de Maillard réduisent la disponibilité
+    protéique pour les espèces monogastriques.
+  </p>
+  <p>
+    Une bonne maîtrise de la cuisson-extrusion permet donc de faire varier
+    les caractéristiques du produit en fonction de l'anatomie de l'espèce
+    visée.
+  </p>
+</ArticleLayout>

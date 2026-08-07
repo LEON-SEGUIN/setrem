@@ -1,0 +1,233 @@
+---
+import ArticleCard from './ArticleCard.astro';
+import { articles } from '../data/articles';
+
+// Les neuf articles, dans l'ordre du fichier de données. Le carrousel les
+// fait tous défiler : aucun n'est privilégié, et les neuf liens sont dans
+// le HTML servi (le duplicata nécessaire à la boucle est cloné en JS et
+// sorti de l'arbre d'accessibilité — voir scripts/rail.js).
+const total = String(articles.length).padStart(2, '0');
+---
+
+<section class="expert sheet" aria-labelledby="expert-titre">
+  <div class="container">
+    <h2 class="expert__title reveal" id="expert-titre">
+      L'œil de l'expert : la cuisson-extrusion, expliquée.
+    </h2>
+    {/* « Du traitement de la graine de soja aux réactions de Maillard »
+        est la formule de /loil-de-lexpert : ici on annonce plutôt ce que
+        le procédé fait à la matière. */}
+    <p class="expert__sub reveal">
+      Facteurs antinutritionnels, gélatinisation de l'amidon, protéines
+      by-pass : ce que la cuisson-extrusion change dans la matière,
+      expliqué article par article.
+    </p>
+  </div>
+
+  <div class="expert__rail" data-rail>
+    <ul class="expert__track" data-rail-track>
+      {
+        articles.map((a, i) => (
+          <li class="expert__item" data-rail-item>
+            <ArticleCard
+              href={`/loil-de-lexpert/${a.slug}`}
+              titre={a.titre}
+              extrait={a.extrait}
+              image={a.image}
+              alt={a.alt}
+              numero={i + 1}
+              sizes="(min-width: 40rem) 30rem, 78vw"
+              widths={[480, 960]}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="container expert__foot reveal">
+    <span class="expert__gauge" aria-hidden="true" data-rail-gauge>
+      <span class="expert__gauge-thumb"></span>
+      <span class="expert__gauge-thumb expert__gauge-thumb--echo"></span>
+    </span>
+    <p class="expert__count">
+      <span class="expert__count-n">{total}</span> articles
+    </p>
+    <a class="btn btn--dark expert__all" href="/loil-de-lexpert">
+      Voir plus d'articles
+    </a>
+  </div>
+</section>
+
+<style>
+  .expert {
+    position: relative;
+    z-index: 2;
+    background: var(--surface-raised);
+    padding-block: var(--section);
+    /* Le rail déborde jusqu'aux bords de la fenêtre */
+    overflow: clip;
+  }
+
+  .expert__title {
+    font-size: var(--text-h1);
+    font-weight: 650;
+    max-width: 28ch;
+  }
+
+  .expert__sub {
+    margin-top: var(--space-4);
+    color: var(--text-muted);
+    font-size: var(--text-small);
+    max-width: 52ch;
+  }
+
+  /* ---- Le rail ----
+     Sans JS c'est une liste qui défile horizontalement, à la main :
+     tout le contenu est là, seule l'animation manque. Avec JS,
+     scripts/rail.js prend la main (classe .is-live) et fait glisser
+     la piste en continu. */
+
+  .expert__rail {
+    margin-top: var(--space-16);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    /* Sinon l'accrochage colle le premier article au bord de la fenêtre
+       et mange la gouttière (repli sans JS et mouvement réduit). */
+    scroll-padding-inline-start: var(--gutter);
+  }
+
+  html.js .expert__rail {
+    opacity: 0;
+    transition: opacity 0.9s var(--ease-out);
+  }
+
+  html.js .expert__rail.is-visible {
+    opacity: 1;
+  }
+
+  .expert__rail.is-live {
+    overflow: hidden;
+    scroll-snap-type: none;
+    /* Le navigateur garde le défilement vertical, le geste horizontal
+       nous revient : le rail se traîne au doigt sans bloquer la page. */
+    touch-action: pan-y;
+    cursor: grab;
+    user-select: none;
+  }
+
+  .expert__rail.is-dragging {
+    cursor: grabbing;
+  }
+
+  .expert__rail.is-live::-webkit-scrollbar {
+    display: none;
+  }
+
+  .expert__track {
+    display: flex;
+    gap: var(--space-6);
+    padding-inline: var(--gutter);
+  }
+
+  .expert__item {
+    flex: 0 0 auto;
+    width: min(78vw, 30rem);
+    scroll-snap-align: start;
+    transition: opacity var(--duration-slower) var(--ease-in-out);
+  }
+
+  /* Survol : la carte visée reste en pleine lumière, les autres
+     s'effacent — c'est le contraste qui désigne, pas un cadre. */
+  @media (hover: hover) {
+    .expert__rail:hover .expert__item {
+      opacity: 0.42;
+    }
+
+    .expert__rail .expert__item:hover,
+    .expert__rail .expert__item:focus-within {
+      opacity: 1;
+    }
+  }
+
+  /* ---- Pied : jauge, compte, lien vers la liste complète ---- */
+
+  .expert__foot {
+    margin-top: var(--space-12);
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  /* La jauge est un curseur de défilement, pas une barre qui se remplit :
+     sa largeur (--w) vaut la part des neuf articles tenant à l'écran, sa
+     position (--g) l'avancement dans la boucle. Son bord droit touche le
+     bout de la ligne au moment exact où le 09 achève d'entrer.
+     Le second curseur est le même, décalé d'une longueur de piste : quand
+     le premier sort par la droite, il entre par la gauche — la boucle du
+     rail, en petit. */
+
+  .expert__gauge {
+    --g: 0;
+    --w: 0.28;
+    position: relative;
+    display: block;
+    flex: 1 1 auto;
+    max-width: 22rem;
+    height: 2px;
+    background: var(--border);
+    overflow: hidden;
+  }
+
+  .expert__gauge-thumb {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 100%;
+    background: var(--text);
+    transform-origin: left center;
+    /* Le translate porte sur la largeur pleine, la mise à l'échelle vient
+       après : le curseur se pose en var(--g), long de var(--w). */
+    transform: translateX(calc(var(--g) * 100%)) scaleX(var(--w));
+  }
+
+  .expert__gauge-thumb--echo {
+    transform: translateX(calc(var(--g) * 100% - 100%)) scaleX(var(--w));
+  }
+
+  .expert__count {
+    font-size: var(--text-micro);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    white-space: nowrap;
+  }
+
+  .expert__count-n {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+  }
+
+  .expert__all {
+    margin-left: auto;
+  }
+
+  @media (max-width: 40rem) {
+    .expert__foot {
+      flex-wrap: wrap;
+    }
+
+    .expert__gauge {
+      order: 3;
+      flex-basis: 100%;
+      max-width: none;
+    }
+
+    .expert__all {
+      margin-left: 0;
+    }
+  }
+</style>

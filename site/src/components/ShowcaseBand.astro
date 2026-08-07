@@ -1,0 +1,175 @@
+---
+// Bande sombre pleine largeur, photo en parallaxe — la ponctuation
+// sombre de la charte (une à deux sections par page, jamais un mode).
+// C'est l'alternance clair/sombre qui donne son relief à l'accueil : les
+// pages intérieures la reçoivent ici, sans le coût d'une section épinglée.
+//
+// La photo glisse dans son cadre au scroll (data-parallax, lu par le
+// moteur de scripts/scroll.js) et le titre se révèle mot à mot.
+// Sans JS : photo fixe, titre entier — rien ne manque.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Words from './Words.astro';
+
+interface Props {
+  eyebrow?: string;
+  titre: string;
+  /** Portion du titre à passer en accent */
+  accent?: string;
+  texte?: string;
+  image: ImageMetadata;
+  alt: string;
+  id: string;
+  /** Vitesse de parallaxe (0 = figée) */
+  vitesse?: number;
+  /** Hauteur réduite, pour une simple respiration entre deux bandes */
+  compact?: boolean;
+}
+
+const {
+  eyebrow,
+  titre,
+  accent,
+  texte,
+  image,
+  alt,
+  id,
+  vitesse = 0.12,
+  compact = false,
+} = Astro.props;
+---
+
+<section
+  class:list={['show', { 'show--compact': compact }]}
+  aria-labelledby={id}
+>
+  <div class="show__media" data-parallax={vitesse}>
+    <Image
+      src={image}
+      alt={alt}
+      widths={[900, 1400, 1920]}
+      sizes="100vw"
+      loading="lazy"
+    />
+  </div>
+  <div class="show__scrim" aria-hidden="true"></div>
+
+  <div class="container show__inner">
+    {eyebrow && <p class="eyebrow show__eyebrow reveal">{eyebrow}</p>}
+    <Words texte={titre} accent={accent} as="h2" class="show__title" id={id} />
+    {texte && <p class="show__texte reveal" style="--ri: 1">{texte}</p>}
+    <div class="show__extra"><slot /></div>
+  </div>
+</section>
+
+<style>
+  .show {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    background: var(--steel-950);
+    color: var(--steel-200);
+    display: grid;
+    align-items: end;
+    min-height: min(82vh, 44rem);
+    padding-block: calc(var(--section) * 0.8);
+  }
+
+  .show--compact {
+    min-height: min(58vh, 32rem);
+    padding-block: calc(var(--section) * 0.55);
+  }
+
+  /* 8 % de réserve en haut et en bas : la course de la parallaxe ne
+     découvre jamais le fond du cadre. */
+  .show__media {
+    position: absolute;
+    inset: -8% 0;
+    z-index: 0;
+  }
+
+  .show__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Le voile fait deux choses : garantir le contraste du texte, et
+     ramener une photo d'atelier un peu chaude dans la teinte froide de
+     la marque. Le lavis bleu est très faible — il refroidit sans colorer. */
+  .show__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(
+        color-mix(in srgb, var(--accent) 10%, transparent),
+        color-mix(in srgb, var(--accent) 10%, transparent)
+      ),
+      /* Le texte vit à gauche : sur une photo claire (graines de soja),
+         le seul dégradé vertical le laissait à la limite du lisible. */
+      linear-gradient(
+        to right,
+        rgba(20, 26, 29, 0.6) 0%,
+        rgba(20, 26, 29, 0.26) 46%,
+        rgba(20, 26, 29, 0) 72%
+      ),
+      linear-gradient(
+        to top,
+        rgba(20, 26, 29, 0.86) 0%,
+        rgba(20, 26, 29, 0.5) 46%,
+        rgba(20, 26, 29, 0.24) 100%
+      );
+  }
+
+  .show__inner {
+    position: relative;
+    z-index: 2;
+  }
+
+  .show__eyebrow {
+    color: var(--steel-400);
+    margin-bottom: var(--space-4);
+  }
+
+  .show :global(.show__title) {
+    font-size: var(--text-h1);
+    font-weight: 650;
+    line-height: var(--leading-tight);
+    color: var(--steel-50);
+    max-width: 24ch;
+  }
+
+  /* L'accent de <Words> vaut --accent (bleu 600) : sur ce fond il tombe
+     à 2,04:1, illisible. --teal-400 est le token prévu pour l'accent sur
+     fond sombre (6,87:1, AA texte courant). Vérifié au
+     contrast-check de brand/. */
+  .show :global(.words__w--accent) {
+    color: var(--teal-400);
+  }
+
+  /* Les mots du titre vivent dans des masques `overflow: hidden` : leur
+     boîte de ligne colle au texte suivant si on ne l'écarte pas. */
+  .show__texte {
+    margin-top: var(--space-6);
+    max-width: 56ch;
+    font-size: var(--text-small);
+    color: var(--steel-300);
+  }
+
+  /* Le contenu passé en slot vit sur fond sombre : le lien global vaut
+     --accent (bleu 600), soit 2:1 ici. --teal-300 est le token du lien
+     sur fond sombre (10,2:1), celui qu'utilise déjà le bandeau CTA. */
+  .show__extra:not(:empty) {
+    margin-top: var(--space-8);
+  }
+
+  .show__extra :global(a) {
+    color: var(--teal-300);
+  }
+
+  .show__extra :global(a:hover) {
+    color: var(--steel-50);
+  }
+</style>

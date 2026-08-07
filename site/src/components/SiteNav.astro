@@ -1,0 +1,230 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/img/logo.svg';
+import logoW from '../assets/img/logo-w.svg';
+
+interface Props {
+  /** « dark » : la barre survole une section sombre en haut de page —
+      logo blanc (la déclinaison prévue par la charte) et liens clairs
+      tant qu'elle n'est pas passée en carte flottante. */
+  variant?: 'light' | 'dark';
+}
+
+const { variant = 'light' } = Astro.props;
+
+const links = [
+  { href: '/nos-solutions', label: 'Nos solutions' },
+  { href: '/applications', label: 'Applications' },
+  { href: '/la-ligne-pilote', label: 'La ligne pilote' },
+  { href: '/loil-de-lexpert', label: "L'œil de l'expert" },
+  { href: '/actualites', label: 'Actualités' },
+];
+---
+
+<header
+  class:list={['nav-wrap', { 'nav-wrap--dark': variant === 'dark' }]}
+  data-nav
+>
+  <nav class="nav container" aria-label="Navigation principale">
+    <a class="nav__logo" href="/" aria-label="SETREM — accueil">
+      <Image
+        src={logo}
+        alt="SETREM"
+        width={140}
+        height={39}
+        loading="eager"
+        class="nav__logo-img nav__logo-img--color"
+      />
+      <Image
+        src={logoW}
+        alt=""
+        width={140}
+        height={39}
+        loading="eager"
+        class="nav__logo-img nav__logo-img--white"
+      />
+    </a>
+
+    <button
+      class="nav__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="nav-menu"
+      data-nav-toggle
+    >
+      <span class="visually-hidden">Menu</span>
+      <span class="nav__toggle-bar" aria-hidden="true"></span>
+      <span class="nav__toggle-bar" aria-hidden="true"></span>
+    </button>
+
+    <ul class="nav__links" id="nav-menu">
+      {
+        links.map(({ href, label }) => (
+          <li>
+            <a class="nav__link" href={href}>
+              {label}
+            </a>
+          </li>
+        ))
+      }
+      <li class="nav__cta-item">
+        <a class="btn btn--dark nav__cta" href="/contact">Contactez-nous</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .nav-wrap {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 100;
+    padding-top: var(--space-3);
+    pointer-events: none;
+  }
+
+  .nav {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    background: transparent;
+    box-shadow: none;
+    transition:
+      background-color var(--duration-slow) var(--ease-out),
+      box-shadow var(--duration-slow) var(--ease-out);
+  }
+
+  /* Au scroll : la barre transparente devient une carte flottante */
+  :global(.nav-wrap.is-scrolled) .nav {
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .nav__logo {
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .nav__logo-img--white {
+    display: none;
+  }
+
+  /* ---- Variante sombre : tant que la barre est transparente sur la
+     section sombre, logo blanc et liens clairs ; dès qu'elle devient
+     carte flottante (ou menu mobile ouvert), retour à la normale. ---- */
+
+  :global(.nav-wrap--dark:not(.is-scrolled):not(.is-open)) .nav__logo-img--color {
+    display: none;
+  }
+
+  :global(.nav-wrap--dark:not(.is-scrolled):not(.is-open)) .nav__logo-img--white {
+    display: block;
+  }
+
+  :global(.nav-wrap--dark:not(.is-scrolled):not(.is-open)) .nav__link {
+    color: var(--steel-100);
+  }
+
+  :global(.nav-wrap--dark:not(.is-scrolled):not(.is-open)) .nav__link:hover {
+    color: var(--blue-200);
+  }
+
+  :global(.nav-wrap--dark:not(.is-scrolled):not(.is-open)) .nav__toggle-bar {
+    background: var(--steel-100);
+  }
+
+  :global(.nav-wrap--dark:not(.is-scrolled):not(.is-open)) .nav__cta {
+    background: var(--surface-raised);
+    color: var(--steel-950);
+  }
+
+  :global(.nav-wrap--dark:not(.is-scrolled):not(.is-open)) .nav__cta:hover {
+    background: var(--blue-100);
+    color: var(--blue-900);
+  }
+
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .nav__link {
+    color: var(--text);
+    font-size: var(--text-small);
+    font-weight: 500;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .nav__link:hover {
+    color: var(--accent);
+  }
+
+  .nav__toggle {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .nav__toggle {
+      display: grid;
+      gap: 6px;
+      padding: var(--space-3);
+    }
+
+    .nav__toggle-bar {
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      transition: transform var(--duration-base) var(--ease-out);
+    }
+
+    /* Menu ouvert : les deux barres se croisent — l'état se lit sur le
+       bouton lui-même. (Les barres sont les 2e et 3e span du bouton,
+       après le libellé masqué.) */
+    :global(.nav-wrap.is-open) .nav__toggle-bar:nth-of-type(2) {
+      transform: translateY(4px) rotate(45deg);
+    }
+
+    :global(.nav-wrap.is-open) .nav__toggle-bar:nth-of-type(3) {
+      transform: translateY(-4px) rotate(-45deg);
+    }
+
+    .nav__links {
+      position: absolute;
+      top: calc(100% + var(--space-2));
+      right: var(--gutter);
+      left: var(--gutter);
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-2);
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+      background: var(--surface-raised);
+      box-shadow: var(--shadow-lg);
+      display: none;
+    }
+
+    :global(.nav-wrap.is-open) .nav__links {
+      display: flex;
+    }
+
+    :global(.nav-wrap.is-open) .nav {
+      background: var(--surface-raised);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .nav__link {
+      display: block;
+      padding: var(--space-3);
+    }
+
+    .nav__cta {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

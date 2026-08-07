@@ -1,0 +1,80 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Chemin canonique de la page, ex. "/" ou "/nos-solutions" */
+  path?: string;
+  /** Pages à exclure de l'index (ex. /contact/merci) */
+  noindex?: boolean;
+  /** Données structurées supplémentaires (ex. Article), en plus du LocalBusiness */
+  jsonLdExtra?: Record<string, unknown>;
+}
+
+const { title, description, path = '/', noindex = false, jsonLdExtra } = Astro.props;
+
+const site = Astro.site ?? new URL('https://www.setrem.com');
+const canonical = new URL(path, site);
+const ogImage = new URL('/og.jpg', site);
+
+// Données réelles — voir scrape/SYNTHESE.md. Ne rien inventer ici.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'SETREM',
+  description:
+    "Depuis 1986, SETREM conçoit et construit des lignes complètes d'extrusion pour l'alimentation humaine et animale.",
+  url: site.toString(),
+  telephone: '+33232250847',
+  foundingDate: '1986',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'ZI Les Pâtis, 7 rue Robert Dumont',
+    postalCode: '27400',
+    addressLocality: 'Acquigny',
+    addressCountry: 'FR',
+  },
+  sameAs: ['https://www.linkedin.com/company/setremextrusion'],
+};
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SETREM" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {
+      jsonLdExtra && (
+        <script type="application/ld+json" set:html={JSON.stringify(jsonLdExtra)} />
+      )
+    }
+
+    <script is:inline>
+      // Marqueur JS : les états initiaux d'animation (contenu masqué,
+      // sections épinglées) ne s'appliquent que si cette classe est là.
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

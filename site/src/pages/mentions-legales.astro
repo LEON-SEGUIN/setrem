@@ -1,0 +1,65 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import PageHero from '../components/PageHero.astro';
+
+// Données issues de la page /conditions-generales du site actuel
+// (la page /mentions-legales était en erreur serveur).
+// TODO: contenu client — faire valider l'ensemble avant mise en ligne.
+---
+
+<PageLayout
+  title="Mentions légales — SETREM"
+  description="Mentions légales du site setrem.com : identification de la société SETREM, direction de la publication et hébergement."
+  path="/mentions-legales"
+>
+  <PageHero kicker="Informations" titre="Mentions légales" compact />
+
+  <section class="band sheet" aria-label="Mentions légales">
+    <div class="container">
+      <div class="prose prose--flow">
+        <h2>Éditeur du site</h2>
+        <p>
+          SETREM<br />
+          SARL unipersonnelle au capital de 300&nbsp;000&nbsp;euros<br />
+          SIRET&nbsp;: 323&nbsp;514&nbsp;745&nbsp;00039<br />
+          Numéro de TVA intracommunautaire&nbsp;: FR&nbsp;77&nbsp;323&nbsp;514&nbsp;745
+        </p>
+        <p>
+          Siège social&nbsp;: ZI Les Pâtis, 7 rue Robert Dumont,
+          27400 Acquigny, France<br />
+          Téléphone&nbsp;: <a href="tel:+33232250847">+33 2 32 25 08 47</a>
+        </p>
+
+        <h2>Directeur de la publication</h2>
+        <p>Arnaud Delique</p>
+
+        <h2>Hébergement</h2>
+        <!-- TODO: contenu client — hébergeur à confirmer pour le nouveau
+             site (OVH est celui du site actuel, via /conditions-generales). -->
+        <p>
+          OVH SAS au capital de 10&nbsp;069&nbsp;020&nbsp;euros<br />
+          2 rue Kellermann, 59100 Roubaix, France
+        </p>
+
+        <h2>Propriété intellectuelle</h2>
+        <p>
+          Le site et chacun des éléments qui le composent — y compris, sans
+          limitation, les marques, logos, icônes, infographies et
+          photographies — sont protégés au titre de la législation
+          internationale de la propriété intellectuelle. Toute utilisation,
+          reproduction ou représentation, par quelque procédé que ce soit et
+          sur quelque support que ce soit, de tout ou partie du site n'est
+          pas autorisée sans le consentement exprès de SETREM. Voir les
+          <a href="/conditions-generales">conditions générales</a>.
+        </p>
+
+        <h2>Données personnelles et cookies</h2>
+        <p>
+          Les modalités de traitement des données et l'usage des cookies
+          sont détaillés dans la
+          <a href="/politique-de-cookies">politique de cookies</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</PageLayout>

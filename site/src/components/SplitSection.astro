@@ -1,0 +1,169 @@
+---
+// Bloc texte + image en deux colonnes, révélé au scroll.
+// Le texte passe dans le slot (balisage libre : prose, listes, tableaux).
+//
+// Trois mouvements, tous progressifs :
+//  — le titre se révèle mot à mot (le geste de la section Mission),
+//  — l'image s'ouvre depuis un cadre resserré (le geste du process),
+//  — puis elle glisse dans son cadre au scroll (data-parallax, lu par
+//    le moteur de scripts/scroll.js).
+// Sans JS : titre, texte et image sont là, entiers et immobiles.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Words from './Words.astro';
+
+interface Props {
+  kicker?: string;
+  titre: string;
+  /** Portion du titre à passer en accent */
+  accent?: string;
+  image?: ImageMetadata;
+  alt?: string;
+  /** Image à gauche au lieu de droite */
+  reverse?: boolean;
+  /** Niveau de titre (h2 par défaut) */
+  level?: 'h2' | 'h3';
+  /** Numéro de chapitre affiché au-dessus du titre (ex. « 01 ») */
+  num?: string;
+  id?: string;
+}
+
+const {
+  kicker,
+  titre,
+  accent,
+  image,
+  alt = '',
+  reverse = false,
+  level = 'h2',
+  num,
+  id,
+} = Astro.props;
+
+// Le cadre suit l'orientation de la photo au lieu de l'imposer : les
+// machines SETREM sont photographiées aussi bien en portrait (sécheur,
+// 2000 × 2712) qu'en paysage (extrudeurs, 2000 × 1500), et un ratio
+// unique coupait les premières en plein milieu. Bornes : ni plus haut
+// que 4/5, ni plus large que 8/5 — au-delà la colonne se déséquilibre.
+const ratio = image
+  ? Math.min(Math.max(image.width / image.height, 0.8), 1.6)
+  : 1;
+---
+
+<section class:list={['split', { 'split--reverse': reverse, 'split--solo': !image }]} id={id}>
+  <div class="split__copy">
+    <div class="reveal">
+      {num && <span class="band__num" aria-hidden="true">{num}</span>}
+      {kicker && <p class="eyebrow split__kicker">{kicker}</p>}
+    </div>
+    <Words texte={titre} accent={accent} as={level} class="split__title" />
+    <div class="split__body prose reveal" style="--ri: 1">
+      <slot />
+    </div>
+  </div>
+  {
+    image && (
+      <figure
+        class="split__media reveal reveal--clip"
+        style={`--ri: 1; --ar: ${ratio.toFixed(3)}`}
+        data-parallax="0.06"
+      >
+        <Image
+          src={image}
+          alt={alt}
+          widths={[480, 760, 1100]}
+          sizes="(max-width: 900px) 100vw, 44vw"
+          loading="lazy"
+        />
+      </figure>
+    )
+  }
+</section>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  .split--reverse {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  }
+
+  .split--reverse .split__copy {
+    order: 2;
+  }
+
+  .split--solo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .split + .split {
+    margin-top: calc(var(--section) * 0.55);
+  }
+
+  .split__kicker {
+    margin-bottom: var(--space-4);
+  }
+
+  /* Le titre est rendu par <Words> : c'est le composant enfant qui porte
+     l'attribut de portée, pas ce fichier — d'où le :global. Le nom reste
+     assez spécifique pour ne rien atteindre d'autre. */
+  .split :global(.split__title) {
+    font-size: var(--text-h2);
+    font-weight: 650;
+    max-width: 24ch;
+  }
+
+  .split__body {
+    margin-top: var(--space-4);
+  }
+
+  /* Cadre à ratio fixe : il réserve sa place avant le chargement (pas de
+     saut de mise en page) et donne à la parallaxe la matière qu'il lui
+     faut déborder. Le clip de .reveal--clip pose l'arrondi à l'entrée ;
+     celui posé ici sert au repli sans JS et au mouvement réduit. */
+  .split__media {
+    margin: 0;
+    position: sticky;
+    top: var(--space-24);
+    aspect-ratio: var(--ar, 1.25);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    background: var(--surface-sunken);
+  }
+
+  /* 7 % de réserve en haut et en bas : la course de la parallaxe
+     (data-parallax="0.06") ne découvre jamais le fond du cadre. */
+  .split__media :global(img) {
+    position: absolute;
+    inset: -7% 0;
+    width: 100%;
+    height: 114%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 900px) {
+    .split,
+    .split--reverse {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    .split--reverse .split__copy {
+      order: 0;
+    }
+
+    /* `relative`, pas `static` : l'image absolue du cadre a besoin que
+       la figure reste son bloc conteneur, sinon elle s'en échappe et
+       recouvre les sections voisines. Seule la stickiness doit sauter. */
+    .split__media {
+      position: relative;
+      top: auto;
+    }
+  }
+</style>

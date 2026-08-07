@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets';
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABand from '../../components/CTABand.astro';
+import eurotierImg from '../../assets/img/news-eurotier.webp';
+---
+
+<PageLayout
+  title="EuroTier 2026 à Hanovre — SETREM au Hall 12, stand E48"
+  description="Retrouvez SETREM au salon EuroTier de Hanovre, du 10 au 13 novembre 2026, Hall 12 – stand E48 : le salon international de l'élevage professionnel."
+  path="/actualites/eurotier-2026-hanovre"
+>
+  <PageHero
+    kicker="Actualités · Salon"
+    titre="EuroTier 2026, à Hanovre."
+    lede="Du 10 au 13 novembre 2026, retrouvez-nous Hall 12, stand E48."
+    compact
+  />
+
+  <section class="band sheet" aria-label="Le salon EuroTier">
+    <div class="container">
+      <article class="brve">
+        <figure class="brve__cover reveal">
+          <Image
+            src={eurotierImg}
+            alt="Le stand SETREM au salon EuroTier"
+            widths={[700, 1100]}
+            sizes="(max-width: 900px) 100vw, 900px"
+            loading="eager"
+          />
+        </figure>
+        <div class="brve__body prose">
+          <h2>Innovations pour l'industrie mondiale de l'élevage d'animaux</h2>
+          <p>
+            EuroTier est le salon international leader dans le domaine de
+            l'élevage professionnel et de la gestion du bétail. La
+            principale plateforme d'innovation de l'industrie mondiale de la
+            production animale offre un aperçu des innovations et des normes
+            établies. Il apporte des réponses et des solutions aux défis
+            actuels et futurs.
+          </p>
+          <ul>
+            <li><strong>Dates</strong> — du 10 au 13 novembre 2026</li>
+            <li><strong>Lieu</strong> — parc des expositions de Hanovre, Allemagne</li>
+            <li><strong>Stand SETREM</strong> — Hall 12, stand E48</li>
+          </ul>
+          <p>
+            <a href="https://www.eurotier.com" rel="noopener">
+              Visiter le site du salon →
+            </a>
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <CTABand
+    titre="Prenons rendez-vous sur le salon."
+    texte="Pour préparer votre visite au stand E48, contactez l'équipe SETREM."
+  />
+</PageLayout>
+
+<style>
+  .brve {
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+
+  .brve__cover {
+    margin: 0 0 var(--space-8);
+  }
+
+  .brve__cover :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .brve__body :global(h2:first-child) {
+    margin-top: 0;
+  }
+</style>

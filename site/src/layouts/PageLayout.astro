@@ -1,0 +1,27 @@
+---
+// Enveloppe des pages intérieures : nav + <main> + footer + moteur
+// d'animations. Le contenu (PageHero, bandes, CTABand) vit dans le slot.
+import Layout from './Layout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  noindex?: boolean;
+  jsonLdExtra?: Record<string, unknown>;
+}
+
+const props = Astro.props;
+---
+
+<Layout {...props}>
+  <SiteNav />
+  <main>
+    <slot />
+  </main>
+  <SiteFooter />
+
+  <script src="../scripts/scroll.js"></script>
+</Layout>

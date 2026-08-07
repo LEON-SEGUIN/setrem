@@ -1,0 +1,9 @@
+# Dépendances
+node_modules/
+
+# Build
+site/dist/
+site/.astro/
+
+# Système
+.DS_Store

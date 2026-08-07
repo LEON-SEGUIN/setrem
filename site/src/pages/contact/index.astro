@@ -1,0 +1,332 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+
+const adresseQuery = encodeURIComponent(
+  'SETREM, 7 rue Robert Dumont, 27400 Acquigny, France'
+);
+---
+
+<PageLayout
+  title="Contact — SETREM, Acquigny, Normandie"
+  description="Contactez SETREM : ZI Les Pâtis, 7 rue Robert Dumont, 27400 Acquigny, France. Téléphone +33 2 32 25 08 47. Constructeur de lignes complètes d'extrusion depuis 1986."
+  path="/contact"
+>
+  <PageHero
+    kicker="Contact"
+    titre="Parlons de votre projet."
+    lede="Un débit à atteindre, une formule à valider, une ligne à moderniser : l'équipe SETREM vous répond."
+  />
+
+  <section class="band sheet" aria-label="Coordonnées et formulaire">
+    <div class="container contact">
+      <div class="contact__infos">
+        <div class="reveal">
+          <h2 class="contact__titre">SETREM</h2>
+          <address class="contact__adresse">
+            ZI Les Pâtis<br />
+            7 rue Robert Dumont<br />
+            27400 Acquigny, France
+          </address>
+          <dl class="contact__lignes">
+            <div>
+              <dt>Téléphone</dt>
+              <dd><a href="tel:+33232250847">+33 2 32 25 08 47</a></dd>
+            </div>
+            <div>
+              <dt>Fax</dt>
+              <dd>+33 2 32 40 67 88</dd>
+            </div>
+            <div>
+              <dt>LinkedIn</dt>
+              <dd>
+                <a href="https://www.linkedin.com/company/setremextrusion" rel="noopener">
+                  setremextrusion
+                </a>
+              </dd>
+            </div>
+            <!-- TODO: contenu client — e-mail public à confirmer (aucun sur
+                 le site actuel, qui n'expose qu'un formulaire). -->
+          </dl>
+        </div>
+
+        <!-- TODO: RGPD — l'iframe Google Maps dépose des cookies tiers :
+             à conditionner au consentement lors de l'arbitrage cookies. -->
+        <figure class="contact__map reveal" style="--ri: 1">
+          <iframe
+            src={`https://maps.google.com/maps?q=${adresseQuery}&z=14&hl=fr&output=embed`}
+            title="Plan d'accès — SETREM, ZI Les Pâtis, 7 rue Robert Dumont, 27400 Acquigny"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          ></iframe>
+          <figcaption>
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${adresseQuery}`}
+              rel="noopener"
+            >
+              Ouvrir dans Google Maps →
+            </a>
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- TODO: brancher le formulaire sur un backend (service de
+           formulaires ou endpoint de l'hébergeur) avant mise en ligne,
+           avec redirection vers /contact/merci. -->
+      <form class="formulaire reveal" style="--ri: 2" method="post" action="/contact/merci">
+        <p class="formulaire__intro">
+          Décrivez votre projet, nous vous rappelons.
+        </p>
+
+        <div class="formulaire__grille">
+          <div class="champ">
+            <label for="nom">Nom <span class="champ__req" aria-hidden="true">*</span></label>
+            <input id="nom" name="nom" type="text" autocomplete="name" required />
+          </div>
+          <div class="champ">
+            <label for="societe">Société</label>
+            <input id="societe" name="societe" type="text" autocomplete="organization" />
+          </div>
+          <div class="champ">
+            <label for="email">E-mail <span class="champ__req" aria-hidden="true">*</span></label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="champ">
+            <label for="telephone">Téléphone</label>
+            <input id="telephone" name="telephone" type="tel" autocomplete="tel" />
+          </div>
+          <div class="champ champ--large">
+            <label for="message">Votre projet <span class="champ__req" aria-hidden="true">*</span></label>
+            <textarea
+              id="message"
+              name="message"
+              rows="6"
+              required
+              placeholder="Produit visé, débit recherché, matières premières…"></textarea>
+          </div>
+        </div>
+
+        <!-- Mention de traitement des données : elle figurait sur le
+             formulaire de l'ancien site et manquait ici. Reprise mot pour
+             mot — à faire valider avec les mentions légales. -->
+        <p class="formulaire__rgpd">
+          En soumettant ce formulaire, j'accepte que les données
+          personnelles saisies soient traitées et utilisées uniquement dans
+          le cadre de ma demande de contact et de la relation commerciale
+          qui peut en découler.
+        </p>
+
+        <div class="formulaire__pied">
+          <p class="formulaire__note">* Champs requis</p>
+          <button class="btn btn--dark" type="submit">Envoyer la demande</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .contact {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  /* ---- Colonne infos + carte ---- */
+
+  .contact__infos {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .contact__titre {
+    font-size: var(--text-h2);
+    font-weight: 650;
+  }
+
+  .contact__adresse {
+    margin-top: var(--space-4);
+    font-style: normal;
+    line-height: var(--leading-normal);
+    color: var(--text-body);
+  }
+
+  .contact__lignes {
+    margin: var(--space-6) 0 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .contact__lignes div {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    gap: var(--space-4);
+    align-items: baseline;
+  }
+
+  .contact__lignes dt {
+    font-size: var(--text-micro);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+  }
+
+  .contact__lignes dd {
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+  }
+
+  .contact__map {
+    margin: 0;
+  }
+
+  .contact__map iframe {
+    display: block;
+    width: 100%;
+    height: 260px;
+    border: 0;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    /* Légère désaturation pour rester dans la palette acier */
+    filter: grayscale(0.25) saturate(0.85);
+    transition: filter var(--duration-slow) var(--ease-out);
+  }
+
+  .contact__map:hover iframe {
+    filter: none;
+  }
+
+  .contact__map figcaption {
+    margin-top: var(--space-3);
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+
+  .contact__map figcaption a:hover {
+    color: var(--highlight);
+  }
+
+  /* ---- Formulaire ---- */
+
+  .formulaire {
+    padding: var(--space-8);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-md);
+    border-top: 3px solid var(--blue-600);
+  }
+
+  .formulaire__intro {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 650;
+    color: var(--text);
+    margin-bottom: var(--space-6);
+  }
+
+  .formulaire__grille {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4) var(--space-6);
+  }
+
+  .champ {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .champ--large {
+    grid-column: 1 / -1;
+  }
+
+  .champ label {
+    font-size: var(--text-small);
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .champ__req {
+    color: var(--highlight);
+  }
+
+  .champ input,
+  .champ textarea {
+    font: inherit;
+    color: var(--text);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--steel-50);
+    transition:
+      border-color var(--duration-fast) var(--ease-out),
+      background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .champ textarea {
+    resize: vertical;
+    min-height: 8rem;
+  }
+
+  .champ input::placeholder,
+  .champ textarea::placeholder {
+    color: var(--text-subtle);
+  }
+
+  .champ input:hover,
+  .champ textarea:hover {
+    border-color: var(--border-strong);
+  }
+
+  .champ input:focus-visible,
+  .champ textarea:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 0;
+    border-color: transparent;
+    background: var(--surface-raised);
+  }
+
+  .formulaire__rgpd {
+    margin-top: var(--space-6);
+    font-size: var(--text-micro);
+    line-height: var(--leading-normal);
+    color: var(--text-muted);
+    max-width: 62ch;
+  }
+
+  .formulaire__pied {
+    margin-top: var(--space-6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .formulaire__note {
+    font-size: var(--text-micro);
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 900px) {
+    .contact {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+
+    .formulaire__grille {
+      grid-template-columns: 1fr;
+    }
+
+    .formulaire {
+      padding: var(--space-6);
+    }
+
+    .formulaire__pied {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

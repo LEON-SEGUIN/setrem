@@ -1,0 +1,139 @@
+---
+import { Image } from 'astro:assets';
+import logoW from '../assets/img/logo-w.svg';
+
+const annee = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <Image src={logoW} alt="SETREM" width={160} height={45} loading="lazy" />
+      <!-- Le pied de page reprend l'identité sous un autre angle que la
+           déclaration de l'accueil : le métier (constructeur) et l'objet
+           (l'extrudeur monovis), pas la date — elle est ailleurs. -->
+      <p class="footer__tagline">
+        Constructeur d'extrudeurs monovis et de lignes complètes
+        d'extrusion, pour l'alimentation humaine et animale.
+      </p>
+    </div>
+
+    <nav class="footer__col" aria-label="Plan du site">
+      <p class="footer__head">Le site</p>
+      <ul>
+        <li><a href="/qui-sommes-nous">Qui sommes-nous</a></li>
+        <li><a href="/nos-solutions">Nos solutions</a></li>
+        <li><a href="/applications">Applications</a></li>
+        <li><a href="/la-ligne-pilote">La ligne pilote</a></li>
+        <li><a href="/loil-de-lexpert">L'œil de l'expert</a></li>
+        <li><a href="/actualites">Actualités</a></li>
+        <li><a href="/ressources">Ressources</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="footer__col">
+      <p class="footer__head">Coordonnées</p>
+      <address class="footer__address">
+        ZI Les Pâtis, 7 rue Robert Dumont<br />
+        27400 Acquigny, France<br />
+        <a href="tel:+33232250847">+33 2 32 25 08 47</a>
+      </address>
+      <a
+        class="footer__linkedin"
+        href="https://www.linkedin.com/company/setremextrusion"
+        rel="noopener"
+      >
+        LinkedIn
+      </a>
+    </div>
+
+    <div class="footer__col">
+      <p class="footer__head">Informations</p>
+      <ul>
+        <!-- TODO: contenu client — mentions légales (SIRET, TVA, dirigeant)
+             indisponibles : /mentions-legales de l'ancien site est en erreur. -->
+        <li><a href="/mentions-legales">Mentions légales</a></li>
+        <li><a href="/politique-de-cookies">Politique de cookies</a></li>
+        <li><a href="/conditions-generales">Conditions générales</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer__bottom">
+    <p>© {annee} SETREM — Acquigny, France</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    z-index: 2;
+    background: var(--surface-dark);
+    color: var(--steel-300);
+    padding-block: var(--space-24) var(--space-8);
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) repeat(3, minmax(0, 2.3fr));
+    gap: var(--space-12);
+  }
+
+  .footer__tagline {
+    margin-top: var(--space-4);
+    max-width: 34ch;
+    font-size: var(--text-small);
+    color: var(--steel-400);
+  }
+
+  .footer__head {
+    font-size: var(--text-micro);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--steel-500);
+    margin-bottom: var(--space-4);
+  }
+
+  .footer__col ul {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .footer__col a {
+    color: var(--steel-200);
+    font-size: var(--text-small);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .footer__col a:hover {
+    color: var(--teal-300);
+  }
+
+  .footer__address {
+    font-style: normal;
+    font-size: var(--text-small);
+    color: var(--steel-300);
+    line-height: var(--leading-normal);
+  }
+
+  .footer__linkedin {
+    display: inline-block;
+    margin-top: var(--space-4);
+  }
+
+  .footer__bottom {
+    margin-top: var(--space-16);
+    padding-top: var(--space-6);
+    font-size: var(--text-micro);
+    color: var(--steel-500);
+  }
+
+  @media (max-width: 900px) {
+    .footer__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+</style>

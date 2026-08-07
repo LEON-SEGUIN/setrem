@@ -1,0 +1,396 @@
+---
+// Les quatre temps d'une ligne SETREM — vocabulaire de scrape/SYNTHESE.md §3.
+// Fond : animation 3D d'un extrudeur (fournie par Leon le 6 août 2026).
+// ⚠️ Footage tiers — droits à régler avant mise en ligne (voir CLAUDE.md).
+const steps = [
+  {
+    index: '01',
+    nav: 'Préconditionnement',
+    title: 'Préparer la matière avant la vis',
+    text:
+      'Les préconditionneurs PBR, monorotor ou birotor, hydratent la formule ' +
+      'de façon homogène pendant trois minutes de rétention : débit régulier, ' +
+      'usure réduite, amidons gélatinisés.',
+  },
+  {
+    index: '02',
+    nav: 'Extrusion',
+    title: 'Cuire et texturer dans le fourreau',
+    text:
+      'Le fourreau assemble vis, écluses et chambres en acier haute ' +
+      'résistance, à double enveloppe pour chauffer ou refroidir. Process à ' +
+      'sec ou semi-humide, pour les produits les plus élaborés.',
+  },
+  {
+    index: '03',
+    nav: 'Coupe & séchage',
+    title: 'Calibrer puis stabiliser le produit',
+    text:
+      'Le cutter articulé, à couteaux interchangeables, ouvre directement sur ' +
+      'la filière. Deux technologies de sécheurs — contre-courant et lits ' +
+      "fluidisés — selon le produit et l'eau à évaporer.",
+  },
+  {
+    index: '04',
+    nav: 'Enrobage & pilotage',
+    title: 'Finir et conduire la ligne',
+    text:
+      'Les enrobeurs déposent une couche uniforme de liquide ou de poudre ' +
+      "sur les extrudés. L'automatisme SETREM assure la conduite automatique " +
+      'de la ligne complète.',
+  },
+];
+---
+
+<section class="process" id="process" data-process aria-labelledby="process-titre">
+  <h2 class="visually-hidden" id="process-titre">
+    Le process d'une ligne d'extrusion, en quatre temps
+  </h2>
+  <div class="process__spacer">
+    <div class="process__viewport">
+      <div class="process__frame" data-process-frame>
+        <video
+          class="process__video"
+          data-process-video
+          muted
+          loop
+          playsinline
+          autoplay
+          preload="metadata"
+          poster="/video/process-poster.jpg"
+          aria-hidden="true"
+        >
+          <source src="/video/process-extrusion.mp4" type="video/mp4" />
+        </video>
+        <div class="process__scrim" aria-hidden="true"></div>
+      </div>
+
+      <ol class="process__steps">
+        {
+          steps.map((step, i) => (
+            <li
+              class={`process__step${i === 0 ? ' is-active' : ''}`}
+              data-process-step
+            >
+              <p class="process__step-index" aria-hidden="true">{step.index}</p>
+              <h3 class="process__step-title">{step.title}</h3>
+              <p class="process__step-text">{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+
+      <ol class="process__index" aria-hidden="true" data-process-index>
+        {
+          steps.map((step, i) => (
+            <li class={i === 0 ? 'is-active' : ''}>
+              <span class="process__index-label">{step.nav}</span>
+              <span class="process__index-num">{step.index}</span>
+              <span class="process__index-gauge">
+                <span class="process__index-fill"></span>
+              </span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .process {
+    position: relative;
+    background: var(--surface-dark);
+  }
+
+  /* Sans JS : flux normal, tout le contenu est lisible.
+     Avec JS : le spacer donne la course de scroll, le viewport est collé. */
+  html.js .process__spacer {
+    height: 460vh;
+  }
+
+  html.js .process__viewport {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .process__frame {
+    position: relative;
+    background: var(--steel-950);
+  }
+
+  html.js .process__frame {
+    position: absolute;
+    inset: 0;
+    /* Piloté par --p (0 → 1) : de carte centrée à plein écran */
+    clip-path: inset(
+      calc((1 - var(--p, 0)) * 18%)
+      calc((1 - var(--p, 0)) * 22%)
+      calc((1 - var(--p, 0)) * 14%)
+      calc((1 - var(--p, 0)) * 22%)
+      round calc((1 - var(--p, 0)) * var(--radius-lg))
+    );
+  }
+
+  .process__video {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  html.js .process__video {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    object-fit: cover;
+    /* Légère sur-échelle : marge pour la parallaxe verticale (--vy) et
+       le « cut caméra » (--pulse) au changement de chapitre */
+    transform: translateY(var(--vy, 0)) scale(calc(1.06 + var(--pulse, 0)));
+    transition: none;
+  }
+
+  /* Le cut caméra : un très bref élan de zoom qui retombe */
+  html.js .process__frame.is-cutting .process__video {
+    transition: transform 0.7s var(--ease-out);
+  }
+
+  .process__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(20, 26, 29, 0.85) 0%,
+      rgba(20, 26, 29, 0.38) 45%,
+      rgba(20, 26, 29, 0.16) 100%
+    );
+    opacity: var(--p, 1);
+  }
+
+  .process__steps {
+    position: relative;
+    z-index: 2;
+  }
+
+  html.js .process__steps {
+    position: absolute;
+    inset: auto var(--gutter) 13vh var(--gutter);
+  }
+
+  .process__step {
+    max-width: 46ch;
+    padding-block: var(--space-8);
+    color: var(--steel-50);
+  }
+
+  html.js .process__step {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding-block: 0;
+    pointer-events: none;
+  }
+
+  /* Entrée / sortie échelonnées : index, titre puis texte.
+     Le chapitre sortant file vers le haut pendant que l'entrant
+     monte par le bas — un flux continu, jamais un aller-retour. */
+  html.js .process__step > * {
+    opacity: 0;
+    translate: 0 40px;
+    transition:
+      opacity 0.55s var(--ease-out),
+      translate 0.55s var(--ease-out);
+  }
+
+  html.js .process__step.is-leaving > * {
+    opacity: 0;
+    translate: 0 -30px;
+    transition-duration: 0.38s;
+    transition-delay: 0s;
+  }
+
+  html.js .process__step.is-active {
+    pointer-events: auto;
+  }
+
+  html.js .process__step.is-active > * {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  html.js .process__step.is-active .process__step-index {
+    transition-delay: 0.05s;
+  }
+
+  html.js .process__step.is-active .process__step-title {
+    transition-delay: 0.14s;
+  }
+
+  html.js .process__step.is-active .process__step-text {
+    transition-delay: 0.24s;
+  }
+
+  .process__step-index {
+    font-size: var(--text-micro);
+    letter-spacing: var(--tracking-wide);
+    color: var(--steel-400);
+    margin-bottom: var(--space-2);
+  }
+
+  .process__step-title {
+    font-size: var(--text-h1);
+    font-weight: 650;
+    color: var(--steel-50);
+    line-height: var(--leading-tight);
+  }
+
+  .process__step-text {
+    margin-top: var(--space-4);
+    color: var(--steel-200);
+    font-size: var(--text-small);
+    max-width: 52ch;
+  }
+
+  /* Sans JS, les étapes défilent sous la vidéo, sur fond sombre */
+  html:not(.js) .process__steps {
+    padding: var(--section) var(--gutter);
+    display: grid;
+    gap: var(--space-12);
+  }
+
+  .process__index {
+    display: none;
+  }
+
+  html.js .process__index {
+    display: grid;
+    gap: var(--space-3);
+    position: absolute;
+    z-index: 2;
+    right: var(--gutter);
+    bottom: 13vh;
+    text-align: right;
+    font-size: var(--text-small);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .process__index li {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    color: var(--steel-400);
+    opacity: 0.75;
+    transition:
+      color var(--duration-slow) var(--ease-out),
+      opacity var(--duration-slow) var(--ease-out);
+  }
+
+  .process__index-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Jauge : le fil du chapitre en cours se remplit au scroll */
+  .process__index-gauge {
+    width: 2px;
+    height: 1.5em;
+    background: color-mix(in srgb, var(--steel-50) 18%, transparent);
+    overflow: hidden;
+  }
+
+  .process__index-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--teal-400);
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+
+  .process__index li.is-done .process__index-fill {
+    transform: scaleY(1);
+  }
+
+  .process__index li.is-active {
+    color: var(--steel-50);
+    opacity: 1;
+  }
+
+  .process__index li.is-active .process__index-fill {
+    transform: scaleY(var(--sp, 0));
+  }
+
+  @media (max-width: 900px) {
+    html.js .process__index {
+      display: none;
+    }
+
+    .process__step-title {
+      font-size: var(--text-h2);
+    }
+
+    /* Sur mobile, 100vh déborde sous la barre d'outils du navigateur :
+       le petit viewport (svh) garde les chapitres visibles. Le léger
+       jeu quand la barre se rétracte tombe sur le fond sombre. */
+    html.js .process__viewport {
+      height: 100svh;
+    }
+  }
+
+  /* ---- Mouvement réduit : la section redevient une liste illustrée ----
+     initMotion() s'arrête net dans ce mode (--p posé à 1, puis plus
+     rien) : sans ce repli, le spacer garde ses 460vh de course — un
+     gouffre noir de quatre écrans — et seul le premier chapitre est
+     visible. Même parti que .pin.is-static dans PinnedSteps. */
+  @media (prefers-reduced-motion: reduce) {
+    html.js .process__spacer {
+      height: auto;
+    }
+
+    html.js .process__viewport {
+      position: static;
+      height: auto;
+      overflow: visible;
+    }
+
+    html.js .process__frame {
+      position: relative;
+      inset: auto;
+      clip-path: none;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+    }
+
+    html.js .process__video {
+      transform: none;
+    }
+
+    html.js .process__steps {
+      position: static;
+      inset: auto;
+      padding: var(--section) var(--gutter);
+      display: grid;
+      gap: var(--space-12);
+    }
+
+    html.js .process__step {
+      position: static;
+      inset: auto;
+      padding-block: 0;
+      pointer-events: auto;
+    }
+
+    html.js .process__step > * {
+      opacity: 1;
+      translate: none;
+      transition: none;
+    }
+
+    html.js .process__index {
+      display: none;
+    }
+  }
+</style>

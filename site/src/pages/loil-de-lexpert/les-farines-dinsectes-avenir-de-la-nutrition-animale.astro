@@ -1,0 +1,130 @@
+---
+import { Image } from 'astro:assets';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import elevageImg from '../../assets/img/article-insectes-elevage.webp';
+---
+
+<ArticleLayout slug="les-farines-dinsectes-avenir-de-la-nutrition-animale">
+  <p>
+    Cet accroissement de la population entraînera un manque d'eau, de terres
+    agricoles et de biodiversité pour produire les protéines animales
+    nécessaires à l'élevage et la nutrition humaine. Une solution durable,
+    alternative aux farines animales traditionnelles (viandes et poissons),
+    serait la production et l'utilisation de protéines d'insectes.
+  </p>
+
+  <h2>Pourquoi les insectes ?</h2>
+  <p>
+    De tout temps, les insectes ont fait partie du régime alimentaire des
+    animaux et des hommes. Près de 2,5&nbsp;milliards de personnes en
+    consomment régulièrement, et ils sont partie intégrante du régime
+    alimentaire de la plupart des animaux sauvages :
+  </p>
+  <ul>
+    <li>40&nbsp;% chez les truites,</li>
+    <li>jusqu'à 50&nbsp;% chez les volailles, faisans ou perdrix en croissance,</li>
+    <li>5&nbsp;% chez les sangliers,</li>
+    <li>3&nbsp;% chez les félins et canins.</li>
+  </ul>
+  <p>
+    Les insectes sont riches en protéines de haute qualité, en acides gras
+    et en acides aminés essentiels : ils sont donc les candidats idéaux à la
+    substitution des protéines animales utilisées notamment dans
+    l'alimentation des poissons et des animaux domestiques.
+  </p>
+
+  <figure>
+    <Image
+      src={elevageImg}
+      alt="Élevage d'insectes pour la production de farines"
+      widths={[600, 900]}
+      sizes="(max-width: 900px) 100vw, 700px"
+      loading="lazy"
+    />
+  </figure>
+
+  <h2>Enjeu de développement</h2>
+  <p>
+    Les besoins de farine d'insectes en nutrition animale peuvent être
+    estimés à 100&nbsp;000&nbsp;tonnes par an dans le long terme. Pour
+    pouvoir répondre à cette demande, il est important de trouver des
+    méthodes d'élevage performantes à grande échelle. En France, leur nombre
+    ne cesse d'augmenter, mais les éleveurs se heurtent à certaines
+    barrières techniques et réglementaires.
+  </p>
+  <p>
+    L'élevage industriel est énergivore : le stockage des larves en masse
+    provoque un échauffement et, les insectes étant ectothermes — ils ne
+    régulent pas leur température —, il est nécessaire de contrôler la
+    température des lieux d'élevage. Pour dissiper cette chaleur, il faut
+    des systèmes qui brassent le mélange et font circuler l'air entre les
+    couches — des systèmes qui consomment de grandes quantités
+    d'électricité. Le choix de
+    l'espèce, la maîtrise de la reproduction, la gestion de
+    l'approvisionnement en matière première ainsi que le dimensionnement et
+    la transformation des produits finis détermineront la viabilité de la
+    production.
+  </p>
+  <p>De plus, la filière est confrontée à des blocages réglementaires :</p>
+  <ul>
+    <li>
+      interdiction d'utiliser les protéines d'origine animale dans les
+      aliments pour animaux d'élevage,
+    </li>
+    <li>
+      limitation des substrats autorisés comme aliments pour insectes : pas
+      de fumier ni de lisier, pas de déchets de restauration ni d'aliments
+      périmés.
+    </li>
+  </ul>
+  <p>
+    Néanmoins, depuis le 1<sup>er</sup>&nbsp;juillet 2017, il est autorisé
+    d'utiliser des farines d'insectes dans l'alimentation des poissons
+    d'élevage.
+  </p>
+
+  <h2>Tests réalisés</h2>
+  <p>
+    Les expériences réalisées avec des aliments extrudés de 3&nbsp;mm
+    contenant 30&nbsp;% de farine d'<i lang="la">Hermetia illucens</i>
+    soulignent une digestibilité des protéines brutes et des lipides
+    supérieure aux farines végétales.
+  </p>
+  <div class="table-scroll">
+    <table class="table-data">
+      <caption class="visually-hidden">
+        Digestibilité des aliments extrudés contenant 30 % de farine
+        d'insectes, chez le bar et la truite, en pourcentage
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Digestibilité</th>
+          <th scope="col">Bar</th>
+          <th scope="col">Truite</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Protéines brutes</th>
+          <td>91,8&nbsp;%</td>
+          <td>87,1&nbsp;%</td>
+        </tr>
+        <tr>
+          <th scope="row">Lipides</th>
+          <td>93,5&nbsp;%</td>
+          <td>92,9&nbsp;%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    Les farines d'insectes présentent donc de nombreux avantages : riches en
+    protéines de haute qualité, en acides gras et acides aminés essentiels,
+    hautement digestibles, elles permettent un élevage préservant les
+    ressources naturelles. Pour que ces farines deviennent une composante
+    incontournable de l'alimentation animale et non plus un marché de niche,
+    le facteur prix est déterminant : elles doivent pouvoir concurrencer les
+    farines de poissons dans les aliments poissons et les farines de viandes
+    dans le petfood, seuls débouchés où elles sont aujourd'hui autorisées.
+  </p>
+</ArticleLayout>

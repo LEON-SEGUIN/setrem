@@ -1,0 +1,92 @@
+---
+import { Image } from 'astro:assets';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import figComparatif from '../../assets/img/fig-comparatif-soja.webp';
+---
+
+<ArticleLayout slug="traitement-des-matieres-premieres-soja">
+  <p>
+    Le soja cru contient des matières biologiquement actives à l'action
+    antinutritionnelle. Les plus importantes sont essentiellement les
+    protéases et les hémo-agglutinines, mais des saponines et des facteurs
+    induisant les allergies, le goitre et le rachitisme sont également
+    présents.
+  </p>
+
+  <h2>Comment fonctionne l'extrusion ?</h2>
+  <p>
+    L'extrusion consiste à faire passer au travers d'une filière les graines
+    de soja broyées et comprimées dans un fourreau, au moyen d'une vis sans
+    fin tournant à grande vitesse.
+  </p>
+  <h3>L'objectif du traitement des graines de soja par extrusion est triple</h3>
+  <ul>
+    <li>réduire la teneur en facteurs antinutritionnels,</li>
+    <li>ne pas endommager les protéines,</li>
+    <li>
+      provoquer la rupture des cellules contenant l'huile pour améliorer la
+      valeur énergétique.
+    </li>
+  </ul>
+  <p>
+    Cette méthode consiste à porter les graines de soja à une température
+    élevée — 160&nbsp;°C en sortie de filière — pendant un temps très court.
+    La configuration interne de la machine assure des conditions de
+    frottement et de cisaillement adéquates qui fragilisent les parois
+    cellulaires de la graine. L'eau libre de la graine est portée à une
+    température très supérieure à la température de vaporisation, mais reste
+    liquide en raison des fortes pressions qu'elle supporte dans le corps de
+    l'extrudeur. À la sortie de la filière, le retour brutal à la pression
+    atmosphérique entraîne une évaporation instantanée de cette eau.
+  </p>
+  <h3>Cette évaporation a pour effet</h3>
+  <ul>
+    <li>de faire éclater toutes les cellules,</li>
+    <li>
+      d'absorber les calories nécessaires à la production de cette vapeur —
+      environ 6&nbsp;% du poids initial des graines.
+    </li>
+  </ul>
+  <p>
+    Le retour quasi instantané du produit traité à une température d'environ
+    100&nbsp;°C stoppe pratiquement toute réaction de brunissement. Cette
+    méthode s'apparente donc aux traitements HT-ST (High Temperature-Short
+    Time), un peu analogues au traitement UHT qui permet la production des
+    laits de longue conservation.
+  </p>
+
+  <h2>La teneur énergétique est plus élevée</h2>
+  <ul>
+    <li>parce que sa teneur en eau est faible,</li>
+    <li>
+      parce que son procédé d'obtention permet la destruction pratiquement
+      totale des structures cellulaires de la graine de soja, et de ce fait
+      une meilleure digestion de l'énergie qu'elle contient.
+    </li>
+  </ul>
+
+  <h2>Le produit est plus stable</h2>
+  <p>
+    L'extrusion détruit également les lipases et la lipoxydase contenues
+    dans la graine de soja crue — ces enzymes favorisent l'hydrolyse et
+    l'oxydation des graisses. Par ailleurs, sa teneur réduite en eau libre
+    après extrusion assure sa conservation : stocké convenablement pendant
+    des mois, le produit
+  </p>
+  <ul>
+    <li>ne rancit pas,</li>
+    <li>ne s'oxyde pas,</li>
+    <li>ne moisit pas.</li>
+  </ul>
+
+  <figure>
+    <Image
+      src={figComparatif}
+      alt="Tableau comparatif des caractéristiques des graines de soja crues et extrudées"
+      widths={[600, 900]}
+      sizes="(max-width: 900px) 100vw, 700px"
+      loading="lazy"
+    />
+    <figcaption>Tableau comparatif sur les graines de soja.</figcaption>
+  </figure>
+</ArticleLayout>

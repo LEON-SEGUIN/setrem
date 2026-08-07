@@ -1,0 +1,485 @@
+---
+// Données réelles du tableau des capacités : src/data/capacites.ts
+// (partagées avec /nos-solutions/tableau-des-capacites-des-equipements).
+import { modeles, applications, MAX, fmt, disclaimer } from '../data/capacites';
+---
+
+<section class="capa" aria-labelledby="capa-titre">
+  <div class="container">
+    <div class="capa__head">
+      <h2 class="capa__title reveal" id="capa-titre">
+        Capacités : de 40&nbsp;kg/h à 9&nbsp;t/h.
+      </h2>
+      {/* « Six extrudeurs monovis couvrent l'ensemble des débits » est le
+          chapô de la page dédiée : ici on décrit la lecture du graphique. */}
+      <p class="capa__sub reveal">
+        Du S50 au Z300, cinq applications sur une seule échelle. Les
+        productions sont indicatives : formule, matières premières et
+        granulométrie font varier les valeurs.
+      </p>
+    </div>
+
+    <div class="capa__tabs reveal" role="tablist" aria-label="Capacités par application" data-tabs>
+      {
+        applications.map((app, i) => (
+          <button
+            class="capa__tab"
+            role="tab"
+            id={`tab-${app.id}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-controls={`panel-${app.id}`}
+            tabindex={i === 0 ? 0 : -1}
+          >
+            {app.label}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="capa__panel-wrap reveal">
+      {
+        applications.map((app, i) => (
+          <div
+            class="capa__panel"
+            role="tabpanel"
+            id={`panel-${app.id}`}
+            aria-labelledby={`tab-${app.id}`}
+            hidden={i !== 0}
+            data-bars
+          >
+            <div class="capa__panel-head">
+              <p class="capa__panel-label">{app.label}</p>
+              <p class="capa__panel-detail">{app.detail}</p>
+            </div>
+
+            <ul class="bars">
+              {app.valeurs.map(([min, max], j) => (
+                <li class="bars__row">
+                  <div class="bars__meta">
+                    <span class="model-ref bars__ref">{modeles[j].ref}</span>
+                    <span class="bars__kw">
+                      {modeles[j].kw} kW · {modeles[j].chambres} chambres
+                    </span>
+                  </div>
+                  <div class="bars__track">
+                    <div
+                      class="bars__fill"
+                      style={`--w: ${((max / MAX) * 100).toFixed(1)}%`}
+                    >
+                      <span class="bars__spark" aria-hidden="true" />
+                      <span class="bars__spark" aria-hidden="true" />
+                      <span class="bars__spark" aria-hidden="true" />
+                    </div>
+                  </div>
+                  <p class="bars__value">
+                    {fmt(min)} – {fmt(max)}
+                    <span class="bars__unit">kg/h</span>
+                  </p>
+                </li>
+              ))}
+            </ul>
+
+            <div class="bars__axis" aria-hidden="true">
+              <span>0</span>
+              <span>3 000</span>
+              <span>6 000</span>
+              <span>9 000 kg/h</span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <details class="capa__table reveal">
+      <summary>Voir le tableau complet des capacités</summary>
+      <div class="capa__table-scroll">
+        <table>
+          <caption class="visually-hidden">
+            Capacités des extrudeurs SETREM en kilogrammes par heure, par
+            modèle et par application
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Modèle</th>
+              <th scope="col">Chambres</th>
+              <th scope="col">Puissance (kW)</th>
+              {applications.map((app) => <th scope="col">{app.label}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {
+              modeles.map((m, j) => (
+                <tr>
+                  <th scope="row" class="model-ref">{m.ref}</th>
+                  <td>{m.chambres}</td>
+                  <td>{m.kw}</td>
+                  {applications.map((app) => (
+                    <td>
+                      {fmt(app.valeurs[j][0])} – {fmt(app.valeurs[j][1])}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="capa__disclaimer">{disclaimer}</p>
+      <p class="capa__link">
+        <a href="/nos-solutions/tableau-des-capacites-des-equipements">
+          Consulter la page dédiée aux capacités →
+        </a>
+      </p>
+    </details>
+  </div>
+</section>
+
+<style>
+  .capa {
+    position: relative;
+    z-index: 2;
+    background: var(--surface-dark);
+    padding-block: calc(var(--section) * 0.6);
+    color: var(--steel-200);
+  }
+
+  .capa__head {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  .capa__title {
+    color: var(--steel-50);
+    font-size: var(--text-h2);
+    font-weight: 650;
+    max-width: 26ch;
+  }
+
+  .capa__sub {
+    font-size: var(--text-small);
+    color: var(--steel-300);
+    max-width: 52ch;
+  }
+
+  /* ---- Onglets ---- */
+
+  .capa__tabs {
+    margin-top: var(--space-6);
+    display: flex;
+    gap: var(--space-8);
+    overflow-x: auto;
+  }
+
+  .capa__tab {
+    position: relative;
+    padding-block: var(--space-3);
+    font-size: var(--text-small);
+    font-weight: 500;
+    color: var(--steel-500);
+    white-space: nowrap;
+    transition: color var(--duration-base) var(--ease-out);
+  }
+
+  .capa__tab:hover {
+    color: var(--steel-200);
+  }
+
+  .capa__tab[aria-selected='true'] {
+    color: var(--steel-50);
+  }
+
+  .capa__tab[aria-selected='true']::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--blue-300), var(--teal-400));
+  }
+
+  /* ---- Panneau de barres ---- */
+
+  .capa__panel-wrap {
+    margin-top: var(--space-6);
+    border: 1px solid var(--steel-800);
+    border-radius: var(--radius-lg);
+    background:
+      repeating-linear-gradient(
+        to right,
+        transparent 0,
+        transparent calc(25% - 1px),
+        var(--steel-900) calc(25% - 1px),
+        var(--steel-900) 25%
+      ),
+      var(--steel-950);
+  }
+
+  .capa__panel {
+    padding: var(--space-4) var(--space-6);
+  }
+
+  /* Changement d'onglet : le panneau entre en glissant, barres rejouées */
+  .capa__panel.is-entering {
+    animation: panel-in 0.45s var(--ease-out);
+  }
+
+  @keyframes panel-in {
+    from {
+      opacity: 0;
+      translate: 0 18px;
+    }
+  }
+
+  .capa__panel-head {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  .capa__panel-label,
+  .capa__panel-detail {
+    font-size: var(--text-micro);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .capa__panel-label {
+    color: var(--steel-200);
+  }
+
+  .capa__panel-detail {
+    color: var(--steel-600);
+  }
+
+  .bars {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .bars__row {
+    display: grid;
+    grid-template-columns: minmax(150px, 2fr) minmax(0, 9fr) minmax(130px, auto);
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .bars__meta {
+    display: grid;
+  }
+
+  .bars__ref {
+    color: var(--steel-50);
+    font-size: var(--text-small);
+  }
+
+  .bars__kw {
+    font-size: var(--text-micro);
+    color: var(--steel-600);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .bars__track {
+    position: relative;
+    height: 22px;
+    border-radius: var(--radius-sm);
+    background: rgba(237, 241, 243, 0.05);
+    border: 1px solid var(--steel-800);
+    overflow: hidden;
+  }
+
+  .bars__fill {
+    position: relative;
+    height: 100%;
+    width: var(--w);
+    border-radius: inherit;
+    background: linear-gradient(to right, var(--blue-500), var(--blue-200));
+    overflow: hidden;
+  }
+
+  /* Avec JS : la barre part de zéro et s'anime à l'entrée dans le viewport */
+  html.js [data-bars] .bars__fill {
+    width: 0;
+    transition: width 1s var(--ease-out);
+  }
+
+  html.js [data-bars].is-visible .bars__fill {
+    width: var(--w);
+  }
+
+  /* Reflet en mouvement continu dans la barre */
+  .bars__fill::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(247, 249, 250, 0.35) 50%,
+      transparent 60%
+    );
+    background-size: 220% 100%;
+    animation: sheen 3.2s var(--ease-linear) infinite;
+  }
+
+  @keyframes sheen {
+    from {
+      background-position: 130% 0;
+    }
+    to {
+      background-position: -30% 0;
+    }
+  }
+
+  .bars__spark {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--steel-50);
+    opacity: 0;
+    animation: spark 2.8s ease-in-out infinite;
+  }
+
+  .bars__spark:nth-child(1) {
+    left: 32%;
+    top: 30%;
+  }
+
+  .bars__spark:nth-child(2) {
+    left: 58%;
+    top: 60%;
+    animation-delay: 0.9s;
+  }
+
+  .bars__spark:nth-child(3) {
+    left: 81%;
+    top: 42%;
+    animation-delay: 1.7s;
+  }
+
+  @keyframes spark {
+    0%, 100% {
+      opacity: 0;
+      scale: 0.6;
+    }
+    50% {
+      opacity: 0.9;
+      scale: 1;
+    }
+  }
+
+  .bars__value {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    font-size: var(--text-small);
+    color: var(--steel-50);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .bars__unit {
+    color: var(--steel-500);
+    font-weight: 400;
+  }
+
+  .bars__axis {
+    margin-top: var(--space-4);
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--text-micro);
+    color: var(--steel-600);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- Tableau complet ---- */
+
+  .capa__table {
+    margin-top: var(--space-6);
+  }
+
+  .capa__table summary {
+    cursor: pointer;
+    font-size: var(--text-small);
+    font-weight: 600;
+    color: var(--steel-300);
+    padding: var(--space-3) 0;
+  }
+
+  .capa__table summary:hover {
+    color: var(--steel-50);
+  }
+
+  .capa__table-scroll {
+    overflow-x: auto;
+    margin-top: var(--space-4);
+  }
+
+  .capa__table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-small);
+    white-space: nowrap;
+  }
+
+  .capa__table th,
+  .capa__table td {
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+    color: var(--steel-200);
+  }
+
+  /* Sans filets : un zébrage discret guide l'œil d'une ligne à l'autre */
+  .capa__table tbody tr:nth-child(odd) {
+    background: color-mix(in srgb, var(--steel-50) 4%, transparent);
+  }
+
+  .capa__table thead th {
+    font-size: var(--text-micro);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--steel-500);
+  }
+
+  .capa__table tbody th {
+    color: var(--steel-50);
+  }
+
+  .capa__disclaimer {
+    margin-top: var(--space-4);
+    font-size: var(--text-micro);
+    color: var(--steel-600);
+    max-width: 62ch;
+  }
+
+  .capa__link {
+    margin-top: var(--space-3);
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+
+  .capa__link a {
+    color: var(--teal-300);
+  }
+
+  .capa__link a:hover {
+    color: var(--teal-200);
+  }
+
+  @media (max-width: 900px) {
+    .capa__head {
+      grid-template-columns: 1fr;
+    }
+
+    .bars__row {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+
+    .bars__value {
+      text-align: left;
+    }
+  }
+</style>

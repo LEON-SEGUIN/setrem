@@ -1,0 +1,210 @@
+---
+// Grille de cartes de navigation (solutions, applications, articles…).
+// Même vocabulaire que les cartes « L'œil de l'expert » de l'accueil.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Item {
+  href: string;
+  titre: string;
+  texte?: string;
+  image?: ImageMetadata;
+  alt?: string;
+}
+
+interface Props {
+  items: Item[];
+  /** Colonnes en desktop (3 par défaut) */
+  cols?: 2 | 3 | 4;
+  /**
+   * Libellé de l'appel à l'action. « Lire la suite » convient à un
+   * article, pas à une machine ni à un marché : chaque grille dit ce
+   * qu'il y a au bout du lien.
+   */
+  cta?: string;
+}
+
+const { items, cols = 3, cta = 'Lire la suite' } = Astro.props;
+---
+
+<div class="cards" style={`--cols: ${cols}`}>
+  {
+    items.map((item, i) => (
+      <article class="cards__card reveal" style={`--ri: ${i % 4}`}>
+        <a href={item.href}>
+          {item.image && (
+            <span class="cards__media">
+              {/* Chaque carte dérive à sa propre cadence : trois
+                  mouvements de caméra valent mieux que trois fois le
+                  même (le geste des cartes du bento). */}
+              <span
+                class="cards__frame"
+                style={`--drift: ${20 + (i % 4) * 3}s; --drift-delay: -${i * 4}s; --dx: ${i % 2 ? 3 : -3}%; --dy: ${i % 3 ? -3 : 3}%`}
+              >
+                <Image
+                  src={item.image}
+                  alt={item.alt ?? ''}
+                  widths={[400, 700]}
+                  sizes="(max-width: 900px) 100vw, 33vw"
+                  loading="lazy"
+                />
+              </span>
+            </span>
+          )}
+          <div class="cards__body">
+            <h3 class="cards__title">{item.titre}</h3>
+            {item.texte && <p class="cards__texte">{item.texte}</p>}
+            <p class="cards__more">
+              {cta} <span aria-hidden="true">→</span>
+            </p>
+          </div>
+        </a>
+      </article>
+    ))
+  }
+</div>
+
+<style>
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .cards__card {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Le soulèvement au survol passe par `transform`, l'entrée de .reveal
+     par `translate` : deux propriétés distinctes, donc deux durées
+     possibles. Les confondre obligerait le survol à durer 850 ms. */
+  .cards__card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+  }
+
+  /* Survol : la carte visée reste en pleine lumière, les autres
+     s'effacent — c'est le contraste qui désigne, pas un cadre.
+     Même geste que le rail « L'œil de l'expert » de l'accueil. */
+  @media (hover: hover) {
+    .cards:hover .cards__card {
+      opacity: 0.5;
+    }
+
+    .cards .cards__card:hover,
+    .cards .cards__card:focus-within {
+      opacity: 1;
+    }
+  }
+
+  /* `html.js .reveal` (global.css) pose déjà un transition sur ces cartes
+     et l'emporterait : sans cette branche, l'entrée comme le survol
+     partiraient avec le transition-delay de --ri. On reprend donc les
+     durées de .reveal pour l'entrée, et des durées courtes pour le
+     survol. L'opacité sert aux deux (entrée et effacement des voisines) :
+     700 ms est le compromis, imperceptible à l'entrée et juste au survol. */
+  html.js .cards__card,
+  .cards__card {
+    transition:
+      opacity var(--duration-slower) var(--ease-in-out),
+      translate 0.85s var(--ease-out),
+      scale 0.85s var(--ease-out),
+      transform var(--duration-base) var(--ease-out),
+      box-shadow var(--duration-base) var(--ease-out);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cards__card:hover {
+      transform: none;
+    }
+  }
+
+  .cards__card a {
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .cards__media {
+    display: block;
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+    background: var(--surface-sunken);
+  }
+
+  .cards__frame {
+    position: absolute;
+    inset: 0;
+    display: block;
+    transform: scale(1.06);
+  }
+
+  .cards__card :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* La dérive n'existe pas quand le mouvement n'est pas voulu : déclarée
+     sous no-preference plutôt que coupée plus bas, aucune règle n'a à en
+     battre une autre en spécificité. */
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .cards__card.is-visible .cards__frame {
+      animation: cards-drift var(--drift, 22s) var(--ease-in-out) infinite;
+      animation-delay: var(--drift-delay, 0s);
+    }
+  }
+
+  @keyframes cards-drift {
+    0% {
+      transform: scale(1.06) translate3d(0, 0, 0);
+    }
+    50% {
+      transform: scale(1.2) translate3d(var(--dx, -3%), var(--dy, -3%), 0);
+    }
+    100% {
+      transform: scale(1.06) translate3d(0, 0, 0);
+    }
+  }
+
+  .cards__body {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .cards__title {
+    font-size: var(--text-h3);
+    font-weight: 650;
+  }
+
+  .cards__texte {
+    margin-top: var(--space-3);
+    font-size: var(--text-small);
+    color: var(--text-muted);
+  }
+
+  .cards__more {
+    margin-top: auto;
+    padding-top: var(--space-4);
+    font-size: var(--text-small);
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .cards__card:hover .cards__more {
+    color: var(--highlight);
+  }
+
+  @media (max-width: 900px) {
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

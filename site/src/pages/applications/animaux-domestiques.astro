@@ -1,0 +1,98 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SplitSection from '../../components/SplitSection.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import CTABand from '../../components/CTABand.astro';
+import { autresMarches } from '../../data/marches';
+import petfoodImg from '../../assets/img/extrudeur-petfood.webp';
+import croquettesImg from '../../assets/img/croquettes-chien.webp';
+
+const autres = autresMarches('animaux-domestiques').map((m) => ({
+  href: `/applications/${m.slug}`,
+  titre: m.titre,
+  texte: m.texte,
+  image: m.image,
+  alt: m.alt,
+}));
+---
+
+<PageLayout
+  title="Petfood — extrusion d'aliments pour animaux domestiques | SETREM"
+  description="Aliments secs, semi-humides et friandises co-extrudées pour chiens et chats : les filières petfood SETREM, préconditionneur birotor compris."
+  path="/applications/animaux-domestiques"
+>
+  <PageHero
+    kicker="Applications"
+    titre="Animaux domestiques"
+    lede="Des aliments appétents, sains et digestes — avec un préconditionneur birotor qui accepte jusqu'aux viandes fraîches."
+  />
+
+  <section class="band sheet" aria-label="L'extrusion petfood">
+    <div class="container">
+      <SplitSection
+        kicker="Le marché"
+        titre="Homogénéité et digestibilité, le double enjeu."
+        image={petfoodImg}
+        alt="Extrudeur SETREM en production petfood"
+      >
+        <p>
+          Dans le secteur de la production d'aliments pour chiens et chats,
+          l'enjeu est double : l'homogénéité du produit a autant
+          d'importance que sa digestibilité pour l'animal.
+        </p>
+        <p>
+          SETREM a acquis une véritable expérience dans la conception de ces
+          filières. Les formes extrudées sont très variées afin de répondre
+          à toutes les sollicitations du marché. Les aliments peuvent être
+          des aliments secs, semi-humides, ou encore des friandises, telles
+          que les co-extrudés.
+        </p>
+        <p>
+          La conception du préconditionneur birotor permet l'inclusion de
+          sous-produits à forte humidité, telles que les viandes fraîches.
+        </p>
+      </SplitSection>
+
+      {/* L'ancienne liste « avantages » de cette page (produits élaborés,
+          40 kg/h – 9 t/h, sécheur inclus) était la même que sur
+          /applications/aquaculture et que le chapô de /applications :
+          remplacée par les débits réels du petfood, lus dans le tableau
+          des capacités. */}
+      <SplitSection
+        kicker="Les débits"
+        titre="De 150 kg/h à 8,5 tonnes par heure."
+        image={croquettesImg}
+        alt="Croquettes pour chien"
+        reverse
+      >
+        <p>
+          Les débits se lisent en deux granulométries, au-dessus et en
+          dessous de 5&nbsp;mm de diamètre. Le S50 démarre à
+          150&nbsp;kg/h en granulé fin ; le Z300 monte à
+          8&nbsp;500&nbsp;kg/h en granulé supérieur à 5&nbsp;mm.
+        </p>
+        <p>
+          La ligne est livrée complète : préconditionneur, extrudeur,
+          sécheur et enrobeur.
+        </p>
+        <p>
+          <a href="/nos-solutions/tableau-des-capacites-des-equipements">
+            Voir le tableau des capacités →
+          </a>
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">Les autres marchés</h2>
+      </div>
+      <LinkCards items={autres} cols={3} cta="Voir le marché" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>

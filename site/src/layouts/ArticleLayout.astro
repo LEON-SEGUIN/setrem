@@ -1,0 +1,144 @@
+---
+// Gabarit des articles « L'œil de l'expert » : en-tête, image, prose,
+// articles liés, CTA. Le corps de l'article passe dans le slot.
+import { Image } from 'astro:assets';
+import PageLayout from './PageLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import LinkCards from '../components/LinkCards.astro';
+import CTABand from '../components/CTABand.astro';
+import { articles, autresArticles } from '../data/articles';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const article = articles.find((a) => a.slug === slug);
+if (!article) {
+  throw new Error(`Article inconnu : ${slug}`);
+}
+
+const path = `/loil-de-lexpert/${article.slug}`;
+const lies = autresArticles(article.slug).map((a) => ({
+  href: `/loil-de-lexpert/${a.slug}`,
+  titre: a.titre,
+  texte: a.extrait,
+  image: a.image,
+  alt: a.alt,
+}));
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: article.titre,
+  description: article.description,
+  inLanguage: 'fr',
+  image: new URL(article.image.src, Astro.site).toString(),
+  author: { '@type': 'Organization', name: 'SETREM' },
+  publisher: { '@type': 'Organization', name: 'SETREM' },
+  mainEntityOfPage: new URL(path, Astro.site).toString(),
+};
+---
+
+<PageLayout
+  title={`${article.titre} | L'œil de l'expert — SETREM`}
+  description={article.description}
+  path={path}
+  jsonLdExtra={jsonLd}
+>
+  {/* Filet de progression : il suit la hauteur du corps de l'article,
+      pas celle de la page — ce qui intéresse le lecteur, c'est où il en
+      est dans le texte, pas dans le pied de page. */}
+  <div class="progress" data-progress aria-hidden="true"></div>
+
+  <PageHero kicker="L'œil de l'expert" titre={article.titre} lede={article.extrait} compact />
+
+  <div class="article-band sheet">
+    <div class="container">
+      <article class="article" data-progress-target>
+        <figure class="article__cover reveal reveal--clip" data-parallax="0.08">
+          <Image
+            src={article.image}
+            alt={article.alt}
+            widths={[700, 1100, 1600]}
+            sizes="(max-width: 900px) 100vw, 900px"
+            loading="eager"
+          />
+        </figure>
+
+        <div class="article__body prose prose--flow">
+          <slot />
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <section class="band band--raised band--tight" aria-labelledby="lies-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="lies-titre">Poursuivre la lecture</h2>
+      </div>
+      <LinkCards items={lies} cols={3} />
+      <p class="article__tous reveal">
+        <a href="/loil-de-lexpert">Tous les articles de l'œil de l'expert →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Le lecteur d'un article technique n'est pas dans la même intention
+       qu'un visiteur de page produit : le bandeau générique (« Parlez-nous
+       de votre projet ») revenait à l'identique au bas des neuf articles. -->
+  <CTABand
+    titre="Une question sur votre procédé ?"
+    texte="L'équipe technique SETREM répond aux questions de formulation comme de conduite d'extrusion."
+  />
+</PageLayout>
+
+<style>
+  .article-band {
+    position: relative;
+    z-index: 2;
+    background: var(--surface);
+    padding-block: calc(var(--section) * 0.55);
+  }
+
+  .article {
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+
+  /* Cadre à ratio fixe : il réserve sa place avant le chargement, et
+     donne à la parallaxe les 8 % de réserve qu'elle doit déborder. */
+  .article__cover {
+    position: relative;
+    margin: 0 0 var(--space-10);
+    aspect-ratio: 16 / 9;
+    max-height: 26rem;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    background: var(--surface-sunken);
+  }
+
+  .article__cover :global(img) {
+    position: absolute;
+    inset: -8% 0;
+    width: 100%;
+    height: 116%;
+    object-fit: cover;
+  }
+
+  .article__body {
+    margin-inline: auto;
+  }
+
+  .article__tous {
+    margin-top: var(--space-8);
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+
+  .article__tous a:hover {
+    color: var(--highlight);
+  }
+</style>

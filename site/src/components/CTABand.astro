@@ -1,0 +1,131 @@
+---
+// Bandeau sombre de fin de page — la ponctuation sombre de la charte.
+// Un seul par page, juste avant le footer.
+interface Props {
+  titre?: string;
+  texte?: string;
+}
+
+const {
+  titre = "Parlez-nous de votre projet d'extrusion.",
+  texte = "Mise en route, conseil en formulation, stock de pièces détachées : l'équipe technique SETREM vous accompagne sur toute la vie de votre ligne.",
+} = Astro.props;
+---
+
+<section class="cta sheet" aria-labelledby="cta-titre">
+  <svg class="cta__orbit" viewBox="0 0 100 100" aria-hidden="true">
+    <g class="cta__ring">
+      <circle
+        cx="50" cy="50" r="47"
+        fill="none"
+        stroke="var(--teal-400)"
+        stroke-width="0.5"
+        stroke-linecap="round"
+        stroke-dasharray="150 60 40 45"
+      />
+    </g>
+    <g class="cta__ring cta__ring--b">
+      <circle
+        cx="50" cy="50" r="35"
+        fill="none"
+        stroke="var(--steel-700)"
+        stroke-width="0.4"
+        stroke-linecap="round"
+        stroke-dasharray="90 40 60 36"
+      />
+    </g>
+  </svg>
+
+  <div class="container cta__inner">
+    <h2 class="cta__title reveal" id="cta-titre">{titre}</h2>
+    <p class="cta__texte reveal">{texte}</p>
+    <div class="cta__actions reveal">
+      <a class="btn cta__btn" href="/contact">Contactez-nous</a>
+      <a class="cta__tel" href="tel:+33232250847">+33 2 32 25 08 47</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    overflow: hidden;
+    background: var(--surface-dark);
+    padding-block: calc(var(--section) * 0.7);
+    color: var(--steel-200);
+  }
+
+  .cta__orbit {
+    position: absolute;
+    right: -18vmin;
+    bottom: -30vmin;
+    width: 64vmin;
+    height: 64vmin;
+    opacity: 0.35;
+  }
+
+  .cta__ring {
+    transform-origin: 50% 50%;
+    animation: cta-orbit 80s var(--ease-linear) infinite;
+  }
+
+  .cta__ring--b {
+    animation-duration: 120s;
+    animation-direction: reverse;
+  }
+
+  @keyframes cta-orbit {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .cta__inner {
+    position: relative;
+  }
+
+  .cta__title {
+    font-size: clamp(1.9rem, 1.2rem + 2.8vw, 3.4rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--steel-50);
+    max-width: 22ch;
+  }
+
+  .cta__texte {
+    margin-top: var(--space-4);
+    max-width: 52ch;
+    font-size: var(--text-small);
+    color: var(--steel-400);
+  }
+
+  .cta__actions {
+    margin-top: var(--space-8);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+  }
+
+  .cta__btn {
+    background: var(--steel-50);
+    color: var(--steel-950);
+  }
+
+  .cta__btn:hover {
+    background: var(--teal-300);
+  }
+
+  .cta__tel {
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: var(--text-h3);
+    color: var(--steel-50);
+    font-variant-numeric: tabular-nums;
+    transition: color var(--duration-base) var(--ease-out);
+  }
+
+  .cta__tel:hover {
+    color: var(--teal-300);
+  }
+</style>

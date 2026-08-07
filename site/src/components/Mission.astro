@@ -1,0 +1,141 @@
+---
+// La déclaration, découpée en mots au build pour la révélation
+// mot à mot — sans JS, le texte est simplement rendu tel quel.
+const segments = [
+  { texte: 'Depuis 1986, SETREM conçoit et construit des' },
+  { texte: "lignes complètes d'extrusion", accent: true },
+  { texte: "pour l'alimentation humaine et animale." },
+];
+
+const mots = segments.flatMap(({ texte, accent }) =>
+  texte.split(' ').map((mot) => ({ mot, accent }))
+);
+---
+
+<section class="mission sheet" aria-labelledby="mission-titre">
+  <div class="container">
+    <h2 class="eyebrow mission__eyebrow reveal" id="mission-titre">
+      Le constructeur
+    </h2>
+
+    <p class="mission__lede" data-words>
+      {
+        mots.map(({ mot, accent }, i) => (
+          <span class={`mission__w${accent ? ' mission__w--accent' : ''}`}>
+            <span class="mission__w-in" style={`--wi: ${i}`}>{mot}</span>
+          </span>
+        ))
+      }
+    </p>
+
+    <div class="mission__row">
+      <a class="btn btn--light mission__cta reveal" href="/qui-sommes-nous">
+        <span class="mission__cta-icon" aria-hidden="true">↳</span>
+        Découvrir SETREM
+      </a>
+      {/* L'appui ne reformule pas la déclaration : il l'ouvre sur la
+          gamme et les marchés. « A suivi et anticipé les évolutions du
+          marché » (l'ancien site) ne disait rien et revenait sur quatre
+          pages — remplacé partout par du concret. */}
+      <p class="mission__aside reveal">
+        Six extrudeurs monovis, du process à sec au semi-humide. La même
+        mécanique sert le petfood, l'aquaculture, le bétail et
+        l'alimentation humaine — et le traitement des matières premières.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Une respiration courte entre le hero et le process :
+     la section reste volontairement petite. */
+  .mission {
+    background: var(--surface-raised);
+    padding-block: calc(var(--section) * 0.55);
+  }
+
+  .mission__eyebrow {
+    margin-bottom: var(--space-6);
+  }
+
+  /* ---- La déclaration, mot à mot ---- */
+
+  .mission__lede {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 1rem + 2.4vw, 2.6rem);
+    font-weight: 620;
+    line-height: 1.2;
+    letter-spacing: var(--tracking-tight);
+    color: var(--text);
+    max-width: 30ch;
+  }
+
+  .mission__w {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    /* L'espace inter-mots vit hors du masque */
+    margin-right: 0.26em;
+  }
+
+  .mission__w--accent {
+    color: var(--accent);
+  }
+
+  .mission__w-in {
+    display: inline-block;
+  }
+
+  /* Chaque mot monte derrière son masque, en cascade */
+  html.js .mission__w-in {
+    translate: 0 115%;
+    transition: translate 0.65s var(--ease-out);
+    transition-delay: calc(var(--wi) * 36ms);
+  }
+
+  html.js [data-words].is-visible .mission__w-in {
+    translate: 0 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.js .mission__w-in {
+      translate: 0 0;
+    }
+  }
+
+  /* ---- CTA + complément ---- */
+
+  .mission__row {
+    margin-top: var(--space-6);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+
+  .mission__cta-icon {
+    display: grid;
+    place-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-sm);
+    background: var(--blue-50);
+    color: var(--accent);
+  }
+
+  .mission__aside {
+    max-width: 44ch;
+    color: var(--text-muted);
+    font-size: var(--text-small);
+  }
+
+  @media (max-width: 900px) {
+    .mission__row {
+      flex-direction: column;
+    }
+
+    .mission__lede {
+      max-width: none;
+    }
+  }
+</style>

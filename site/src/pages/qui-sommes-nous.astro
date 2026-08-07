@@ -1,0 +1,96 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SplitSection from '../components/SplitSection.astro';
+import ShowcaseBand from '../components/ShowcaseBand.astro';
+import CTABand from '../components/CTABand.astro';
+import extrusionImg from '../assets/img/extrusion-setrem.webp';
+import futImg from '../assets/img/fut-extrudeur.webp';
+import monovisImg from '../assets/img/extrudeur-monovis.webp';
+---
+
+<PageLayout
+  title="Qui sommes-nous ? Constructeur d'extrudeurs depuis 1986 | SETREM"
+  description="Constructeur et non revendeur : depuis 1986, SETREM dessine et fabrique ses extrudeurs monovis à Acquigny, en Normandie. Toute la ligne sort de la même maison."
+  path="/qui-sommes-nous"
+>
+  <PageHero
+    kicker="Qui sommes-nous"
+    titre="Constructeur, pas revendeur."
+    lede="Depuis 1986, SETREM dessine, fabrique et met en route ses propres machines — depuis Acquigny, en Normandie, et pour le monde entier."
+  />
+  <!-- TODO: contenu client — chiffres d'entreprise (effectif, pays desservis,
+       lignes installées, certifications) : aucun sur le site actuel. -->
+
+  <section class="band sheet" aria-label="L'entreprise">
+    <div class="container">
+      {/* Cette page parle de la maison, pas du produit : la fiche
+          technique de l'extrudeur (process, capacités, avantages) vit une
+          seule fois, sur /nos-solutions/extrudeurs. */}
+      <SplitSection
+        kicker="Le métier"
+        titre="Concevoir la machine, puis la construire."
+        image={extrusionImg}
+        alt="Ligne d'extrusion SETREM en production"
+      >
+        <p>
+          SETREM ne revend pas des équipements : elle les dessine et les
+          fabrique. De la trémie à l'automatisme, tous les organes d'une
+          ligne sortent de la même maison — c'est ce qui permet d'ajuster
+          la machine à une formule, plutôt que l'inverse.
+        </p>
+        <p>
+          Souplesse d'utilisation, faible coût de fonctionnement et qualité
+          des produits extrudés sont des compétences reconnues des matériels
+          SETREM, très appréciées des industriels.
+        </p>
+      </SplitSection>
+
+      <SplitSection
+        kicker="Des équipements 100 % polyvalents"
+        titre="Du petfood à l'huilerie, la même mécanique."
+        image={futImg}
+        alt="Fût d'extrudeur monovis SETREM"
+        reverse
+      >
+        <ul>
+          <li>Du petfood — aliments pour chiens et chats…</li>
+          <li>Des aliments pour espèces aquatiques, flottants ou coulants</li>
+          <li>
+            Des aliments pour le bétail — vaches laitières haute production,
+            autres bovins, ovins, porcins, volaille (pondeuse, chair),
+            équidés…
+          </li>
+        </ul>
+        <p>Mais aussi utilisés pour :</p>
+        <ul>
+          <li>
+            le traitement des matières premières : soja, colza, blé et
+            autres céréales,
+          </li>
+          <li>
+            la préparation à l'extraction mécanique d'huile sur oléagineux.
+          </li>
+        </ul>
+        <p>
+          <a href="/applications">Découvrir les applications →</a>
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <!-- L'atelier en plein format et sur fond sombre : la photo portait la
+       section, elle était réduite à une illustration sous un titre. -->
+  <ShowcaseBand
+    id="atelier-titre"
+    eyebrow="L'atelier"
+    titre="Construit à Acquigny, en Normandie."
+    accent="en Normandie."
+    texte="ZI Les Pâtis, 7 rue Robert Dumont, 27400 Acquigny, France."
+    image={monovisImg}
+    alt="Extrudeur monovis SETREM en cours d'assemblage en atelier"
+  />
+
+  <CTABand />
+</PageLayout>
+

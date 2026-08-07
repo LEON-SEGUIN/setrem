@@ -1,0 +1,47 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import CTABand from '../../components/CTABand.astro';
+import eurotierImg from '../../assets/img/news-eurotier.webp';
+import voeuxImg from '../../assets/img/news-voeux-2026.webp';
+
+const items = [
+  {
+    href: '/actualites/eurotier-2026-hanovre',
+    titre: 'EuroTier 2026 : du 10 au 13 novembre à Hanovre',
+    texte:
+      'Retrouvez SETREM au salon EuroTier à Hanovre — Hall 12, stand E48.',
+    image: eurotierImg,
+    alt: 'Salon EuroTier',
+  },
+  {
+    href: '/actualites/2026-une-nouvelle-annee',
+    titre: '2026, une nouvelle année qui prend forme',
+    texte: "Nous vous adressons nos meilleurs vœux pour l'année 2026.",
+    image: voeuxImg,
+    alt: 'Vœux SETREM pour 2026',
+  },
+];
+---
+
+<PageLayout
+  title="Actualités — salons et vie de l'entreprise | SETREM"
+  description="Les actualités de SETREM : salons professionnels, rendez-vous et vie de l'entreprise. Prochain rendez-vous : EuroTier 2026 à Hanovre, du 10 au 13 novembre."
+  path="/actualites"
+>
+  <PageHero
+    kicker="Actualités"
+    titre="Les rendez-vous SETREM."
+    lede="Salons professionnels et vie de l'entreprise : les dernières nouvelles d'Acquigny."
+  />
+
+  <section class="band sheet" aria-labelledby="actus-titre">
+    <h2 class="visually-hidden" id="actus-titre">Les actualités SETREM</h2>
+    <div class="container">
+      <LinkCards items={items} cols={2} cta="Lire l'actualité" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>

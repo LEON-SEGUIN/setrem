@@ -1,0 +1,575 @@
+---
+// Hero « Signature » — quatrième direction, épurée.
+// Le sujet, c'est le logo : le symbole S de SETREM, repris trait pour
+// trait du fichier officiel (mêmes tracés, mêmes dégradés chromés —
+// aucune modification, brand/BRAND.md), mis en scène sur le fond acier
+// de la charte. Il se révèle le long de ses propres courbes, se pose
+// sur un reflet, et une passe de lumière traverse le métal.
+// Presque pas de texte : un titre, une phrase, un bouton.
+// SVG + CSS uniquement — aucune image, aucune lib, complet sans JS.
+---
+
+<section class="hero" aria-label="Introduction" data-hero>
+  <!-- Brume argentée qui suit le curseur (souris uniquement, pilotée
+       par scroll.js) — décorative, sous le symbole et le texte -->
+  <div class="hero__mist" aria-hidden="true" data-mist></div>
+
+  <!-- La brume de couleur du départ : une vague bleu→teal poussée
+       devant la feuille qui recouvre le hero (position pilotée par
+       --hp, la progression du recouvrement écrite par scroll.js).
+       Invisible à l'arrêt et sans JS. -->
+  <div class="hero__dusk" aria-hidden="true"></div>
+
+  <figure class="hero__figure" aria-hidden="true">
+    <svg class="hero__mark" viewBox="-12 -12 160 216">
+      <defs>
+        <!-- Dégradés du logo, copiés à l'identique -->
+        <radialGradient
+          id="sGradA"
+          cx="3.7359" cy="67.2557" r="71.0809"
+          gradientTransform="matrix(0.964 0.266 -0.3436 1.2454 23.2437 -17.4968)"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0" stop-color="#F6F7F8"></stop>
+          <stop offset="1" stop-color="#78878F"></stop>
+        </radialGradient>
+        <radialGradient
+          id="sGradB"
+          cx="1.4363" cy="209.998" r="64.9878"
+          gradientTransform="matrix(-0.9889 0.1487 -0.2622 -1.7432 188.546 434.7206)"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0.0187" stop-color="#F6F7F8"></stop>
+          <stop offset="0.1125" stop-color="#DADBDF"></stop>
+          <stop offset="0.2419" stop-color="#B9BDC2"></stop>
+          <stop offset="0.3715" stop-color="#9EA6AD"></stop>
+          <stop offset="0.4996" stop-color="#8C979E"></stop>
+          <stop offset="0.6256" stop-color="#808E96"></stop>
+          <stop offset="0.747" stop-color="#7C8B93"></stop>
+          <stop offset="0.9876" stop-color="#778B91"></stop>
+        </radialGradient>
+
+        <!-- Le symbole, tracés du fichier logo -->
+        <g id="s-mark">
+          <path fill="#78878F" d="M44,66.3c-1,0-1.8-0.8-1.7-1.8c1.6-24.2,22-44,46.9-44c24.3,0,44.3,18.8,46.8,42.2c-2.9-35-32.1-62.5-67.9-62.5C30.5,0.3,0,30.8,0,68.4c0,0.6,0.4,1.4,1.9,1.4h90.3c1,0,1.8,0.8,1.7,1.8c-1.6,24.2-22,43.9-46.9,43.9c-25.1,0-45.6-20-46.9-44.5c1.4,36.4,31.3,65.5,68.1,65.5c37.6,0,68.1-30.5,68.1-68.1l0,0c0-1.1-0.9-2-2-2H44z"></path>
+          <path fill="url(#sGradA)" d="M1.5,69.2c-0.7,0-1.2-0.6-1.2-1.2v-0.3c0-37.1,30.2-67.3,67.4-67.3c29.2,0,55,18.4,64.1,45.2c-7.9-15.7-24.2-25.6-42.6-25.6c-25.3,0-46.4,20.6-47.3,46h0c0,1.6-1.3,3.4-3.1,3.4H1.5z"></path>
+          <path fill="#78878F" d="M67.6,0.5c15.1,0,29.4,4.7,41.2,13.7c9.6,7.3,17.1,17.1,21.5,28.2c-8.4-14.1-23.9-22.8-41.2-22.8c-25.4,0-46.6,20.7-47.5,46.3l0,0c0,1.5-1.2,3.1-2.8,3.1H1.5c-0.5,0-1-0.4-1-1v-0.3C0.5,30.6,30.6,0.5,67.6,0.5 M67.6,0C30.3,0,0,30.3,0,67.6v0.3c0,0.8,0.7,1.5,1.5,1.5h37.3c1.8,0,3.3-1.8,3.3-3.6v0.3c0.7-25,21.5-46.1,47-46.1c19.8,0,37,11.8,43.9,29C125.3,20.4,98.8,0,67.6,0L67.6,0z"></path>
+          <path fill="#FFFFFF" d="M65.9,2.3c-0.3,0-0.6,0-0.9,0c-26.6,0-49.4,16.7-58.5,40.2C17.6,20.3,39.2,2.9,65.9,2.3z"></path>
+          <path fill="url(#sGradB)" d="M68,135.5c-28.3,0-53.7-17.8-63.4-44.4c0-0.1,0-0.2,0-0.2c0-0.1,0.1-0.1,0.2-0.1c0.1,0,0.1,0,0.2,0.1c8.3,15.3,24.2,24.8,41.4,24.8c25.4,0,47.4-21.2,48.1-46.2c0-1.9,0.6-2.6,2.2-2.6h37.3c0.8,0,1.4,0.6,1.4,1.4C135.5,105.4,105.3,135.5,68,135.5z"></path>
+          <path fill="#78878F" d="M134.2,67.1c0.7,0,1.2,0.6,1.2,1.2c0,18-7,34.8-19.7,47.5C103,128.5,86.1,135.4,68,135.4c-28.2,0-53.6-17.8-63.3-44.3c0-0.1,0-0.1,0-0.1c0,0,0.1-0.1,0.1-0.1c0,0,0.1,0,0.1,0.1c8.4,15.3,24.3,24.9,41.5,24.9c12.4,0,24.3-4.9,33.5-13.7c9.2-8.8,14.4-20.4,14.7-32.6c0-1.8,0.6-2.4,2.1-2.4H134.2 M134.2,66.8H96.9c-1.8,0-2.3,0.9-2.3,2.7c-0.7,25-22.4,46.1-48,46.1c-17.8,0-33.3-10.1-41.3-24.7c-0.1-0.1-0.2-0.2-0.3-0.2c-0.2,0-0.5,0.2-0.4,0.5c9.4,25.9,34.3,44.5,63.5,44.5c37.3,0,67.6-30,67.6-67.3C135.7,67.5,135,66.8,134.2,66.8L134.2,66.8z"></path>
+          <path fill="#FFFFFF" d="M46.7,118.6c-0.3,0-0.7,0-1,0c1.4,0.1,2.8,0.2,4.3,0.2c25,0,45.3-19.7,46.4-44.4C93.6,99.2,72.4,118.6,46.7,118.6z"></path>
+        </g>
+
+        <!-- La révélation : deux arcs balayent chacun une pale le long de
+             sa courbure, et la barre centrale — celle qui relie les deux
+             pales et fait du S un cercle continu — se dessine à part, en
+             un seul trait de gauche à droite. La bande noire la soustrait
+             aux arcs pour qu'elle n'apparaisse jamais par morceaux ;
+             le rect s-bar la révèle d'un geste. -->
+        <mask id="s-reveal" maskUnits="userSpaceOnUse" x="-12" y="-12" width="160" height="160">
+          <rect x="-12" y="-12" width="160" height="160" fill="#000000"></rect>
+          <!-- Extrémités posées sur le cercle de centre 67.9,67.8 (celui
+               du symbole) avec 197° d'arc : les deux anneaux sont
+               concentriques et leur union couvre les 360°. -->
+          <path
+            class="s-arc s-arc--a"
+            d="M 24 69.8 A 44 44 0 1 1 110.4 79"
+            pathLength="1"
+          ></path>
+          <path
+            class="s-arc s-arc--b"
+            d="M 24 69.8 A 44 44 0 1 1 110.4 79"
+            transform="rotate(180 67.9 67.8)"
+            pathLength="1"
+          ></path>
+          <rect x="-12" y="65.9" width="160" height="4.8" fill="#000000"></rect>
+          <rect class="s-bar" x="-1" y="65.7" width="138" height="5.2" fill="#FFFFFF"></rect>
+        </mask>
+
+        <!-- Fondu vertical du reflet -->
+        <linearGradient id="s-fade" x1="0" y1="143" x2="0" y2="196" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#FFFFFF"></stop>
+          <stop offset="1" stop-color="#000000"></stop>
+        </linearGradient>
+        <mask id="s-mirror" maskUnits="userSpaceOnUse" x="-12" y="140" width="160" height="64">
+          <rect x="-12" y="140" width="160" height="64" fill="url(#s-fade)"></rect>
+        </mask>
+
+        <!-- La lumière ne passe que sur le métal -->
+        <clipPath id="s-clip">
+          <path d="M44,66.3c-1,0-1.8-0.8-1.7-1.8c1.6-24.2,22-44,46.9-44c24.3,0,44.3,18.8,46.8,42.2c-2.9-35-32.1-62.5-67.9-62.5C30.5,0.3,0,30.8,0,68.4c0,0.6,0.4,1.4,1.9,1.4h90.3c1,0,1.8,0.8,1.7,1.8c-1.6,24.2-22,43.9-46.9,43.9c-25.1,0-45.6-20-46.9-44.5c1.4,36.4,31.3,65.5,68.1,65.5c37.6,0,68.1-30.5,68.1-68.1l0,0c0-1.1-0.9-2-2-2H44z"></path>
+          <path d="M1.5,69.2c-0.7,0-1.2-0.6-1.2-1.2v-0.3c0-37.1,30.2-67.3,67.4-67.3c29.2,0,55,18.4,64.1,45.2c-7.9-15.7-24.2-25.6-42.6-25.6c-25.3,0-46.4,20.6-47.3,46h0c0,1.6-1.3,3.4-3.1,3.4H1.5z"></path>
+          <path d="M68,135.5c-28.3,0-53.7-17.8-63.4-44.4c0-0.1,0-0.2,0-0.2c0-0.1,0.1-0.1,0.2-0.1c0.1,0,0.1,0,0.2,0.1c8.3,15.3,24.2,24.8,41.4,24.8c25.4,0,47.4-21.2,48.1-46.2c0-1.9,0.6-2.6,2.2-2.6h37.3c0.8,0,1.4,0.6,1.4,1.4C135.5,105.4,105.3,135.5,68,135.5z"></path>
+        </clipPath>
+
+        <linearGradient id="s-sheen" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#FFFFFF" stop-opacity="0"></stop>
+          <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.55"></stop>
+          <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"></stop>
+        </linearGradient>
+      </defs>
+
+      <!-- Ombre de contact -->
+      <ellipse class="hero__ground" cx="67.9" cy="140" rx="56" ry="4"></ellipse>
+
+      <!-- Reflet -->
+      <g mask="url(#s-mirror)">
+        <g class="hero__refl" transform="translate(0 279) scale(1 -1)">
+          <g mask="url(#s-reveal)">
+            <use href="#s-mark"></use>
+          </g>
+        </g>
+      </g>
+
+      <!-- Le symbole -->
+      <g mask="url(#s-reveal)">
+        <use href="#s-mark"></use>
+        <g clip-path="url(#s-clip)">
+          <rect class="hero__sheen" x="-160" y="-15" width="52" height="170" fill="url(#s-sheen)"></rect>
+        </g>
+      </g>
+    </svg>
+  </figure>
+
+  <div class="hero__copy">
+    <h1 class="hero__title" lang="en">
+      Extrusion Cooking
+      <span class="visually-hidden" lang="fr">
+        — lignes complètes d'extrusion pour l'alimentation humaine et animale
+      </span>
+    </h1>
+
+    {/* Les deux coins portent déjà le lieu et l'ancienneté : la baseline
+        dit ce que les coins ne disent pas — pour qui, et à quelle
+        échelle. La déclaration complète est le sujet de la section
+        Mission, juste en dessous. */}
+    <p class="hero__baseline">
+      Des lignes complètes pour l'alimentation humaine et animale, de
+      l'essai en ligne pilote à neuf tonnes par heure.
+    </p>
+
+    <div class="hero__cta">
+      <a class="btn btn--dark" href="/nos-solutions">Découvrir nos solutions</a>
+    </div>
+  </div>
+
+  <p class="hero__coin hero__coin--g">Acquigny — Normandie</p>
+  <p class="hero__coin hero__coin--d">Constructeur depuis 1986</p>
+
+  <div class="hero__cue" aria-hidden="true"></div>
+</section>
+
+<style>
+  .hero {
+    /* Épinglé sous la suite : la feuille de la section suivante le
+       recouvre au scroll (main est isolé, voir global.css), et
+       scroll.js le fond et le fait reculer pendant le recouvrement */
+    position: sticky;
+    top: 0;
+    z-index: -1;
+    /* Contexte d'empilement local : la brume en z négatif reste
+       au-dessus du fond du hero, sous le symbole et le texte */
+    isolation: isolate;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-8);
+    padding: clamp(6rem, 14vh, 9rem) var(--gutter) clamp(4rem, 9vh, 6rem);
+    /* Le fond de la charte, avec un léger point de lumière derrière
+       le chrome — c'est le fond sur lequel le logo se pose le mieux */
+    background:
+      radial-gradient(
+        62vmin 62vmin at 50% 40%,
+        rgba(255, 255, 255, 0.85),
+        transparent 70%
+      ),
+      linear-gradient(var(--steel-50), var(--steel-100) 62%);
+  }
+
+  /* ---- La brume de couleur au départ ----
+     Une nappe en dégradé bleu→teal de la charte, ancrée sous le bas
+     du hero, qui monte devant la feuille pendant le recouvrement :
+     le bas de l'écran s'embrume de couleur, et tout s'évanouit avec
+     le hero. --hp (0 → 1) vient de scroll.js. */
+
+  .hero__dusk {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6svh;
+    height: 65svh;
+    z-index: 0;
+    pointer-events: none;
+    opacity: min(calc(var(--hp, 0) * 1.8), 1);
+    /* Le bord dense de la nappe reste juste au-dessus de la couture
+       de la feuille pendant toute la montée */
+    transform: translateY(calc(var(--hp, 0) * -92svh));
+    will-change: transform, opacity;
+    background:
+      radial-gradient(
+        120% 90% at 50% 100%,
+        color-mix(in srgb, var(--teal-500) 38%, transparent),
+        transparent 62%
+      ),
+      linear-gradient(
+        to top,
+        color-mix(in srgb, var(--blue-700) 78%, transparent),
+        color-mix(in srgb, var(--blue-400) 40%, transparent) 42%,
+        color-mix(in srgb, var(--blue-200) 16%, transparent) 68%,
+        transparent 92%
+      );
+  }
+
+  /* ---- Le point de brume au curseur ----
+     Deux petits voiles superposés qui dérivent lentement l'un contre
+     l'autre : la lueur reste organique, jamais un cercle net. Teintes
+     acier de la charte. Positionné en transform par scroll.js ;
+     invisible sans JS ou au toucher — pure beauté, aucun contenu. */
+
+  .hero__mist {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 9rem;
+    aspect-ratio: 1;
+    margin: -4.5rem 0 0 -4.5rem;
+    opacity: 0;
+    will-change: transform, opacity;
+    pointer-events: none;
+  }
+
+  .hero__mist::before,
+  .hero__mist::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    filter: blur(14px);
+  }
+
+  .hero__mist::before {
+    background: radial-gradient(
+      closest-side,
+      rgba(255, 255, 255, 1),
+      color-mix(in srgb, var(--steel-300) 38%, transparent) 58%,
+      transparent 78%
+    );
+    animation: mist-drift-a 7s ease-in-out infinite alternate;
+  }
+
+  .hero__mist::after {
+    inset: 14% -10% -10% 14%;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--steel-400) 26%, transparent),
+      transparent 72%
+    );
+    animation: mist-drift-b 9s ease-in-out infinite alternate;
+  }
+
+  @keyframes mist-drift-a {
+    from {
+      transform: translate(-7%, 5%) scale(0.88);
+    }
+    to {
+      transform: translate(9%, -7%) scale(1.1);
+    }
+  }
+
+  @keyframes mist-drift-b {
+    from {
+      transform: translate(11%, -5%) scale(1.06);
+    }
+    to {
+      transform: translate(-9%, 9%) scale(0.82);
+    }
+  }
+
+  /* ---- Le symbole ---- */
+
+  .hero__figure {
+    margin: 0 0 clamp(-8rem, -13vmin, -4rem);
+  }
+
+  .hero__mark {
+    display: block;
+    width: clamp(280px, 44vmin, 560px);
+    height: auto;
+  }
+
+  html.js .hero__figure {
+    animation: fig-in 0.4s var(--ease-out) both;
+  }
+
+  @keyframes fig-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  /* La révélation : chaque pale est balayée le long de sa courbe.
+     Sans JS, les arcs du masque sont pleins et la pastille visible :
+     symbole complet d'emblée. */
+  .s-arc {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 56;
+  }
+
+  html.js .s-arc {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: s-draw 1.3s cubic-bezier(0.5, 0, 0.15, 1) forwards;
+  }
+
+  html.js .s-arc--a {
+    animation-delay: 0.2s;
+  }
+
+  html.js .s-arc--b {
+    animation-delay: 0.42s;
+  }
+
+  @keyframes s-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* La barre centrale se dessine en un seul trait, de gauche à droite :
+     elle part avec le premier front et vient s'ancrer dans le second */
+  html.js .s-bar {
+    transform: scaleX(0);
+    transform-box: fill-box;
+    transform-origin: left center;
+    animation: bar-draw 0.62s cubic-bezier(0.5, 0, 0.15, 1) 0.2s forwards;
+  }
+
+  @keyframes bar-draw {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .hero__ground {
+    fill: var(--steel-800);
+    opacity: 0.07;
+    filter: blur(3px);
+  }
+
+  html.js .hero__ground {
+    opacity: 0;
+    animation: ground-in 0.9s var(--ease-out) 1.15s forwards;
+  }
+
+  @keyframes ground-in {
+    to {
+      opacity: 0.07;
+    }
+  }
+
+  .hero__refl {
+    opacity: 0.16;
+    filter: blur(1.2px);
+  }
+
+  /* La passe de lumière : une fois le symbole formé, puis
+     périodiquement, discrète */
+  .hero__sheen {
+    opacity: 0;
+    animation: sheen 9s var(--ease-linear) 2s infinite;
+  }
+
+  @keyframes sheen {
+    0% {
+      transform: translateX(0) skewX(-20deg);
+      opacity: 0;
+    }
+    2% {
+      opacity: 1;
+    }
+    11% {
+      transform: translateX(330px) skewX(-20deg);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(330px) skewX(-20deg);
+      opacity: 0;
+    }
+  }
+
+  /* ---- Le texte : un titre, une phrase, un geste ---- */
+
+  .hero__copy {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-6);
+    text-align: center;
+  }
+
+  .hero__title {
+    font-size: clamp(2.6rem, 1.2rem + 5.8vw, 6.25rem);
+    font-weight: 460;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    color: var(--steel-900);
+  }
+
+  .hero__baseline {
+    max-width: 52ch;
+    font-size: var(--text-base);
+    color: var(--text-muted);
+    text-wrap: balance;
+  }
+
+  .hero__cta {
+    margin-top: var(--space-2);
+  }
+
+  html.js .hero__title,
+  html.js .hero__baseline,
+  html.js .hero__cta {
+    animation: rise 1s var(--ease-out) both;
+  }
+
+  html.js .hero__title {
+    animation-delay: 1.3s;
+  }
+
+  html.js .hero__baseline {
+    animation-delay: 1.5s;
+  }
+
+  html.js .hero__cta {
+    animation-delay: 1.7s;
+  }
+
+  /* L'offset d'entrée passe par `transform` : la propriété `translate`
+     est réservée au départ au scroll ci-dessous, les deux se composent
+     sans se marcher dessus (translate s'applique avant transform). */
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+      filter: blur(6px);
+    }
+  }
+
+  /* ---- Le départ vers le haut ----
+     Au scroll, le fond du hero ne recule qu'à peine (−3vh, posé par
+     scroll.js) ; le contenu, lui, s'en détache et file vers le haut
+     pendant que tout s'évanouit. C'est cet écart qui rend le départ
+     visible — un bloc entier qui monte avec son fond ne se voit pas.
+     Le texte et le bouton partent un cheveu plus vite que le symbole
+     et le titre : la scène gagne de la profondeur au lieu de coulisser
+     d'une pièce. --hq (0 → 1, légèrement accéléré) vient de scroll.js ;
+     à 0 par défaut, donc rien ne bouge sans JS ni en reduced-motion. */
+
+  .hero__figure {
+    translate: 0 calc(var(--hq, 0) * -13vh);
+  }
+
+  .hero__title {
+    translate: 0 calc(var(--hq, 0) * -14vh);
+  }
+
+  .hero__baseline {
+    translate: 0 calc(var(--hq, 0) * -17vh);
+  }
+
+  .hero__cta {
+    translate: 0 calc(var(--hq, 0) * -19vh);
+  }
+
+  .hero__coin {
+    translate: 0 calc(var(--hq, 0) * -9vh);
+  }
+
+  .hero__cue {
+    translate: 0 calc(var(--hq, 0) * -7vh);
+  }
+
+  /* ---- Les coins : deux repères, rien de plus ---- */
+
+  .hero__coin {
+    position: absolute;
+    bottom: clamp(1.25rem, 4vh, 2.5rem);
+    font-size: var(--text-micro);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--steel-600);
+  }
+
+  .hero__coin--g {
+    left: var(--gutter);
+  }
+
+  .hero__coin--d {
+    right: var(--gutter);
+  }
+
+  html.js .hero__coin {
+    animation: fig-in 0.8s var(--ease-out) 2.4s both;
+  }
+
+  /* ---- L'indice de scroll, réduit à un trait ---- */
+
+  .hero__cue {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(1.25rem, 4vh, 2.5rem);
+    width: 1px;
+    height: 44px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--steel-500) 35%, transparent);
+  }
+
+  .hero__cue::after {
+    content: '';
+    position: absolute;
+    top: -14px;
+    left: 0;
+    width: 1px;
+    height: 14px;
+    background: var(--steel-600);
+    animation: cue-drop 2.4s var(--ease-linear) infinite;
+  }
+
+  @keyframes cue-drop {
+    0% {
+      top: -14px;
+    }
+    70% {
+      top: 44px;
+    }
+    100% {
+      top: 44px;
+    }
+  }
+
+  html.js .hero__cue {
+    animation: fig-in 0.8s var(--ease-out) 2.7s both;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      gap: var(--space-6);
+    }
+
+    .hero__mark {
+      width: clamp(230px, 62vmin, 360px);
+    }
+
+    .hero__figure {
+      margin-bottom: clamp(-4.5rem, -13vmin, -2.5rem);
+    }
+
+    .hero__coin {
+      display: none;
+    }
+  }
+</style>

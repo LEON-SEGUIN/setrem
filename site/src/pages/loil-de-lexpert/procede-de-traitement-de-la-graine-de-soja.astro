@@ -1,0 +1,215 @@
+---
+import { Image } from 'astro:assets';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import figProcede from '../../assets/img/fig-procede-soja.webp';
+---
+
+<ArticleLayout slug="procede-de-traitement-de-la-graine-de-soja">
+  <p>
+    La graine contient notamment des protéases (inhibiteurs trypsiques)
+    empêchant la digestion des graines, des hémato-agglutinines (lectines)
+    qui empêchent l'absorption des principes nutritifs, ainsi que des
+    facteurs allergènes pouvant affecter en particulier les veaux de lait.
+  </p>
+  <p>
+    Dans le but de profiter au maximum des composantes nutritionnelles du
+    soja, l'extrusion est le meilleur traitement. Elle permet d'améliorer la
+    digestibilité des protéines de 11&nbsp;%, de la lysine de 14&nbsp;%, de
+    la méthionine de 11&nbsp;% et de la cystine de 5&nbsp;% par rapport à la
+    graine crue, mais également de diminuer la teneur en acides aminés bruts
+    et donc l'indigéré protéique.
+  </p>
+
+  <h2>Étude technique</h2>
+  <p>
+    Afin d'obtenir un produit avec un apport énergétique raisonnable
+    facilitant l'équilibrage de la ration, il est intéressant d'opérer un
+    déshuilage partiel des graines extrudées. Par ce biais, la teneur en
+    matière grasse passe de 20&nbsp;% à environ 5,4&nbsp;% dans les
+    tourteaux, tout en récupérant un produit à forte valeur ajoutée :
+    l'huile de soja. Dans l'alimentation animale, l'élément principalement
+    recherché est le taux de protéines : baisser le taux de matière grasse
+    permet donc d'augmenter le taux protéique des tourteaux tout en
+    récupérant un coproduit.
+  </p>
+  <p>
+    Le procédé classique comporte deux phases, comme le montre le schéma
+    ci-dessous. Afin de baisser encore le taux de matière grasse des
+    tourteaux, une solution à l'étude consiste à ajouter au fourreau de
+    l'extrudeur une chambre spéciale permettant de récupérer de l'huile.
+    Ainsi, le taux de matière grasse à la sortie de l'extrudeur est
+    inférieur de 1 à 2&nbsp;%, facilitant le travail de la presse qui peut
+    alors produire des tourteaux à taux de matière grasse inférieur.
+  </p>
+  <figure>
+    <Image
+      src={figProcede}
+      alt="Schéma du procédé de traitement de la graine de soja en deux phases : extrusion puis pressage"
+      widths={[600, 900]}
+      sizes="(max-width: 900px) 100vw, 700px"
+      loading="lazy"
+    />
+    <figcaption>Le procédé classique, en deux phases.</figcaption>
+  </figure>
+
+  <h2>Extrusion à sec</h2>
+  <p>
+    L'extrusion à sec permet de cuire les graines à forte température —
+    environ 150&nbsp;°C — durant un temps très court, de quelques dizaines
+    de secondes. La chaleur est apportée par l'énergie mécanique créée par
+    les forces de cisaillement et de frottement dans l'extrudeur. Dans le
+    fourreau, l'eau naturellement présente dans les graines reste liquide en
+    raison de la forte pression (plusieurs dizaines de bars) ; à la sortie
+    de la filière, les graines retrouvent la pression atmosphérique, ce qui
+    entraîne :
+  </p>
+  <ul>
+    <li>
+      une évaporation instantanée de l'eau, portant les graines extrudées à
+      une humidité de 6&nbsp;%,
+    </li>
+    <li>
+      la destruction des parois des cellules qui contiennent l'huile,
+      facilitant le travail de la presse,
+    </li>
+    <li>
+      une descente brutale en température, entraînant un arrêt de toutes les
+      réactions de brunissement.
+    </li>
+  </ul>
+
+  <h2>Pressage mécanique</h2>
+  <p>
+    L'extrusion permet un meilleur déshuilage des graines qu'avec une
+    méthode d'aplatissage-cuisson-pression : à la sortie de l'extrudeur, les
+    cellules contenant les matières grasses ont été détruites et l'huile est
+    libre. L'extrudeur travaille comme un préparateur pour la presse, ce qui
+    lui permet d'avoir un meilleur rendement, de travailler à un débit
+    supérieur et d'avoir un taux d'usure inférieur. Les expériences montrent
+    que les tourteaux contiennent en moyenne 1,3&nbsp;% d'huile en moins. De
+    plus, le traitement par extrusion puis pressage engendre des rendements
+    plus importants, à la fois d'huile et de tourteaux, tout en ayant moins
+    de freinte.
+  </p>
+
+  <h3>Bilan matières</h3>
+  <div class="table-scroll">
+    <table class="table-data">
+      <caption class="visually-hidden">
+        Bilans matière pour 1 000 kilogrammes de graines, extrusion-pression
+        contre aplatissage-cuisson-pression
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Pour 1 000 kg de graines</th>
+          <th scope="col">Tourteau (kg)</th>
+          <th scope="col">Huile (kg)</th>
+          <th scope="col">Eau perdue (kg)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">EP — rendement huile moyen</th>
+          <td>788,8</td>
+          <td>145,7</td>
+          <td>65,6</td>
+        </tr>
+        <tr>
+          <th scope="row">ACP — rendement huile moyen</th>
+          <td>774,5</td>
+          <td>140,5</td>
+          <td>85,2</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <small>EP = extrusion-pression · ACP = aplatissage-cuisson-pression.</small>
+  </p>
+  <p>
+    Comme le souligne le tableau ci-dessous, l'extrusion-pression produit
+    des tourteaux contenant près de 45&nbsp;% de protéines, et une division
+    par 4 des facteurs antitrypsiques. De surcroît, le produit traité est
+    très stable, acceptant une conservation de plusieurs mois grâce à la
+    destruction des lipases et de la lipoxydase, ainsi qu'à une faible
+    teneur en eau libre — ce qui évite l'ajout de conservateurs, le produit
+    n'étant touché ni par le rancissement, ni par l'oxydation, ni par la
+    moisissure.
+  </p>
+
+  <h3>Composition des produits du soja</h3>
+  <div class="table-scroll">
+    <table class="table-data">
+      <caption class="visually-hidden">
+        Composition comparée de la graine crue et des tourteaux extrudés
+        puis pressés
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Humidité (%)</th>
+          <th scope="col">Matière grasse (%)</th>
+          <th scope="col">Protéines (%)</th>
+          <th scope="col">Facteurs antitrypsiques (UTI/mg MB)</th>
+          <th scope="col">Solubilité des protéines</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Graine crue</th>
+          <td>11,8</td>
+          <td>19,3</td>
+          <td>34,6</td>
+          <td>35,5</td>
+          <td>92</td>
+        </tr>
+        <tr>
+          <th scope="row">Tourteaux</th>
+          <td>6,9</td>
+          <td>5,4</td>
+          <td>44,9</td>
+          <td>6,5</td>
+          <td>77</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Étude économique</h2>
+  <p>
+    D'un point de vue économique, il est important de connaître le coût de
+    ce traitement par tonne de soja. Dans l'hypothèse d'une usine produisant
+    20&nbsp;000&nbsp;tonnes par an — soit en moyenne 3&nbsp;tonnes par heure
+    —, les coûts sont synthétisés dans le tableau ci-dessous :
+  </p>
+  <div class="table-scroll">
+    <table class="table-data">
+      <caption class="visually-hidden">
+        Coûts partiels du traitement extrusion-pression en euros par tonne
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Coûts partiels (€/t)</th>
+          <th scope="col">Extrusion-pression</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Amortissement</th><td>3,60</td></tr>
+        <tr><th scope="row">Frais financiers</th><td>0,50</td></tr>
+        <tr><th scope="row">Assurances, cash-flow</th><td>1,15</td></tr>
+        <tr><th scope="row">Maintenance</th><td>1,51</td></tr>
+        <tr><th scope="row">Énergie thermique</th><td>0</td></tr>
+        <tr><th scope="row">Énergie électrique</th><td>15,30</td></tr>
+        <tr><th scope="row">Main-d'œuvre</th><td>10,50</td></tr>
+        <tr><th scope="row">Total (€/t de graines triturées)</th><td>32,56</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <small>Données : intérêts 2&nbsp;%, électricité 0,05775&nbsp;€/kWh.</small>
+  </p>
+  <p>
+    Le coût hors matière première d'une tonne de soja extrudée puis pressée
+    revient à moins de 35&nbsp;€.
+  </p>
+</ArticleLayout>

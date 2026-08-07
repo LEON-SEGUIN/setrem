@@ -1,0 +1,781 @@
+---
+import { Image } from 'astro:assets';
+import atelier from '../assets/img/atelier-extrudeurs.webp';
+import laboratoire from '../assets/img/extrudeur-laboratoire.webp';
+import extrudeurAtelier from '../assets/img/extrudeur-atelier.webp';
+
+// Gamme réelle — scrape/SYNTHESE.md §3
+const gamme = [
+  { ref: 'S50', kw: '22 – 37 kW' },
+  { ref: 'X100', kw: '75 kW' },
+  { ref: 'X125', kw: '90 kW' },
+  { ref: 'Y160', kw: '110 kW' },
+  { ref: 'Y200', kw: '160 kW' },
+  { ref: 'Z300', kw: '200 – 250 kW' },
+];
+
+// Composition d'une ligne complète — dans l'ordre du process.
+// Numérotés : la valeur d'usage est la séquence, pas la liste.
+const composants = [
+  'Trémie',
+  'Doseur',
+  'Préconditionneur PBR',
+  'Fourreau & vis',
+  'Cutter',
+  'Sécheurs',
+  'Enrobeurs',
+  'Automatisme',
+];
+
+// Deux rangées qui défilent en sens inverse : la coupure se fait au
+// milieu du process, chaque rangée reste lisible seule.
+const rangeeA = composants.slice(0, 4);
+const rangeeB = composants.slice(4);
+---
+
+<section class="partner sheet" aria-labelledby="partner-titre">
+  <div class="container">
+    <div class="partner__head">
+      {/* La coupure d'un titre est une décision, pas un hasard : ligne
+          pleine puis ligne courte, comme la référence. Les deux blocs
+          redeviennent du texte courant sous 900 px, où il faut 3 lignes.
+          L'insécable y protège encore le terme « essai pilote ». */}
+      <h2 class="partner__title reveal" id="partner-titre">
+        <span class="partner__ligne">
+          Un partenaire industriel, de l'essai&nbsp;pilote
+        </span>
+        <span class="partner__ligne">à la ligne en production.</span>
+      </h2>
+      <a class="btn btn--light partner__cta reveal" href="/contact">
+        Lancer un projet <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <p class="partner__sub reveal">
+      SETREM réunit la construction des machines, la mise en route, le conseil
+      en formulation et un stock de pièces détachées.
+    </p>
+
+    <div class="bento">
+      <!-- La gamme — carte haute, pleine hauteur -->
+      <article class="card card--gamme reveal" style="--ri: 0">
+        <div class="media">
+          <div class="media__frame" style="--drift: 24s; --dx: -3.4%; --dy: -4.2%">
+            <Image
+              src={atelier}
+              alt="Extrudeurs monovis SETREM alignés en atelier"
+              widths={[500, 800, 1100]}
+              sizes="(max-width: 900px) 100vw, 33vw"
+              loading="lazy"
+            />
+          </div>
+          <div class="media__scrim" aria-hidden="true"></div>
+        </div>
+        <div class="card__body">
+          <p class="eyebrow eyebrow--media">La gamme</p>
+          <ul class="ladder">
+            {
+              gamme.map(({ ref, kw }) => (
+                <li class="ladder__row">
+                  <span class="model-ref ladder__ref">{ref}</span>
+                  <span class="ladder__rule" aria-hidden="true" />
+                  <span class="ladder__val">{kw}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </article>
+
+      <!-- La ligne pilote — carte claire, la voix du client -->
+      <article class="card card--quote reveal" style="--ri: 1">
+        <div class="card__body card__body--pad">
+          <p class="eyebrow">La ligne pilote</p>
+          {/* Même phrase que l'ancien site, redécoupée : l'accroche seule
+              en citation, le reste en appui. La carte « voix » de la
+              référence tient en deux lignes — c'est ce qui lui donne son
+              calme, et ce qui tenait la grille trop haute ici. */}
+          <blockquote class="quote">
+            « Testez la faisabilité de votre produit avant d'investir. »
+          </blockquote>
+          <!-- TODO: contenu client — remplacer par un témoignage industriel
+               signé (nom, fonction, société) dès qu'il est recueilli -->
+          <p class="quote__meta">
+            Une unité de recherche et développement intégrée à l'atelier
+            d'Acquigny, ouverte aux industriels de l'agro-alimentaire.
+            <a class="quote__link" href="/la-ligne-pilote">
+              Découvrir la ligne pilote <span aria-hidden="true">↗</span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+      <!-- Une ligne complète — les organes défilent sur la photo -->
+      <article class="card card--ligne reveal" style="--ri: 2">
+        <div class="media">
+          <div
+            class="media__frame"
+            style="--drift: 28s; --drift-delay: -9s; --dx: 3.6%; --dy: 2.8%"
+          >
+            <Image
+              src={laboratoire}
+              alt="Organes d'une ligne d'extrusion SETREM : vannes, flexibles et fourreau"
+              widths={[500, 800, 1100]}
+              sizes="(max-width: 900px) 100vw, 33vw"
+              loading="lazy"
+            />
+          </div>
+          <div class="media__scrim media__scrim--deep" aria-hidden="true"></div>
+        </div>
+        <div class="card__body">
+          <p class="eyebrow eyebrow--media">Une ligne complète</p>
+          <div class="marquees">
+            {
+              [rangeeA, rangeeB].map((rangee, r) => (
+                <div class="marquee" data-dir={r === 0 ? 'left' : 'right'}>
+                  <ul class="marquee__track">
+                    {rangee.map((nom) => (
+                      <li class="pill">
+                        <span class="pill__n">
+                          {String(composants.indexOf(nom) + 1).padStart(2, '0')}
+                        </span>
+                        {nom}
+                      </li>
+                    ))}
+                  </ul>
+                  {/* Copie de défilement : le texte utile est déjà lu au-dessus */}
+                  <ul class="marquee__track" aria-hidden="true">
+                    {rangee.map((nom) => (
+                      <li class="pill">
+                        <span class="pill__n">
+                          {String(composants.indexOf(nom) + 1).padStart(2, '0')}
+                        </span>
+                        {nom}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </article>
+
+      <!-- Depuis 1986 — le chiffre porte la carte -->
+      <article class="card card--depuis reveal" style="--ri: 3">
+        <div class="media">
+          <div
+            class="media__frame"
+            style="--drift: 20s; --drift-delay: -13s; --dx: -3.8%; --dy: 3.2%"
+          >
+            <Image
+              src={extrudeurAtelier}
+              alt="Fourreau d'extrudeur SETREM en cours d'assemblage en atelier"
+              widths={[500, 800, 1100]}
+              sizes="(max-width: 900px) 100vw, 33vw"
+              loading="lazy"
+            />
+          </div>
+          <div class="media__scrim media__scrim--even" aria-hidden="true"></div>
+        </div>
+        <div class="card__body card__body--center">
+          <p class="eyebrow eyebrow--media">Depuis</p>
+          <p class="depuis__annee">1986</p>
+          <p class="depuis__note">
+            Constructeur français d'extrudeurs monovis, à Acquigny, Normandie
+          </p>
+        </div>
+      </article>
+
+      <!-- Contact — carte claire, basse -->
+      <article class="card card--contact reveal" style="--ri: 4">
+        <div class="card__body card__body--pad card__body--row">
+          <div>
+            <p class="eyebrow">Parler à SETREM</p>
+            <p class="contact__tel">
+              <a href="tel:+33232250847">+33 2 32 25 08 47</a>
+            </p>
+            <p class="contact__adresse">
+              ZI Les Pâtis, 7 rue Robert Dumont<br />27400 Acquigny, France
+            </p>
+            <!-- TODO: contenu client — e-mail public à confirmer -->
+          </div>
+          <a
+            class="contact__fleche"
+            href="/contact"
+            aria-label="Aller à la page contact"
+          >
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .partner {
+    position: relative;
+    z-index: 2;
+    background: var(--surface);
+    /* La section doit tenir dans un écran de portable, titre compris :
+       c'est ce qui commande le rythme vertical ici. */
+    padding-block: calc(var(--section) * 0.55);
+  }
+
+  .partner__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+
+  /* Interlignage très serré : les deux lignes doivent faire un bloc,
+     pas deux phrases empilées. C'est le trait le plus net du titre de
+     la référence — et ça rend de la hauteur à la section. */
+  .partner__title {
+    font-size: var(--text-h2);
+    font-weight: 650;
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    max-width: 34ch;
+    text-wrap: balance;
+  }
+
+  @media (min-width: 900px) {
+    .partner__ligne {
+      display: block;
+    }
+  }
+
+  .partner__cta {
+    flex-shrink: 0;
+  }
+
+  /* L'écart de taille avec le titre fait la hiérarchie : le sous-titre
+     reste petit, clair, et sur une mesure plus courte que le titre. */
+  .partner__sub {
+    margin-top: var(--space-6);
+    max-width: 58ch;
+    color: var(--text-muted);
+    font-size: var(--text-small);
+    line-height: var(--leading-normal);
+  }
+
+  /* ---- Grille bento ----
+     Les rangées sont en fractions égales : c'est ce qui laisse la
+     colonne 2 et la colonne 3 se découper à des hauteurs différentes
+     tout en alignant leurs bords bas. */
+
+  .bento {
+    margin-top: var(--space-6);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(10, minmax(0, 1fr));
+    gap: var(--space-3);
+    /* Hauteur imposée, pas subie : les deux colonnes se découpent à des
+       hauteurs différentes (5/5 et 6/4) et alignent quand même leurs
+       bords. C'est ce décalage qui fait respirer la grille.
+
+       La base en rem tient le bas de l'échelle (un 13" doit garder le
+       titre et les cartes dans un seul écran), la part en vw fait
+       monter la grille sur les grands écrans, où un plafond trop bas
+       la faisait paraître timide. Un simple `33vw` ne sait pas faire
+       les deux : sa pente est trop raide en bas et bute trop tôt. */
+    height: clamp(26rem, 20rem + 14vw, 38rem);
+  }
+
+  .card--gamme {
+    grid-column: 1;
+    grid-row: 1 / span 10;
+  }
+  .card--quote {
+    grid-column: 2;
+    grid-row: 1 / span 5;
+  }
+  .card--depuis {
+    grid-column: 2;
+    grid-row: 6 / span 5;
+  }
+  .card--ligne {
+    grid-column: 3;
+    grid-row: 1 / span 6;
+  }
+  .card--contact {
+    grid-column: 3;
+    grid-row: 7 / span 4;
+  }
+
+  /* ---- Carte ---- */
+
+  .card {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* `html.js .reveal` (global.css) pose déjà un `transition` sur la
+     carte et l'emporte en spécificité : sans cette branche, le survol
+     n'a aucune transition et le bloc saute d'un coup. La branche nue
+     couvre le cas sans JS, où .reveal ne s'applique pas. */
+  html.js .card,
+  .card {
+    transition:
+      transform var(--duration-slower) var(--ease-in-out),
+      box-shadow var(--duration-slower) var(--ease-in-out);
+  }
+
+  .card--quote,
+  .card--contact {
+    background: var(--surface-raised);
+  }
+
+  /* Le survol n'est pas un saut du bloc : la carte se soulève à peine,
+     c'est la photo qui avance. Le mouvement se pose sur toute la durée
+     au lieu de se consommer dans les 100 premières millisecondes. */
+  @media (hover: hover) {
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card .media {
+      transition: transform var(--duration-slower) var(--ease-in-out);
+    }
+
+    .card:hover .media {
+      transform: scale(1.035);
+    }
+  }
+
+  /* ---- Média : la photo respire ----
+     Le cadre dérive lentement dans la carte. Rien n'est piloté par le
+     scroll : c'est une animation composite (transform seul), démarrée
+     seulement quand la carte est entrée dans l'écran. */
+
+  .media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .media__frame {
+    position: absolute;
+    inset: 0;
+    transform: scale(1.06);
+  }
+
+  .media__frame :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* La course est paramétrée par carte (--dx/--dy) : trois mouvements
+     de caméra distincts valent mieux que trois fois le même. */
+  @keyframes media-drift {
+    0% {
+      transform: scale(1.08) translate3d(0, 0, 0);
+    }
+    50% {
+      transform: scale(1.24) translate3d(var(--dx, -3%), var(--dy, -4%), 0);
+    }
+    100% {
+      transform: scale(1.08) translate3d(0, 0, 0);
+    }
+  }
+
+  /* Déclarée sous no-preference plutôt que coupée plus bas : ainsi
+     l'animation n'existe jamais quand le mouvement n'est pas voulu,
+     et aucune règle n'a à en battre une autre en spécificité. */
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .card.is-visible .media__frame {
+      animation: media-drift var(--drift, 22s) var(--ease-in-out) infinite;
+      animation-delay: var(--drift-delay, 0s);
+    }
+  }
+
+  /* Le voile fait deux choses : garantir le contraste du texte, et
+     ramener des photos d'atelier un peu chaudes dans la teinte froide
+     de la marque. Le lavis bleu est très faible — il refroidit sans
+     colorer. */
+  .media__scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        color-mix(in srgb, var(--accent) 9%, transparent),
+        color-mix(in srgb, var(--accent) 9%, transparent)
+      ),
+      linear-gradient(
+        to top,
+        rgba(20, 26, 29, 0.9) 0%,
+        rgba(20, 26, 29, 0.55) 42%,
+        rgba(20, 26, 29, 0.14) 78%,
+        rgba(20, 26, 29, 0.34) 100%
+      );
+  }
+
+  /* Les étiquettes de verre demandent un fond plus dense sous elles */
+  .media__scrim--deep {
+    background:
+      linear-gradient(
+        color-mix(in srgb, var(--accent) 9%, transparent),
+        color-mix(in srgb, var(--accent) 9%, transparent)
+      ),
+      linear-gradient(
+        to top,
+        rgba(20, 26, 29, 0.86) 0%,
+        rgba(20, 26, 29, 0.7) 34%,
+        rgba(20, 26, 29, 0.12) 74%,
+        rgba(20, 26, 29, 0.34) 100%
+      );
+  }
+
+  /* Le chiffre est au centre : le voile doit l'être aussi */
+  .media__scrim--even {
+    background:
+      linear-gradient(
+        color-mix(in srgb, var(--accent) 9%, transparent),
+        color-mix(in srgb, var(--accent) 9%, transparent)
+      ),
+      radial-gradient(
+        72% 58% at 50% 46%,
+        rgba(20, 26, 29, 0.5) 0%,
+        rgba(20, 26, 29, 0.16) 100%
+      ),
+      linear-gradient(
+        to top,
+        rgba(20, 26, 29, 0.66) 0%,
+        rgba(20, 26, 29, 0.12) 55%,
+        rgba(20, 26, 29, 0.34) 100%
+      );
+  }
+
+  /* ---- Corps de carte ---- */
+
+  .card__body {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-4) var(--space-6) var(--space-6);
+  }
+
+  .card__body--pad {
+    padding: var(--space-6);
+  }
+
+  .card__body--center {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* Le chiffre se centre dans l'espace au-dessus de la légende,
+       pas dans la carte entière */
+    padding-bottom: var(--space-16);
+  }
+
+  .card__body--row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  /* L'étiquette centrée en tête de carte média : elle pose le cadre
+     avant que la donnée n'arrive en bas. */
+  .eyebrow--media {
+    align-self: center;
+    color: var(--steel-200);
+  }
+
+  .card__body--center .eyebrow--media {
+    align-self: center;
+    position: absolute;
+    top: var(--space-4);
+  }
+
+  /* ---- L'échelle de la gamme ----
+     Référence à gauche, puissance à droite, filet entre les deux :
+     la lecture d'une fiche technique. */
+
+  .ladder {
+    margin-top: auto;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .ladder__row {
+    display: grid;
+    grid-template-columns: auto minmax(var(--space-4), 1fr) auto;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .ladder__ref {
+    font-size: var(--text-base);
+    color: var(--steel-50);
+  }
+
+  .ladder__rule {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      rgba(247, 249, 250, 0.34),
+      rgba(247, 249, 250, 0.08)
+    );
+  }
+
+  .ladder__val {
+    font-variant-numeric: tabular-nums;
+    font-size: var(--text-small);
+    color: var(--steel-200);
+  }
+
+  /* ---- Citation ---- */
+
+  /* La citation n'a pas besoin d'être grosse pour porter : c'est le
+     blanc autour d'elle qui lui donne son poids. */
+  .quote {
+    margin: var(--space-4) 0 0;
+    max-width: 34ch;
+    font-size: var(--text-base);
+    font-weight: 500;
+    line-height: var(--leading-normal);
+    color: var(--text-body);
+    text-wrap: pretty;
+  }
+
+  /* L'appui suit la citation, il n'est pas plaqué en bas de carte :
+     avec une citation courte, `margin-top: auto` creusait un trou au
+     milieu. Le vide doit tomber sous le texte, comme dans la référence. */
+  .quote__meta {
+    margin-top: var(--space-6);
+    font-size: var(--text-small);
+    color: var(--text-muted);
+  }
+
+  .quote__link {
+    display: block;
+    margin-top: var(--space-2);
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .quote__link:hover {
+    color: var(--accent);
+  }
+
+  /* ---- Les organes de la ligne, en défilement ----
+     Deux rangées en sens inverse. Chaque piste est doublée : la copie
+     est masquée aux lecteurs d'écran, le texte n'existe qu'une fois
+     pour eux. Sans JS, les étiquettes s'arrêtent — elles restent
+     lisibles, seul le mouvement disparaît. */
+
+  .marquees {
+    margin-top: auto;
+    display: grid;
+    gap: var(--space-2);
+    /* Les pastilles débordent la carte : le défilement se voit */
+    margin-inline: calc(var(--space-6) * -1);
+  }
+
+  .marquee {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .marquee__track {
+    display: flex;
+    flex: 0 0 auto;
+    gap: var(--space-2);
+    padding-inline: var(--space-1);
+    /* Chaque piste couvre au moins la carte : quand la première sort
+       par la gauche, la seconde a déjà rempli le champ. Sans ça, une
+       rangée courte laisserait un blanc à la boucle. */
+    min-width: 100%;
+  }
+
+  @keyframes marquee-left {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+
+  @keyframes marquee-right {
+    from {
+      transform: translate3d(-100%, 0, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .card.is-visible .marquee[data-dir='left'] .marquee__track {
+      animation: marquee-left 26s var(--ease-linear) infinite;
+    }
+
+    html.js .card.is-visible .marquee[data-dir='right'] .marquee__track {
+      animation: marquee-right 33s var(--ease-linear) infinite;
+    }
+  }
+
+  /* À l'arrêt sous le curseur : on lit la composition de la ligne */
+  @media (hover: hover) {
+    .card--ligne:hover .marquee__track {
+      animation-play-state: paused;
+    }
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex: 0 0 auto;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
+    background: rgba(20, 26, 29, 0.55);
+    border: 1px solid rgba(247, 249, 250, 0.18);
+    color: var(--steel-50);
+    font-size: var(--text-micro);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* Le rang est une donnée (l'ordre du process), pas un ornement :
+     il reste au-dessus du seuil de lisibilité sur la photo. */
+  .pill__n {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--tracking-wide);
+    color: var(--steel-300);
+  }
+
+  /* Le flou coûte cher à composer : réservé aux écrans larges, où la
+     carte est grande et le budget de rendu confortable. */
+  @media (min-width: 900px) {
+    .pill {
+      background: rgba(20, 26, 29, 0.34);
+      backdrop-filter: blur(14px) saturate(1.3);
+      -webkit-backdrop-filter: blur(14px) saturate(1.3);
+    }
+  }
+
+  /* ---- Depuis 1986 ---- */
+
+  .depuis__annee {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(3.25rem, 1.9rem + 5.5vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: var(--tracking-tight);
+    color: var(--steel-50);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .depuis__note {
+    position: absolute;
+    bottom: var(--space-6);
+    left: var(--space-6);
+    right: var(--space-6);
+    font-size: var(--text-small);
+    color: var(--steel-200);
+    text-wrap: balance;
+  }
+
+  /* ---- Contact ---- */
+
+  .contact__tel {
+    margin-top: var(--space-3);
+  }
+
+  .contact__tel a {
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: var(--text-h3);
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .contact__tel a:hover {
+    color: var(--accent);
+  }
+
+  .contact__adresse {
+    margin-top: var(--space-2);
+    font-size: var(--text-small);
+    color: var(--text-muted);
+  }
+
+  .contact__fleche {
+    flex-shrink: 0;
+    display: grid;
+    place-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--steel-950);
+    color: var(--steel-50);
+    transition:
+      background-color var(--duration-slow) var(--ease-in-out),
+      transform var(--duration-slow) var(--ease-in-out);
+  }
+
+  .card--contact:hover .contact__fleche {
+    background: var(--accent);
+    transform: translate(2px, -2px);
+  }
+
+  /* ---- Repli mobile : la grille se déplie, les hauteurs se libèrent ---- */
+
+  @media (max-width: 900px) {
+    .partner__head {
+      flex-direction: column;
+    }
+
+    .bento {
+      grid-template-columns: 1fr;
+      grid-template-rows: none;
+      /* La hauteur imposée du bureau doit sauter ici, sinon les cartes
+         dépilées débordent d'une grille restée haute de 32rem */
+      height: auto;
+    }
+
+    .card {
+      grid-column: 1;
+      grid-row: auto;
+      min-height: 15rem;
+    }
+
+    .card--gamme {
+      min-height: 26rem;
+    }
+
+    .card--depuis,
+    .card--ligne {
+      min-height: 19rem;
+    }
+  }
+
+  /* ---- Mouvement réduit : tout se fige, rien ne disparaît ---- */
+
+  @media (prefers-reduced-motion: reduce) {
+    /* Les rangées ne défilent plus : elles se parcourent à la main */
+    .marquee {
+      overflow-x: auto;
+    }
+
+    .card:hover,
+    .card:hover .media {
+      transform: none;
+    }
+  }
+</style>

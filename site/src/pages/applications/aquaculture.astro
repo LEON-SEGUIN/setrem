@@ -1,0 +1,108 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SplitSection from '../../components/SplitSection.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import CTABand from '../../components/CTABand.astro';
+import { autresMarches } from '../../data/marches';
+import aquaImg from '../../assets/img/app-aquaculture.webp';
+import ligneImg from '../../assets/img/ligne-extrusion-aquaculture.webp';
+
+const autres = autresMarches('aquaculture').map((m) => ({
+  href: `/applications/${m.slug}`,
+  titre: m.titre,
+  texte: m.texte,
+  image: m.image,
+  alt: m.alt,
+}));
+---
+
+<PageLayout
+  title="Aquaculture — aliments flottants et coulants par extrusion | SETREM"
+  description="Seule l'extrusion fabrique des aliments flottants. Gestion de la densité, granulés de 0,8 à 30 mm, matières fraîches au préconditionneur : le système SETREM."
+  path="/applications/aquaculture"
+>
+  <PageHero
+    kicker="Applications"
+    titre="Aquaculture"
+    lede="Des aliments à haute énergie digestible, moins dépendants de la farine et de l'huile de poisson."
+  />
+
+  <section class="band sheet" aria-label="L'extrusion pour l'aquaculture">
+    <div class="container">
+      <SplitSection
+        kicker="Le marché"
+        titre="Le secteur qui croît le plus vite au monde."
+        image={aquaImg}
+        alt="Bassins d'aquaculture"
+      >
+        <p>
+          L'aquaculture est le secteur de l'alimentation animale qui croît le
+          plus rapidement partout dans le monde, avec une production annuelle
+          de 34&nbsp;millions de tonnes. Le quart des poissons consommés par
+          l'homme est produit par l'aquaculture.
+        </p>
+        <p>
+          Les aliments destinés à l'aquaculture doivent présenter des teneurs
+          élevées en énergie digestible et en acides aminés disponibles pour
+          la croissance, et être administrés sous forme de granulés ou
+          d'extrudés. Pour permettre la continuité et la rentabilité de cette
+          activité, les farines et l'huile de poisson devront être employées
+          de façon beaucoup moins intensive à l'avenir.
+        </p>
+        <p>
+          L'extrusion est la seule technologie qui permet la fabrication
+          d'aliments flottants — pour carpes, tilapias, pangas… Elle apporte
+          également de nombreux avantages pour les aliments coulants :
+        </p>
+        <ul>
+          <li>une meilleure tenue dans l'eau,</li>
+          <li>des pourcentages plus élevés de matières grasses.</li>
+        </ul>
+      </SplitSection>
+
+      <SplitSection
+        kicker="Le système d'extrusion SETREM"
+        titre="La densité sous contrôle, du flottant au coulant."
+        image={ligneImg}
+        alt="Ligne complète d'extrusion SETREM pour l'aquaculture"
+        reverse
+      >
+        {/* Les deux listes de l'ancienne page disaient deux fois la même
+            chose sur la densité, et les deux derniers points étaient les
+            mêmes que sur /applications/animaux-domestiques. Fusionnées en
+            une seule, sans rien perdre. */}
+        <p>Le système d'extrusion SETREM permet :</p>
+        <ul>
+          <li>
+            la gestion de la densité, afin de mieux maîtriser la vitesse de
+            descente des aliments dans l'eau — du flottant au
+            semi-flottant, jusqu'au coulant,
+          </li>
+          <li>
+            la production de différentes tailles de granulés, de
+            0,8&nbsp;mm de diamètre jusqu'à 30&nbsp;mm,
+          </li>
+          <li>l'ajout de matières fraîches dans le préconditionneur.</li>
+        </ul>
+        <p>
+          La ligne est livrée complète, sécheur compris.
+          <a href="/nos-solutions/tableau-des-capacites-des-equipements">
+            Voir le tableau des capacités →
+          </a>
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">Les autres marchés</h2>
+      </div>
+      <LinkCards items={autres} cols={3} cta="Voir le marché" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>

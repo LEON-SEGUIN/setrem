@@ -1,0 +1,162 @@
+---
+import { Image } from 'astro:assets';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import figLigne from '../../assets/img/fig-ligne-farines.webp';
+import bouillieImg from '../../assets/img/article-farines-bouillie.webp';
+---
+
+<ArticleLayout slug="fabrication-de-farines-infantiles-par-cuisson-extrusion">
+  <p>
+    Les farines précuites rencontrent aujourd'hui chez les consommateurs un
+    vif succès par rapport aux farines natives, du fait de leur commodité
+    d'usage, de leurs qualités nutritionnelle et organoleptique améliorées,
+    ainsi que de leur durée de conservation rallongée.
+  </p>
+  <p>
+    La cuisson-extrusion se démarque des autres procédés par différents
+    avantages concurrentiels : polyvalence ; facilité d'intégration à des
+    lignes complètes de production ; larges possibilités de réglage et
+    d'automatisation ; rendement énergétique élevé ; forte capacité de
+    production ; et caractéristiques nutritionnelles et physico-chimiques
+    spécifiques conférées aux farines ainsi traitées.
+  </p>
+
+  <h2>Ligne de fabrication et maîtrise du procédé</h2>
+  <p>
+    La fabrication des farines extrudées passe par les étapes décrites dans
+    le schéma suivant :
+  </p>
+  <figure>
+    <Image
+      src={figLigne}
+      alt="Schéma des étapes d'une ligne de fabrication de farines extrudées"
+      widths={[600, 900]}
+      sizes="(max-width: 900px) 100vw, 700px"
+      loading="lazy"
+    />
+    <figcaption>Les étapes de la fabrication des farines extrudées.</figcaption>
+  </figure>
+  <p>
+    Concernant les équipements et leur conduite, les points suivants devront
+    être plus particulièrement surveillés :
+  </p>
+  <ul>
+    <li>
+      maîtrise de la qualité hygiénique (démarche HACCP) : limitation des
+      risques de reprise en eau après extrusion,
+    </li>
+    <li>maîtrise du degré de cuisson,</li>
+    <li>
+      maîtrise de la juste formulation de la farine : systèmes de dosage et
+      de mélange efficaces, notamment pour le premix minéro-vitaminique à
+      incorporer et sa répartition homogène dans la farine,
+    </li>
+    <li>
+      maîtrise de la granulométrie finale, pour limiter la présence de
+      points durs lors de la reconstitution des bouillies ; système de
+      tamisage avec recyclage des rebuts.
+    </li>
+  </ul>
+
+  <h2>Applications des farines extrudées en alimentation humaine</h2>
+  <p>
+    Les farines extrudées sont principalement utilisées comme aliment de
+    complément, en nutrition infantile ou dans les programmes d'intervention
+    humanitaire. Dans ces deux cas, elles sont obtenues par formulation de
+    mélanges de farines et par fortification minéro-vitaminique
+    systématique. L'objectif est d'équilibrer au mieux les apports
+    qualitatifs et quantitatifs en macro- et micro-constituants, afin de
+    s'approcher au plus près des recommandations nutritionnelles en matière
+    de :
+  </p>
+  <ul>
+    <li>valeur énergétique apportée par les matières grasses,</li>
+    <li>
+      qualité nutritionnelle des protéines incorporées : la composition en
+      acides aminés peut être ajustée par une bonne complémentation
+      céréales/légumineuses,
+    </li>
+    <li>micronutriments essentiels (minéraux, vitamines, acides gras ω3),</li>
+    <li>
+      limitation des facteurs susceptibles de provoquer des réactions
+      d'intolérance ou d'inconfort, comme le gluten et les fibres pour le
+      jeune enfant.
+    </li>
+  </ul>
+
+  <figure>
+    <Image
+      src={bouillieImg}
+      alt="Bouillie infantile reconstituée"
+      widths={[600, 900]}
+      sizes="(max-width: 900px) 100vw, 700px"
+      loading="lazy"
+    />
+  </figure>
+
+  <h2>Farines infantiles produites par cuisson-extrusion</h2>
+  <p>
+    Concernant les farines infantiles, l'OMS recommande de ne les utiliser
+    qu'à partir de 6&nbsp;mois. À cet âge, les farines infantiles peuvent
+    être introduites en complément puis en substitution progressive de
+    l'alimentation au sein, après réhydratation avec de l'eau ou du lait. Le
+    taux de réhydratation est fonction de l'âge de l'enfant afin de
+    s'adapter à ses besoins physiologiques : léger épaississement des laits
+    infantiles fournis au biberon (2<sup>e</sup>&nbsp;âge), puis bouillies
+    de plus en plus consistantes, administrées à la cuillère (enfants de
+    plus de 12&nbsp;mois).
+  </p>
+  <p>
+    À ce niveau, la cuisson-extrusion présente un intérêt spécifique du fait
+    du comportement fortement fluidifiant que la dextrinisation de l'amidon
+    confère aux bouillies reconstituées. Ceci permet, pour un même seuil de
+    viscosité, d'augmenter très sensiblement le taux d'incorporation de
+    matières sèches dans les bouillies reconstituées — et donc d'augmenter
+    d'autant leur densité nutritionnelle et énergétique.
+  </p>
+  <p>
+    Un autre facteur à prendre en compte est le caractère plus ou moins cuit
+    et instantané de ces farines. On les classe en trois groupes :
+  </p>
+  <ul>
+    <li>farines à cuire, qui doivent encore être cuites au moins 15&nbsp;minutes,</li>
+    <li>farines précuites, à mettre à bouillir pendant 5 à 10&nbsp;minutes,</li>
+    <li>farines instantanées, ne nécessitant pas de cuisson supplémentaire.</li>
+  </ul>
+  <p>
+    La digestibilité de l'amidon est corrélée à son taux de gélatinisation,
+    processus connu pour se développer par cuisson en excès d'eau.
+    Concernant la cuisson-extrusion, ceci explique l'intérêt de privilégier
+    un traitement par voie humide plutôt que par voie sèche. De plus, elle
+    permet de précuire d'abord la base amylacée puis d'ajouter, après
+    traitement, les vitamines thermosensibles ainsi que l'éventuel
+    enrichissement protéique (protéines laitières) et en sucre. Un tel
+    protocole empêche le développement des réactions de Maillard qui
+    provoqueraient, sous l'effet de la cuisson, l'immobilisation de la
+    lysine par réaction avec le sucre. Les farines instantanées permettent
+    aussi de limiter le coût énergétique et le temps de préparation : elles
+    améliorent la praticité tout en optimisant la qualité nutritionnelle et
+    hygiénique (cuisson stérilisante), ainsi que la conservation des
+    farines.
+  </p>
+
+  <h2>Compléments nutritionnels utilisés en aide alimentaire</h2>
+  <p>
+    Dans les contextes humanitaires, des farines précuites peuvent être
+    incorporées dans les rations alimentaires de base distribuées aux
+    bénéficiaires tout-venants. Pour les groupes plus à risque — enfants en
+    bas âge, femmes gestantes ou allaitantes, patients atteints de diverses
+    pathologies, dont le SIDA —, elles peuvent être ajoutées comme rations
+    supplémentaires pour renforcer les apports nutritionnels, en prévention
+    de la malnutrition ou en traitement de la malnutrition modérée.
+  </p>
+  <p>
+    Entre 200&nbsp;000 et 300&nbsp;000&nbsp;tonnes de telles farines sont
+    distribuées annuellement par le Programme alimentaire mondial, dont une
+    grande partie produites localement et quasi exclusivement par
+    cuisson-extrusion. Ce procédé permettant d'incorporer une gamme
+    importante de matières premières, chaque pays peut adapter ses recettes
+    aux ressources disponibles localement.
+  </p>
+  <p><small>Crédit : © Dominique Bounie</small></p>
+</ArticleLayout>

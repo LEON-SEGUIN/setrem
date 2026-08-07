@@ -1,0 +1,96 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import CTABand from '../../components/CTABand.astro';
+import { articles } from '../../data/articles';
+---
+
+<PageLayout
+  title="L'œil de l'expert — la cuisson-extrusion, expliquée | SETREM"
+  description="Neuf articles techniques sur la cuisson-extrusion : traitement du soja et des céréales, réactions de Maillard, farines infantiles, préconditionneurs PBR."
+  path="/loil-de-lexpert"
+>
+  <PageHero
+    kicker="L'œil de l'expert"
+    titre="La cuisson-extrusion, expliquée."
+    lede="Neuf articles techniques pour comprendre notre métier — du traitement de la graine de soja aux réactions de Maillard, des préconditionneurs PBR aux farines infantiles."
+  />
+
+  <section class="band sheet" aria-labelledby="articles-titre">
+    <h2 class="visually-hidden" id="articles-titre">Les articles de l'œil de l'expert</h2>
+    <div class="container">
+      <ul class="expert-grid">
+        {
+          articles.map((a, i) => (
+            <li class="reveal" style={`--ri: ${i % 3}`}>
+              <ArticleCard
+                href={`/loil-de-lexpert/${a.slug}`}
+                titre={a.titre}
+                extrait={a.extrait}
+                image={a.image}
+                alt={a.alt}
+                numero={i + 1}
+                lignes={3}
+                sizes="(min-width: 64rem) 25rem, (min-width: 40rem) 45vw, 90vw"
+                widths={[420, 840]}
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>
+
+<style>
+  .expert-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-12) var(--space-6);
+  }
+
+  /* Survol : l'article visé reste en pleine lumière, les autres
+     s'effacent — le geste du rail « L'œil de l'expert » de l'accueil,
+     transposé à la grille. C'est le contraste qui désigne, pas un cadre.
+
+     `html.js .reveal` (global.css) pose déjà un transition sur ces <li>
+     et l'emporte en spécificité : sans la branche html.js, le survol
+     hériterait de sa durée et surtout de son transition-delay (--ri),
+     et le fondu partirait avec un temps de retard. */
+  html.js .expert-grid > li.is-visible,
+  .expert-grid > li {
+    transition: opacity var(--duration-slower) var(--ease-in-out);
+  }
+
+  @media (hover: hover) {
+    .expert-grid:hover > li {
+      opacity: 0.42;
+    }
+
+    .expert-grid > li:hover,
+    .expert-grid > li:focus-within {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .expert-grid > li {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 64rem) {
+    .expert-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .expert-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,110 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABand from '../components/CTABand.astro';
+---
+
+<PageLayout
+  title="Ressources — plaquette et documentation | SETREM"
+  description="La documentation SETREM : plaquette « Solutions d'extrusion » (PDF, 6 pages), tableau des capacités et les neuf articles de l'œil de l'expert."
+  path="/ressources"
+>
+  <PageHero
+    kicker="Ressources"
+    titre="La documentation SETREM."
+    lede="La plaquette commerciale, le tableau des capacités et les articles techniques, réunis au même endroit."
+  />
+
+  <section class="band sheet" aria-label="Documents et liens">
+    <div class="container">
+      <div class="docs">
+        <article class="docs__card reveal" style="--ri: 0">
+          <span class="band__num" aria-hidden="true">01</span>
+          <p class="docs__type">PDF · 6 pages · 3,4 Mo</p>
+          <h2>Plaquette « Solutions d'extrusion »</h2>
+          <p class="docs__texte">
+            La gamme, les process et les applications SETREM, en un document
+            à partager.
+          </p>
+          <a
+            class="btn btn--dark"
+            href="/docs/plaquette-solutions-extrusion.pdf"
+            type="application/pdf"
+          >
+            Télécharger la plaquette
+          </a>
+        </article>
+
+        <article class="docs__card reveal" style="--ri: 1">
+          <span class="band__num" aria-hidden="true">02</span>
+          <p class="docs__type">Données</p>
+          <h2>Le tableau des capacités</h2>
+          <p class="docs__texte">
+            Les débits des six extrudeurs monovis, application par
+            application, de 40&nbsp;kg/h à 9&nbsp;t/h.
+          </p>
+          <a class="btn btn--light" href="/nos-solutions/tableau-des-capacites-des-equipements">
+            Consulter le tableau
+          </a>
+        </article>
+
+        <article class="docs__card reveal" style="--ri: 2">
+          <span class="band__num" aria-hidden="true">03</span>
+          <p class="docs__type">Articles techniques</p>
+          <h2>L'œil de l'expert</h2>
+          <p class="docs__texte">
+            Neuf articles de fond sur le procédé, ses réglages et ses effets
+            sur les matières premières.
+          </p>
+          <a class="btn btn--light" href="/loil-de-lexpert">Lire les articles</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>
+
+<style>
+  .docs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .docs__card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-8) var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .docs__type {
+    font-size: var(--text-micro);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+  }
+
+  .docs__card h2 {
+    font-size: var(--text-h3);
+    font-weight: 650;
+  }
+
+  .docs__texte {
+    font-size: var(--text-small);
+    color: var(--text-body);
+    flex: 1;
+  }
+
+  @media (max-width: 900px) {
+    .docs {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

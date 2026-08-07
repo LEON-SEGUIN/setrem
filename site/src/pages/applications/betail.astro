@@ -1,0 +1,118 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SplitSection from '../../components/SplitSection.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import CTABand from '../../components/CTABand.astro';
+import { autresMarches } from '../../data/marches';
+import betailImg from '../../assets/img/app-betail.webp';
+
+const autres = autresMarches('betail').map((m) => ({
+  href: `/applications/${m.slug}`,
+  titre: m.titre,
+  texte: m.texte,
+  image: m.image,
+  alt: m.alt,
+}));
+---
+
+<PageLayout
+  title="Bétail — extrusion d'aliments composés et granulés | SETREM"
+  description="Étapes et avantages de l'extrusion des aliments pour le bétail : digestibilité, granulés homogènes et stables, contaminants éliminés, formulation souple."
+  path="/applications/betail"
+>
+  <PageHero
+    kicker="Applications"
+    titre="Bétail"
+    lede="Vaches laitières haute production, autres bovins, ovins, porcins, volaille (pondeuse, chair), équidés : une même ligne, autant de formules."
+  />
+
+  <section class="band sheet" aria-label="Le procédé et ses avantages">
+    <div class="container">
+      <SplitSection
+        kicker="Le procédé"
+        titre="Cinq étapes, de la matière première au granulé."
+        image={betailImg}
+        alt="Bétail en élevage"
+      >
+        <p>
+          L'extrusion des aliments pour le bétail est un procédé industriel
+          utilisé pour fabriquer des aliments composés ou granulés : mélange
+          des matières premières, cuisson sous haute pression et
+          température, puis passage à travers une filière.
+        </p>
+        <ol>
+          <li>
+            <strong>Préparation des ingrédients</strong> — céréales,
+            légumineuses, protéines animales ou végétales sont nettoyées,
+            broyées et mélangées selon des formules précises.
+          </li>
+          <li>
+            <strong>Mélange et conditionnement</strong> — les ingrédients
+            forment une pâte homogène ; eau, additifs ou agents liants
+            peuvent être ajoutés à ce stade.
+          </li>
+          <li>
+            <strong>Cuisson-extrusion</strong> — chaleur, pression et
+            cisaillement gélatinisent l'amidon, dénaturent les protéines et
+            stérilisent le produit.
+          </li>
+          <li>
+            <strong>Formation et coupe</strong> — la filière donne sa forme
+            au produit, une lame coupe les extrudats à la longueur désirée.
+          </li>
+          <li>
+            <strong>Séchage et refroidissement</strong> — les extrudats sont
+            séchés puis refroidis pour stabiliser le produit et faciliter son
+            stockage.
+          </li>
+        </ol>
+      </SplitSection>
+
+      <SplitSection
+        kicker="Les avantages"
+        titre="Ce que l'extrusion change pour l'éleveur."
+        reverse
+      >
+        <ul>
+          <li>
+            <strong>Amélioration de la digestibilité</strong> — la
+            gélatinisation de l'amidon et la dénaturation des protéines
+            rendent les nutriments plus accessibles pour les animaux.
+          </li>
+          <li>
+            <strong>Uniformité et stabilité</strong> — des granulés homogènes
+            et stables, faciles à manipuler, stocker et distribuer.
+          </li>
+          <li>
+            <strong>Élimination des contaminants</strong> — la chaleur élevée
+            tue les pathogènes et inactive certaines toxines, rendant les
+            aliments plus sûrs.
+          </li>
+          <li>
+            <strong>Flexibilité de formulation</strong> — l'extrusion permet
+            d'incorporer divers ingrédients, y compris des additifs
+            nutritionnels, pour répondre aux besoins spécifiques des animaux.
+          </li>
+        </ul>
+        <p>
+          <a href="/loil-de-lexpert/lextrudeur-un-outil-incomparable-pour-la-production-animale">
+            Lire l'article : l'extrudeur, un outil incomparable pour la
+            production animale →
+          </a>
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">Les autres marchés</h2>
+      </div>
+      <LinkCards items={autres} cols={3} cta="Voir le marché" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>

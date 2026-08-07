@@ -1,0 +1,86 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SplitSection from '../../components/SplitSection.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import CTABand from '../../components/CTABand.astro';
+import { autresSolutions } from '../../data/solutions';
+import enrobageImg from '../../assets/img/enrobage.webp';
+import croquettesImg from '../../assets/img/croquettes-extrudees.webp';
+
+const autres = autresSolutions('enrobeurs').map((s) => ({
+  href: `/nos-solutions/${s.slug}`,
+  titre: s.titre,
+  texte: s.texte,
+  image: s.image,
+  alt: s.alt,
+}));
+---
+
+<PageLayout
+  title="Enrobeurs — enrobage liquide et poudre des extrudés | SETREM"
+  description="Une couche uniforme de liquide ou de poudre sur l'extrudé : jusqu'à 12 % de matière grasse en enrobage atmosphérique, ou une poudre pour l'appétence."
+  path="/nos-solutions/enrobeurs"
+>
+  <PageHero
+    kicker="Nos solutions"
+    titre="Enrobeurs"
+    lede="Appliquer une couche uniforme de liquide ou de poudre sur les produits extrudés : les enrobeurs améliorent l'appétence en petfood et augmentent l'énergie de l'aliment pour l'aquaculture."
+  />
+
+  <section class="band sheet" aria-label="Le process d'enrobage">
+    <div class="container">
+      <SplitSection
+        kicker="Fonctionnement"
+        titre="Un dosage, une pulvérisation, un mélange continu."
+        image={enrobageImg}
+        alt="Enrobage de produits extrudés en cours de production"
+      >
+        <p>
+          Les enrobeurs sont essentiels pour garantir une qualité constante
+          du produit final et répondre aux attentes des consommateurs en
+          termes de goût, de texture et d'apparence.
+        </p>
+        <p>
+          Les croquettes sont dosées et, en fonction de ce dosage, un
+          pourcentage de liquide est pulvérisé sur la surface de la
+          croquette. Un système de mélange en continu permet
+          l'homogénéisation de l'enrobage. Il est également possible de
+          saupoudrer les croquettes d'un mélange apportant de l'appétence au
+          produit.
+        </p>
+      </SplitSection>
+
+      <SplitSection
+        kicker="Deux types d'enrobage"
+        titre="Liquide ou poudre, selon le produit visé."
+        image={croquettesImg}
+        alt="Croquettes extrudées"
+        reverse
+      >
+        <h3>Enrobage liquide</h3>
+        <p>
+          Pour ajouter arômes et saveurs, les huiles et les graisses
+          animales sont utilisées — jusqu'à 12&nbsp;% en enrobage
+          atmosphérique.
+        </p>
+        <h3>Enrobage en poudre</h3>
+        <p>
+          Utilisé en petfood, la poudre est appliquée pour intensifier le
+          goût et rendre le produit plus appétent.
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">Le reste de la ligne</h2>
+      </div>
+      <LinkCards items={autres} cols={4} cta="Voir l'équipement" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>

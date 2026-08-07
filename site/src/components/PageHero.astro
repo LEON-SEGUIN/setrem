@@ -1,0 +1,243 @@
+---
+// En-tête des pages intérieures : même langage que le hero de l'accueil
+// (dégradé acier, Archivo léger et géant, entrée masquée, arcs en rotation)
+// mais content-first et court — le contenu commence dès le premier scroll.
+interface Props {
+  kicker: string;
+  titre: string;
+  lede?: string;
+  compact?: boolean;
+}
+
+const { kicker, titre, lede, compact = false } = Astro.props;
+---
+
+<header class:list={['phero', { 'phero--compact': compact }]} data-phero>
+  <svg class="phero__orbit" viewBox="0 0 100 100" aria-hidden="true">
+    <g class="phero__ring phero__ring--a">
+      <circle
+        cx="50" cy="50" r="47"
+        fill="none"
+        stroke="var(--blue-300)"
+        stroke-width="0.6"
+        stroke-linecap="round"
+        stroke-dasharray="150 60 40 45"
+      />
+    </g>
+    <g class="phero__ring phero__ring--b">
+      <circle
+        cx="50" cy="50" r="36"
+        fill="none"
+        stroke="var(--steel-400)"
+        stroke-width="0.4"
+        stroke-linecap="round"
+        stroke-dasharray="90 40 60 36"
+      />
+    </g>
+    <g class="phero__sat">
+      <circle cx="50" cy="3" r="0.9" fill="var(--blue-400)"></circle>
+    </g>
+  </svg>
+
+  <!-- La brume de couleur du départ, reprise du hero de l'accueil :
+       une vague bleu→teal poussée devant la feuille qui recouvre
+       l'en-tête (position pilotée par --pp). Invisible à l'arrêt. -->
+  <div class="phero__dusk" aria-hidden="true"></div>
+
+  <div class="container phero__inner">
+    <p class="eyebrow phero__kicker">{kicker}</p>
+    <h1 class="phero__title">
+      <span class="phero__line"><span class="phero__line-inner">{titre}</span></span>
+    </h1>
+    {lede && <p class="phero__lede">{lede}</p>}
+    <slot />
+  </div>
+</header>
+
+<style>
+  /* Épinglé sous la suite, comme le hero de l'accueil : la feuille de
+     la première bande le recouvre au scroll (main est isolé, voir
+     global.css) et scroll.js le fond pendant le recouvrement. C'est ce
+     mouvement — plus que les arcs — qui fait reconnaître l'accueil dans
+     le reste du site. Sans JS il ne bouge pas : il reste simplement en
+     tête de page, entier. */
+  .phero {
+    position: sticky;
+    top: 0;
+    z-index: -1;
+    /* Contexte d'empilement local : la brume en z négatif reste
+       au-dessus du fond, sous le texte */
+    isolation: isolate;
+    overflow: hidden;
+    padding-top: calc(var(--space-24) + 6vh);
+    padding-bottom: calc(var(--section) * 0.7);
+    background: linear-gradient(
+      to bottom,
+      var(--blue-100) 0%,
+      var(--blue-50) 52%,
+      var(--steel-100) 100%
+    );
+  }
+
+  /* La vague de couleur poussée devant la feuille : elle monte du bas
+     au fur et à mesure du recouvrement, jamais visible à l'arrêt. */
+  .phero__dusk {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+      120% 70% at 50% 118%,
+      color-mix(in srgb, var(--teal-400) 42%, transparent) 0%,
+      color-mix(in srgb, var(--blue-600) 26%, transparent) 46%,
+      transparent 78%
+    );
+  }
+
+  html.js .phero__dusk {
+    opacity: calc(var(--pp, 0) * 0.9);
+    translate: 0 calc((1 - var(--pp, 0)) * 26%);
+  }
+
+  .phero--compact {
+    padding-bottom: calc(var(--section) * 0.45);
+  }
+
+  /* L'hélice de la marque, décadrée en haut à droite — la signature
+     de l'accueil, en filigrane sur toutes les pages. */
+  .phero__orbit {
+    position: absolute;
+    top: -34vmin;
+    right: -22vmin;
+    width: 72vmin;
+    height: 72vmin;
+    opacity: 0.55;
+  }
+
+  .phero__ring,
+  .phero__sat {
+    transform-origin: 50% 50%;
+  }
+
+  .phero__ring--a {
+    animation: phero-orbit 70s var(--ease-linear) infinite;
+  }
+
+  .phero__ring--b {
+    opacity: 0.7;
+    animation: phero-orbit 110s var(--ease-linear) infinite reverse;
+  }
+
+  .phero__sat {
+    animation: phero-orbit 30s var(--ease-linear) infinite;
+  }
+
+  @keyframes phero-orbit {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Le contenu part vers le haut nettement plus vite que le fond
+     (--pq > --pp) : sans cet écart, le départ ne se voit pas. */
+  .phero__inner {
+    position: relative;
+  }
+
+  html.js .phero__inner {
+    translate: 0 calc(var(--pq, 0) * -7vh);
+  }
+
+  /* Les arcs suivent le fond, pas le contenu : ils appartiennent au
+     décor et doivent rester en retrait du mouvement. */
+  html.js .phero__orbit {
+    translate: 0 calc(var(--pp, 0) * 2.5vh);
+  }
+
+  .phero__kicker {
+    color: var(--steel-700);
+    margin-bottom: var(--space-6);
+  }
+
+  html.js .phero__kicker,
+  html.js .phero__lede {
+    animation: phero-copy 0.9s var(--ease-out) both;
+  }
+
+  html.js .phero__kicker {
+    animation-delay: 0.08s;
+  }
+
+  html.js .phero__lede {
+    animation-delay: 0.42s;
+  }
+
+  @keyframes phero-copy {
+    from {
+      opacity: 0;
+      translate: 0 24px;
+    }
+  }
+
+  .phero__title {
+    font-size: clamp(2.6rem, 1.6rem + 5.4vw, 6.2rem);
+    font-weight: 480;
+    color: var(--blue-800);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    max-width: 18ch;
+    text-wrap: balance;
+  }
+
+  .phero__line {
+    display: block;
+    overflow: hidden;
+  }
+
+  .phero__line-inner {
+    display: inline-block;
+  }
+
+  html.js .phero__line-inner {
+    animation: phero-line 0.95s var(--ease-out) 0.16s both;
+  }
+
+  @keyframes phero-line {
+    from {
+      translate: 0 112%;
+    }
+  }
+
+  .phero__lede {
+    margin-top: var(--space-6);
+    max-width: 52ch;
+    font-size: var(--text-base);
+    color: var(--steel-800);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.js .phero__line-inner,
+    html.js .phero__kicker,
+    html.js .phero__lede {
+      animation: none;
+    }
+
+    /* scroll.js n'écrit plus --pp/--pq : on neutralise aussi ce qui en
+       dépend, et l'en-tête cesse d'être épinglé. */
+    .phero {
+      position: relative;
+    }
+
+    html.js .phero__inner,
+    html.js .phero__orbit {
+      translate: none;
+    }
+
+    .phero__ring--a,
+    .phero__ring--b,
+    .phero__sat {
+      animation: none;
+    }
+  }
+</style>

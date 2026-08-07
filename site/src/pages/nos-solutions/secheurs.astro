@@ -1,0 +1,158 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SplitSection from '../../components/SplitSection.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import CTABand from '../../components/CTABand.astro';
+import { autresSolutions } from '../../data/solutions';
+import secheurImg from '../../assets/img/secheur.webp';
+
+const autres = autresSolutions('secheurs').map((s) => ({
+  href: `/nos-solutions/${s.slug}`,
+  titre: s.titre,
+  texte: s.texte,
+  image: s.image,
+  alt: s.alt,
+}));
+---
+
+<PageLayout
+  title="Sécheurs — lits fluidisés et contre-courant | SETREM"
+  description="Deux technologies de séchage selon le produit et le rendement recherché : lit fluidisé vibré et contre-courant, de 0,8 à 0,9 kWh par kg d'eau évaporée."
+  path="/nos-solutions/secheurs"
+>
+  <PageHero
+    kicker="Nos solutions"
+    titre="Sécheurs"
+    lede="Une large gamme de sécheurs adaptés aux besoins de l'extrusion — type de produits extrudés et quantité d'eau à évaporer. Essentiels pour garantir que les produits finis répondent aux attentes de qualité, de sécurité et de conservation."
+  />
+
+  <section class="band sheet" aria-label="Les technologies de séchage">
+    <div class="container">
+      <SplitSection
+        kicker="Un process industriel abouti"
+        titre="Deux technologies, selon le produit et le rendement."
+        image={secheurImg}
+        alt="Sécheur industriel SETREM"
+      >
+        <p>
+          Deux technologies sont proposées, selon le produit fabriqué et le
+          rendement énergétique recherché : séchage à lits fluidisés et
+          séchage contre-courant.
+        </p>
+        <h3>Sécheur à lit fluidisé vibré</h3>
+        <p>
+          Idéal pour les produits spécifiques, de petites tailles ou de
+          faible densité. Un flux d'air chaud traverse la couche de produits,
+          l'avance du produit est assurée par vibration. Les vibrations
+          permettent une meilleure circulation des particules et une
+          répartition plus homogène de la chaleur, améliorant l'efficacité
+          du séchage.
+        </p>
+        <h3>Sécheur à contre-courant</h3>
+        <p>
+          Un air chaud traverse une ou plusieurs couches de produits, en
+          simple ou plusieurs étages selon les débits souhaités. Il se
+          caractérise par une faible consommation en énergie — entre 0,8 et
+          0,9&nbsp;kWh par kilogramme d'eau évaporée. L'air peut être chauffé
+          soit à l'aide d'un brûleur gaz, soit à l'aide d'un échangeur
+          vapeur.
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <section class="band band--raised" aria-labelledby="avantages-titre">
+    <div class="container">
+      <div class="band__head">
+        <p class="eyebrow">Pourquoi le séchage compte</p>
+        <h2 class="band__title reveal" id="avantages-titre">
+          L'humidité, paramètre décisif du produit fini.
+        </h2>
+      </div>
+      <div class="atouts">
+        <article class="atouts__card reveal" style="--ri: 0">
+          <span class="band__num" aria-hidden="true">01</span>
+          <h3>Préservation et conservation</h3>
+          <p>
+            Le séchage réduit l'activité de l'eau dans les aliments, inhibe
+            la croissance microbienne et prolonge la durée de conservation.
+            Il permet un stockage et un transport plus efficaces.
+          </p>
+        </article>
+        <article class="atouts__card reveal" style="--ri: 1">
+          <span class="band__num" aria-hidden="true">02</span>
+          <h3>Qualité du produit final</h3>
+          <p>
+            Le contrôle précis de l'humidité est essentiel pour maintenir la
+            texture, le goût et l'apparence des produits extrudés. Des
+            niveaux inappropriés donnent des produits trop secs, cassants ou
+            à la texture désagréable.
+          </p>
+        </article>
+        <article class="atouts__card reveal" style="--ri: 2">
+          <span class="band__num" aria-hidden="true">03</span>
+          <h3>Stabilité du process</h3>
+          <p>
+            Des matières premières trop humides peuvent causer des
+            obstructions ou une extrusion inefficace. Le contrôle de
+            l'humidité garantit la consistance du produit final, surtout pour
+            les aliments soufflés ou croustillants.
+          </p>
+        </article>
+        <article class="atouts__card reveal" style="--ri: 3">
+          <span class="band__num" aria-hidden="true">04</span>
+          <h3>Économie d'énergie</h3>
+          <p>
+            Les sécheurs sont souvent énergivores : l'efficacité énergétique
+            est une préoccupation majeure. C'est pour cette raison qu'un
+            système de recyclage de l'air est nécessaire.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">Le reste de la ligne</h2>
+      </div>
+      <LinkCards items={autres} cols={4} cta="Voir l'équipement" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>
+
+<style>
+  .atouts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .atouts__card {
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    border-left: 3px solid var(--teal-600);
+  }
+
+  .atouts__card h3 {
+    font-size: var(--text-h3);
+    font-weight: 650;
+    margin-bottom: var(--space-3);
+  }
+
+  .atouts__card p {
+    font-size: var(--text-small);
+    color: var(--text-body);
+  }
+
+  @media (max-width: 900px) {
+    .atouts {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

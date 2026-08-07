@@ -1,0 +1,407 @@
+---
+// Section épinglée réutilisable — le geste du process de l'accueil, porté
+// aux pages intérieures : l'image s'ouvre d'une carte centrée au plein
+// écran, puis les chapitres se relaient pendant que le scroll continue.
+// Pilotée par initPins() dans scripts/scroll.js (attributs data-pin*).
+//
+// Le pilote du process de l'accueil n'est pas mutualisé avec celui-ci :
+// il est réglé, validé, et asservit en plus une tête de lecture vidéo.
+//
+// Sans JS : pas de hauteur imposée, pas de sticky — l'image reste en tête
+// et les chapitres défilent dessous, tout le texte est lu. En mouvement
+// réduit : image ouverte d'emblée, chapitres tous visibles.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Step {
+  /** Libellé court pour l'index de droite */
+  nav: string;
+  titre: string;
+  texte: string;
+}
+
+interface Props {
+  /** Titre de section, masqué visuellement : les chapitres portent la lecture */
+  titre: string;
+  id: string;
+  image: ImageMetadata;
+  alt: string;
+  steps: Step[];
+  /** Étiquette optionnelle affichée en haut à gauche */
+  eyebrow?: string;
+}
+
+const { titre, id, image, alt, steps, eyebrow } = Astro.props;
+
+// Course de scroll : un écran par chapitre, plus l'ouverture de l'image
+const course = steps.length * 100 + 60;
+const num = (i: number) => String(i + 1).padStart(2, '0');
+---
+
+<section
+  class="pin"
+  data-pin
+  aria-labelledby={id}
+  style={`--course: ${course}vh`}
+>
+  <h2 class="visually-hidden" id={id}>{titre}</h2>
+
+  <div class="pin__spacer">
+    <div class="pin__viewport">
+      <div class="pin__frame" data-pin-frame>
+        <Image
+          src={image}
+          alt={alt}
+          widths={[900, 1400, 1920]}
+          sizes="100vw"
+          loading="lazy"
+        />
+        <div class="pin__scrim" aria-hidden="true"></div>
+      </div>
+
+      {eyebrow && <p class="eyebrow pin__eyebrow">{eyebrow}</p>}
+
+      <ol class="pin__steps">
+        {
+          steps.map((step, i) => (
+            <li class={`pin__step${i === 0 ? ' is-active' : ''}`} data-pin-step>
+              <p class="pin__step-index" aria-hidden="true">
+                {num(i)}
+              </p>
+              <h3 class="pin__step-title">{step.titre}</h3>
+              <p class="pin__step-text">{step.texte}</p>
+            </li>
+          ))
+        }
+      </ol>
+
+      <ol class="pin__index" aria-hidden="true" data-pin-index>
+        {
+          steps.map((step, i) => (
+            <li class={i === 0 ? 'is-active' : ''}>
+              <span class="pin__index-label">{step.nav}</span>
+              <span class="pin__index-num">{num(i)}</span>
+              <span class="pin__index-gauge">
+                <span class="pin__index-fill" />
+              </span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pin {
+    position: relative;
+    z-index: 2;
+    background: var(--surface-dark);
+  }
+
+  /* Sans JS : flux normal, tout le contenu est lisible.
+     Avec JS : le spacer donne la course de scroll, le viewport est collé. */
+  html.js .pin__spacer {
+    height: var(--course, 460vh);
+  }
+
+  html.js .pin__viewport {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .pin__frame {
+    position: relative;
+    background: var(--steel-950);
+  }
+
+  html.js .pin__frame {
+    position: absolute;
+    inset: 0;
+    /* Piloté par --p (0 → 1) : de carte centrée à plein écran */
+    clip-path: inset(
+      calc((1 - var(--p, 0)) * 18%)
+      calc((1 - var(--p, 0)) * 22%)
+      calc((1 - var(--p, 0)) * 14%)
+      calc((1 - var(--p, 0)) * 22%)
+      round calc((1 - var(--p, 0)) * var(--radius-lg))
+    );
+  }
+
+  .pin__frame :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  html.js .pin__frame :global(img) {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    object-fit: cover;
+    /* Sur-échelle : la marge que demande le contre-glissement (--vy) */
+    transform: translateY(var(--vy, 0)) scale(1.06);
+  }
+
+  /* Trois couches : un lavis bleu très faible qui ramène les photos
+     d'atelier dans la teinte froide de la marque, un dégradé vertical
+     pour le contraste général, et un lavis latéral parce que le texte
+     vit en bas à gauche — sur une machine en inox, le seul dégradé
+     vertical laissait le corps de texte à la limite du lisible. */
+  .pin__scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        color-mix(in srgb, var(--accent) 10%, transparent),
+        color-mix(in srgb, var(--accent) 10%, transparent)
+      ),
+      linear-gradient(
+        to right,
+        rgba(20, 26, 29, 0.62) 0%,
+        rgba(20, 26, 29, 0.24) 42%,
+        rgba(20, 26, 29, 0) 68%
+      ),
+      linear-gradient(
+        to top,
+        rgba(20, 26, 29, 0.9) 0%,
+        rgba(20, 26, 29, 0.44) 46%,
+        rgba(20, 26, 29, 0.2) 100%
+      );
+    opacity: var(--p, 1);
+  }
+
+  .pin__eyebrow {
+    position: relative;
+    z-index: 2;
+    color: var(--steel-400);
+  }
+
+  html.js .pin__eyebrow {
+    position: absolute;
+    top: 13vh;
+    left: var(--gutter);
+    opacity: var(--p, 1);
+  }
+
+  .pin__steps {
+    position: relative;
+    z-index: 2;
+  }
+
+  html.js .pin__steps {
+    position: absolute;
+    inset: auto var(--gutter) 13vh var(--gutter);
+  }
+
+  .pin__step {
+    max-width: 46ch;
+    padding-block: var(--space-8);
+    color: var(--steel-50);
+  }
+
+  html.js .pin__step {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding-block: 0;
+    pointer-events: none;
+  }
+
+  /* Entrée / sortie échelonnées : index, titre puis texte. Le chapitre
+     sortant file vers le haut pendant que l'entrant monte par le bas —
+     un flux continu, jamais un aller-retour. */
+  html.js .pin__step > * {
+    opacity: 0;
+    translate: 0 40px;
+    transition:
+      opacity 0.55s var(--ease-out),
+      translate 0.55s var(--ease-out);
+  }
+
+  html.js .pin__step.is-leaving > * {
+    opacity: 0;
+    translate: 0 -30px;
+    transition-duration: 0.38s;
+    transition-delay: 0s;
+  }
+
+  html.js .pin__step.is-active {
+    pointer-events: auto;
+  }
+
+  html.js .pin__step.is-active > * {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  html.js .pin__step.is-active .pin__step-index {
+    transition-delay: 0.05s;
+  }
+
+  html.js .pin__step.is-active .pin__step-title {
+    transition-delay: 0.14s;
+  }
+
+  html.js .pin__step.is-active .pin__step-text {
+    transition-delay: 0.24s;
+  }
+
+  .pin__step-index {
+    font-size: var(--text-micro);
+    letter-spacing: var(--tracking-wide);
+    color: var(--steel-400);
+    margin-bottom: var(--space-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pin__step-title {
+    font-size: var(--text-h1);
+    font-weight: 650;
+    color: var(--steel-50);
+    line-height: var(--leading-tight);
+  }
+
+  .pin__step-text {
+    margin-top: var(--space-4);
+    color: var(--steel-200);
+    font-size: var(--text-small);
+    max-width: 52ch;
+  }
+
+  /* Sans JS, les étapes défilent sous l'image, sur fond sombre */
+  html:not(.js) .pin__steps {
+    padding: var(--section) var(--gutter);
+    display: grid;
+    gap: var(--space-12);
+  }
+
+  .pin__index {
+    display: none;
+  }
+
+  html.js .pin__index {
+    display: grid;
+    gap: var(--space-3);
+    position: absolute;
+    z-index: 2;
+    right: var(--gutter);
+    bottom: 13vh;
+    text-align: right;
+    font-size: var(--text-small);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .pin__index li {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    color: var(--steel-400);
+    opacity: 0.75;
+    transition:
+      color var(--duration-slow) var(--ease-out),
+      opacity var(--duration-slow) var(--ease-out);
+  }
+
+  .pin__index-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Jauge : le fil du chapitre en cours se remplit au scroll */
+  .pin__index-gauge {
+    width: 2px;
+    height: 1.5em;
+    background: color-mix(in srgb, var(--steel-50) 18%, transparent);
+    overflow: hidden;
+  }
+
+  .pin__index-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--teal-400);
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+
+  .pin__index li.is-done .pin__index-fill {
+    transform: scaleY(1);
+  }
+
+  .pin__index li.is-active {
+    color: var(--steel-50);
+    opacity: 1;
+  }
+
+  .pin__index li.is-active .pin__index-fill {
+    transform: scaleY(var(--sp, 0));
+  }
+
+  /* ---- Mouvement réduit : la section redevient une liste illustrée ----
+     initPins() pose .is-static et ouvre l'image ; il ne reste qu'à
+     rendre la hauteur et à décoller le viewport. */
+  .pin.is-static .pin__spacer,
+  .pin.is-static .pin__viewport {
+    height: auto;
+    position: static;
+    overflow: visible;
+  }
+
+  .pin.is-static .pin__frame {
+    position: relative;
+    inset: auto;
+    clip-path: none;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  /* La sur-échelle et le contre-glissement n'ont plus de raison d'être
+     une fois la section dépliée : sans ce retour à l'échelle 1, l'image
+     déborde de 6 % — le seul défilement horizontal du site. */
+  .pin.is-static .pin__frame :global(img) {
+    transform: none;
+  }
+
+  .pin.is-static .pin__steps {
+    position: static;
+    padding: var(--section) var(--gutter);
+    display: grid;
+    gap: var(--space-12);
+  }
+
+  .pin.is-static .pin__step {
+    position: static;
+  }
+
+  .pin.is-static .pin__step > * {
+    opacity: 1;
+    translate: none;
+  }
+
+  .pin.is-static .pin__eyebrow,
+  .pin.is-static .pin__index {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    html.js .pin__index {
+      display: none;
+    }
+
+    .pin__step-title {
+      font-size: var(--text-h2);
+    }
+
+    /* Sur mobile, 100vh déborde sous la barre d'outils du navigateur :
+       le petit viewport (svh) garde les chapitres visibles. Le léger
+       jeu quand la barre se rétracte tombe sur le fond sombre. */
+    html.js .pin__viewport {
+      height: 100svh;
+    }
+  }
+</style>

@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets';
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABand from '../../components/CTABand.astro';
+import voeuxImg from '../../assets/img/news-voeux-2026.webp';
+---
+
+<PageLayout
+  title="2026, une nouvelle année qui prend forme — SETREM"
+  description="Nous vous adressons nos meilleurs vœux pour l'année 2026. Que cette belle année soit synonyme de succès et marquée par des opportunités et des réussites partagées."
+  path="/actualites/2026-une-nouvelle-annee"
+>
+  <PageHero
+    kicker="Actualités"
+    titre="2026, une nouvelle année qui prend forme."
+    lede="Les vœux de l'équipe SETREM."
+    compact
+  />
+
+  <section class="band sheet" aria-label="Les vœux 2026">
+    <div class="container">
+      <article class="brve">
+        <figure class="brve__cover reveal">
+          <Image
+            src={voeuxImg}
+            alt="Carte de vœux SETREM pour 2026"
+            widths={[700, 1100]}
+            sizes="(max-width: 900px) 100vw, 900px"
+            loading="eager"
+          />
+        </figure>
+        <div class="brve__body prose">
+          <p>
+            Nous vous adressons nos meilleurs vœux pour l'année 2026. Que
+            cette belle année soit synonyme de succès, qu'elle ouvre de
+            nouveaux horizons et qu'elle soit marquée par des opportunités
+            et des réussites partagées. Ensemble, construisons un avenir
+            prospère et inspirant !
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>
+
+<style>
+  .brve {
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+
+  .brve__cover {
+    margin: 0 0 var(--space-8);
+  }
+
+  .brve__cover :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+</style>

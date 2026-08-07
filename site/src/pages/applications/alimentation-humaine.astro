@@ -1,0 +1,165 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SplitSection from '../../components/SplitSection.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import CTABand from '../../components/CTABand.astro';
+import { autresMarches } from '../../data/marches';
+import humaineImg from '../../assets/img/app-alimentation-humaine.webp';
+
+const autres = autresMarches('alimentation-humaine').map((m) => ({
+  href: `/applications/${m.slug}`,
+  titre: m.titre,
+  texte: m.texte,
+  image: m.image,
+  alt: m.alt,
+}));
+---
+
+<PageLayout
+  title="Alimentation humaine — PVT, farines infantiles, snacks, céréales | SETREM"
+  description="Quatre familles d'aliments à fortes valeurs nutritionnelles produites par extrusion : protéines végétales texturées, farines infantiles, snacks, céréales."
+  path="/applications/alimentation-humaine"
+>
+  <PageHero
+    kicker="Applications"
+    titre="Alimentation humaine"
+    lede="Quatre familles de produits, une seule cuisson : protéines végétales texturées, aliments pour enfants, snacks et céréales du petit déjeuner."
+  />
+
+  <section class="band sheet" aria-label="Les familles de produits">
+    <div class="container">
+      {/* Le chapô de la page énumère déjà les quatre familles : ce bloc
+          pose l'enjeu et n'y revient pas. */}
+      <SplitSection
+        kicker="L'enjeu"
+        titre="Nourrir une population qui croît."
+        image={humaineImg}
+        alt="Produits d'alimentation humaine extrudés"
+      >
+        <p>
+          Avec l'accroissement rapide de la population mondiale,
+          l'alimentation est un enjeu majeur : il faut trouver des solutions
+          pour subvenir aux besoins nutritionnels de tous. La
+          cuisson-extrusion est l'un de ces leviers — elle transforme des
+          matières premières simples en aliments à fortes valeurs
+          nutritionnelles, stables et prêts à l'emploi.
+        </p>
+      </SplitSection>
+
+      <SplitSection
+        kicker="Famille 01"
+        titre="Les protéines végétales texturées (PVT)."
+      >
+        <p>
+          Il faut en moyenne 4,9&nbsp;kg de protéines végétales pour produire
+          1&nbsp;kg de protéine animale. Il est donc nécessaire de produire
+          des protéines végétales pouvant se substituer aux protéines
+          animales pour assurer une sécurité alimentaire mondiale durable.
+          La cuisson-extrusion permet de transformer les protéines végétales
+          en analogue de viande appelé protéines végétales texturées (PVT).
+        </p>
+        <p>
+          Elles ont été créées pour avoir les mêmes caractéristiques
+          sensorielles que des protéines animales : apparence, texture,
+          sensation en bouche. Elles permettent de remplacer tout ou partie
+          de la viande dans un plat — sauce bolognaise, nuggets, hamburger,
+          saucisses… — mais sont également dégustées comme plat dans de
+          nombreux pays tels que la Chine, Taïwan, le Japon ou la Corée du
+          Sud.
+        </p>
+        <h3>Les avantages des PVT</h3>
+        <ul>
+          <li>
+            conviennent aux restrictions des régimes alimentaires des
+            différentes religions, cultures et végétarismes,
+          </li>
+          <li>réduction des coûts par rapport aux protéines animales,</li>
+          <li>longue conservation,</li>
+          <li>utilisation facile.</li>
+        </ul>
+        <p>
+          Toutes les protéines végétales peuvent être texturées, mais ce sont
+          les graines de soja qui sont de loin les plus utilisées dans la
+          fabrication de PVT : les réserves sont abondantes et le prix est
+          bas.
+        </p>
+      </SplitSection>
+
+      <SplitSection kicker="Famille 02" titre="Les aliments pour enfants.">
+        <p>
+          La cuisson-extrusion permet de fabriquer des poudres prêtes à
+          l'emploi auxquelles il suffit d'ajouter de l'eau pour obtenir
+          instantanément des aliments réhydratés, complètement gélatinisés
+          et cuits. Le mélange extrudé est stérile : il est sain et sans
+          danger pour les enfants. Il faut néanmoins veiller à la qualité de
+          l'eau ou du lait ajouté, ainsi qu'aux conditions de conservation du
+          produit une fois réhydraté.
+        </p>
+        <p>
+          Ces bouillies jouent un rôle important dans l'indépendance
+          alimentaire des pays en voie de développement : fortement
+          énergétiques et à moindre coût, elles sont un moyen de lutte
+          contre la malnutrition infantile. L'extrusion permet d'utiliser
+          toutes les matières premières — chaque pays peut donc adapter ses
+          recettes aux ressources disponibles localement. De plus, SETREM
+          adapte ses machines en fonction des disponibilités énergétiques et
+          des contraintes environnementales du pays.
+        </p>
+        <p>
+          <a href="/loil-de-lexpert/fabrication-de-farines-infantiles-par-cuisson-extrusion">
+            Lire l'article : fabrication de farines infantiles par
+            cuisson-extrusion →
+          </a>
+        </p>
+      </SplitSection>
+
+      <SplitSection
+        kicker="Familles 03 & 04"
+        titre="Les snacks et les céréales pour petit déjeuner."
+      >
+        {/* « Les formes extrudées sont très variées afin de répondre à
+            toutes les sollicitations du marché » ouvrait aussi le bloc
+            petfood, mot pour mot : gardé là-bas, reformulé ici. */}
+        <p>
+          Le snack peut prendre à peu près toutes les formes : pâtes à base
+          de pomme de terre ou de maïs mises en forme, extrudés par
+          expansion directe, co-extrudés… L'extrusion permet de donner
+          différentes propriétés aux snacks suivant le public visé :
+        </p>
+        <ul>
+          <li>basses calories, contenant de l'amidon résistant,</li>
+          <li>raffinés par leurs qualités gustatives pour les adultes,</li>
+          <li>de forme et de couleur attractives pour les enfants…</li>
+        </ul>
+        <p>
+          Très présentes en Amérique du Nord et en Europe centrale, les
+          céréales pour petit déjeuner représentent un marché en forte
+          croissance : 10 à 20&nbsp;% en Italie, 20 à 25&nbsp;% en Europe de
+          l'Est, 15 à 20&nbsp;% en Amérique latine. Les industriels visent
+          principalement trois publics : les enfants, les consommateurs
+          soucieux de nutrition et de santé, et les consommateurs à la
+          recherche de produits à fortes valeurs énergétiques. Tout comme
+          pour les snacks, l'extrusion permet de produire toute une gamme de
+          produits s'adaptant aux attentes de ces différents publics.
+        </p>
+        <p>
+          <a href="/nos-solutions/tableau-des-capacites-des-equipements">
+            Voir le tableau des capacités →
+          </a>
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">Les autres marchés</h2>
+      </div>
+      <LinkCards items={autres} cols={3} cta="Voir le marché" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>
