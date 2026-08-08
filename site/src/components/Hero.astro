@@ -438,6 +438,10 @@
     justify-items: center;
     gap: var(--space-6);
     text-align: center;
+    /* Recentrage optique : le bloc titre + baseline + bouton remonte
+       d'un souffle. Se compose avec les translate des enfants (départ
+       au scroll), qui restent intacts. */
+    translate: 0 -0.75rem;
   }
 
   .hero__title {
