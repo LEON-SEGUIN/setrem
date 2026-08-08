@@ -58,7 +58,7 @@ const rangeeB = composants.slice(4);
 
     <div class="bento">
       <!-- La gamme — carte haute, pleine hauteur -->
-      <article class="card card--gamme reveal" style="--ri: 0">
+      <article class="card card--gamme" data-inview>
         <div class="media">
           <div class="media__frame" style="--drift: 24s; --dx: -3.4%; --dy: -4.2%">
             <Image
@@ -90,7 +90,7 @@ const rangeeB = composants.slice(4);
       </article>
 
       <!-- La ligne pilote — carte claire, la voix du client -->
-      <article class="card card--quote reveal" style="--ri: 1">
+      <article class="card card--quote">
         <div class="card__body card__body--pad">
           <p class="eyebrow">La ligne pilote</p>
           {/* Même phrase que l'ancien site, redécoupée : l'accroche seule
@@ -113,7 +113,7 @@ const rangeeB = composants.slice(4);
       </article>
 
       <!-- Une ligne complète — les organes défilent sur la photo -->
-      <article class="card card--ligne reveal" style="--ri: 2">
+      <article class="card card--ligne" data-inview>
         <div class="media">
           <div
             class="media__frame"
@@ -166,7 +166,7 @@ const rangeeB = composants.slice(4);
       </article>
 
       <!-- Depuis 1986 — le chiffre porte la carte -->
-      <article class="card card--depuis reveal" style="--ri: 3">
+      <article class="card card--depuis" data-inview>
         <div class="media">
           <div
             class="media__frame"
@@ -194,7 +194,7 @@ const rangeeB = composants.slice(4);
       </article>
 
       <!-- Contact — carte claire, basse -->
-      <article class="card card--contact reveal" style="--ri: 4">
+      <article class="card card--contact">
         <div class="card__body card__body--pad card__body--row">
           <div>
             <p class="eyebrow">Parler à SETREM</p>
@@ -322,11 +322,6 @@ const rangeeB = composants.slice(4);
     box-shadow: var(--shadow-sm);
   }
 
-  /* `html.js .reveal` (global.css) pose déjà un `transition` sur la
-     carte et l'emporte en spécificité : sans cette branche, le survol
-     n'a aucune transition et le bloc saute d'un coup. La branche nue
-     couvre le cas sans JS, où .reveal ne s'applique pas. */
-  html.js .card,
   .card {
     transition:
       transform var(--duration-slower) var(--ease-in-out),
@@ -369,7 +364,9 @@ const rangeeB = composants.slice(4);
   .media__frame {
     position: absolute;
     inset: 0;
-    transform: scale(1.06);
+    /* Même échelle que le départ de media-drift : la boucle prend le
+       relais sans à-coup quand la carte entre à l'écran. */
+    transform: scale(1.08);
   }
 
   .media__frame :global(img) {

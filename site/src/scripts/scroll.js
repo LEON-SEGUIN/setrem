@@ -439,8 +439,10 @@ function initReveals() {
     { rootMargin: '0px 0px -10% 0px' }
   );
 
+  // [data-inview] : éléments sans animation d'entrée dont les boucles
+  // (dérive photo, marquee) ne démarrent qu'une fois à l'écran.
   document
-    .querySelectorAll('.reveal, [data-bars], [data-words], [data-rail]')
+    .querySelectorAll('.reveal, [data-inview], [data-bars], [data-words], [data-rail]')
     .forEach((el) => observer.observe(el));
 }
 
