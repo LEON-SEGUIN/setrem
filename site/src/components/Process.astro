@@ -148,6 +148,17 @@ const steps = [
     display: block;
     width: 100%;
     height: auto;
+    /* Vidéo purement décorative (aria-hidden, pilotée par le scroll) :
+       sans ça, Safari superpose son player flottant au survol — barre de
+       lecture, durée, image dans l'image. Une vidéo non interactive
+       n'en reçoit pas. */
+    pointer-events: none;
+  }
+
+  /* Ceinture et bretelles pour les moteurs WebKit : aucun contrôle
+     natif ne doit se dessiner sur cette vidéo. */
+  .process__video::-webkit-media-controls {
+    display: none !important;
   }
 
   html.js .process__video {
