@@ -161,8 +161,6 @@
 
   <p class="hero__coin hero__coin--g">Acquigny — Normandie</p>
   <p class="hero__coin hero__coin--d">Constructeur depuis 1986</p>
-
-  <div class="hero__cue" aria-hidden="true"></div>
 </section>
 
 <style>
@@ -520,10 +518,6 @@
     translate: 0 calc(var(--hq, 0) * -9vh);
   }
 
-  .hero__cue {
-    translate: 0 calc(var(--hq, 0) * -7vh);
-  }
-
   /* ---- Les coins : deux repères, rien de plus ---- */
 
   .hero__coin {
@@ -546,45 +540,6 @@
 
   html.js .hero__coin {
     animation: fig-in 0.8s var(--ease-out) 2.4s both;
-  }
-
-  /* ---- L'indice de scroll, réduit à un trait ---- */
-
-  .hero__cue {
-    position: absolute;
-    left: 50%;
-    bottom: clamp(1.25rem, 4vh, 2.5rem);
-    width: 1px;
-    height: 44px;
-    overflow: hidden;
-    background: color-mix(in srgb, var(--steel-500) 35%, transparent);
-  }
-
-  .hero__cue::after {
-    content: '';
-    position: absolute;
-    top: -14px;
-    left: 0;
-    width: 1px;
-    height: 14px;
-    background: var(--steel-600);
-    animation: cue-drop 2.4s var(--ease-linear) infinite;
-  }
-
-  @keyframes cue-drop {
-    0% {
-      top: -14px;
-    }
-    70% {
-      top: 44px;
-    }
-    100% {
-      top: 44px;
-    }
-  }
-
-  html.js .hero__cue {
-    animation: fig-in 0.8s var(--ease-out) 2.7s both;
   }
 
   @media (max-width: 900px) {
