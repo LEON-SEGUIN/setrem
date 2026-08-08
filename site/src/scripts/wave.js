@@ -159,6 +159,9 @@ export function initWave() {
     stencil: false,
     premultipliedAlpha: true,
     powerPreference: 'low-power',
+    /* Sans GPU (WebGL logiciel), le shader plein écran brûlerait le
+       processeur : on renonce à la vague, le hero garde son dégradé. */
+    failIfMajorPerformanceCaveat: true,
   });
   if (!gl) return null;
 

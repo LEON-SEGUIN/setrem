@@ -45,6 +45,8 @@ const { items, cols = 3, cta = 'Lire la suite' } = Astro.props;
                   src={item.image}
                   alt={item.alt ?? ''}
                   widths={[400, 700]}
+                  width={700}
+                  quality={70}
                   sizes="(max-width: 900px) 100vw, 33vw"
                   loading="lazy"
                 />

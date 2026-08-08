@@ -9,6 +9,9 @@ const horsSitemap = ['/contact/merci', '/news', '/les-ressources'];
 export default defineConfig({
   site: 'https://www.setrem.com',
   trailingSlash: 'never',
+  // Les pages HTML (~15 Ko compressées) sont préchargées quand leurs
+  // liens entrent à l'écran : la navigation paraît instantanée.
+  prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },
   integrations: [
     sitemap({
       filter: (page) => {

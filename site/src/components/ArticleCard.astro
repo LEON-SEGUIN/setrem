@@ -35,7 +35,15 @@ const {
 <article class="acard" style={`--acard-lines: ${lignes}`}>
   <a class="acard__link" href={href}>
     <span class="acard__media">
-      <Image src={image} alt={alt} widths={widths} sizes={sizes} loading="lazy" />
+      <Image
+        src={image}
+        alt={alt}
+        widths={widths}
+        width={widths.at(-1)}
+        quality={70}
+        sizes={sizes}
+        loading="lazy"
+      />
     </span>
     <span class="acard__num" aria-hidden="true">
       {String(numero).padStart(2, '0')}

@@ -1,5 +1,10 @@
 ---
 import '../styles/global.css';
+// Le LCP est du texte sur toutes les pages : précharger les deux sous-
+// ensembles latins évite que le navigateur ne découvre les polices au
+// bout de la chaîne HTML → CSS → @font-face.
+import archivoLatin from '@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2?url';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 
 interface Props {
   title: string;
@@ -48,6 +53,8 @@ const jsonLd = {
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
+    <link rel="preload" as="font" type="font/woff2" href={archivoLatin} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={interLatin} crossorigin />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="SETREM" />

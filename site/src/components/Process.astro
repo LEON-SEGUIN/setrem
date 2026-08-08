@@ -56,12 +56,22 @@ const steps = [
           loop
           playsinline
           autoplay
-          preload="metadata"
+          preload="none"
           poster="/video/process-poster.jpg"
           aria-hidden="true"
         >
           <source src="/video/process-extrusion.mp4" type="video/mp4" />
         </video>
+        <!-- autoplay force le téléchargement des 8,5 Mo dès le parse, bien
+             avant que scroll.js (différé) ne prenne la main : quand JS est
+             là, on le retire sur-le-champ. Sans JS, la vidéo joue seule. -->
+        <script is:inline>
+          {
+            const v = document.querySelector('[data-process-video]');
+            v?.removeAttribute('autoplay');
+            v?.removeAttribute('loop');
+          }
+        </script>
         <div class="process__scrim" aria-hidden="true"></div>
       </div>
 
