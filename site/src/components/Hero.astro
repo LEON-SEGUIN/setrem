@@ -145,10 +145,6 @@
       </span>
     </h1>
 
-    {/* Les deux coins portent déjà le lieu et l'ancienneté : la baseline
-        dit ce que les coins ne disent pas — pour qui, et à quelle
-        échelle. La déclaration complète est le sujet de la section
-        Mission, juste en dessous. */}
     <p class="hero__baseline">
       Des lignes complètes pour l'alimentation humaine et animale, de
       l'essai en ligne pilote à neuf tonnes par heure.
@@ -158,9 +154,6 @@
       <a class="btn btn--dark" href="/nos-solutions">Découvrir nos solutions</a>
     </div>
   </div>
-
-  <p class="hero__coin hero__coin--g">Acquigny — Normandie</p>
-  <p class="hero__coin hero__coin--d">Constructeur depuis 1986</p>
 </section>
 
 <style>
@@ -518,34 +511,6 @@
     translate: 0 calc(var(--hq, 0) * -19vh);
   }
 
-  .hero__coin {
-    translate: 0 calc(var(--hq, 0) * -9vh);
-  }
-
-  /* ---- Les coins : deux repères, rien de plus ---- */
-
-  .hero__coin {
-    position: absolute;
-    bottom: clamp(1.25rem, 4vh, 2.5rem);
-    font-size: var(--text-micro);
-    font-weight: 600;
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
-    color: var(--steel-600);
-  }
-
-  .hero__coin--g {
-    left: var(--gutter);
-  }
-
-  .hero__coin--d {
-    right: var(--gutter);
-  }
-
-  html.js .hero__coin {
-    animation: fig-in 0.8s var(--ease-out) 2.4s both;
-  }
-
   @media (max-width: 900px) {
     .hero {
       gap: var(--space-6);
@@ -563,10 +528,6 @@
 
     .hero__figure {
       margin-bottom: clamp(-4.5rem, -13vmin, -2.5rem);
-    }
-
-    .hero__coin {
-      display: none;
     }
   }
 </style>
