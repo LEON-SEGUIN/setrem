@@ -7,3 +7,8 @@ site/.astro/
 
 # Système
 .DS_Store
+
+# Vidéos de travail à la racine (captures d'écran, exemples de référence).
+# La vidéo du process, elle, est un asset du site : site/public/video/.
+/*.mov
+/*.mp4
