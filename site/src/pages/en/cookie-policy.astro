@@ -1,0 +1,154 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+
+// Reprise de la politique du site actuel, corrigée de ses artefacts CMS
+// (elle référençait un autre site et « la page temporaire »).
+// TODO: contenu client — arbitrage RGPD à mener avant mise en ligne :
+// liste réelle des cookies déposés (GA4 est aujourd'hui chargé avant
+// consentement sur l'ancien site), bandeau de consentement, date de mise
+// à jour. Ne pas publier telle quelle sans validation.
+---
+
+<PageLayout
+  title="Cookie policy — SETREM"
+  description="The cookie policy of the setrem.com website: cookies used, consent, and your rights regarding your personal data."
+  path="/en/cookie-policy"
+>
+  <PageHero kicker="Information" titre="Cookie policy" compact />
+
+  <section class="band sheet" aria-label="Cookie policy">
+    <div class="container">
+      <div class="prose prose--flow">
+        <h2>1. Introduction</h2>
+        <p>
+          Our website https://www.setrem.com (hereafter “the site”) uses
+          cookies and other related technologies (for simplicity, all these
+          technologies are referred to by the term “cookies”). Cookies may
+          also be placed by third parties we have engaged. In the document
+          below, we inform you about the use of cookies on our website.
+        </p>
+
+        <h2>2. What are cookies?</h2>
+        <p>
+          A cookie is a small, simple file sent with the pages of this website
+          and stored by your browser on the hard drive of your computer or
+          another device. The information stored in it may be sent back to our
+          servers or to the servers of the relevant third parties on a later
+          visit.
+        </p>
+
+        <h2>3. What are scripts?</h2>
+        <p>
+          A script is a piece of code used to make our website work correctly
+          and interactively. This code is executed on our server or on your
+          device.
+        </p>
+
+        <h2>4. What is a web beacon?</h2>
+        <p>
+          A web beacon (or tracking pixel) is a small piece of text or an
+          invisible image on a website, used to track traffic on a website. To
+          do this, various data about you is stored using web beacons.
+        </p>
+
+        <h2>5. Cookies</h2>
+        <h3>5.1 Technical or functional cookies</h3>
+        <p>
+          Some cookies ensure that certain parts of the site work correctly
+          and that your preferences as a user are taken into account. By
+          placing functional cookies, we make it easier for you to visit our
+          site. We may place these cookies without your consent.
+        </p>
+        <h3>5.2 Statistical cookies</h3>
+        <p>
+          Statistical cookies make it possible to measure the site's audience.
+          When statistics are tracked anonymously, no permission is required
+          to place statistical cookies.
+        </p>
+        <h3>5.3 Marketing/tracking cookies</h3>
+        <p>
+          Marketing/tracking cookies are cookies, or any other form of local
+          storage, used to build user profiles in order to display advertising
+          or to track the user on this site or across several websites for
+          similar marketing purposes.
+        </p>
+
+        <h2>6. Cookies placed</h2>
+        <!-- TODO: contenu client — liste définitive des cookies du nouveau
+             site (mesure d'audience à arbitrer : GA4, consentement). -->
+        <ul>
+          <li>Secure session cookies</li>
+          <li>Google Analytics</li>
+        </ul>
+
+        <h2>7. Consent</h2>
+        <p>
+          When you visit our site for the first time, we show you a pop-up
+          with an explanation about cookies. As soon as you click on “Save
+          preferences”, you authorise us to use the categories of cookies and
+          plug-ins you selected in the pop-up, as described in this cookie
+          policy. You can disable the use of cookies through your browser, but
+          please note that our website may then no longer work correctly.
+        </p>
+
+        <h2>8. Your rights regarding personal data</h2>
+        <p>You have the following rights regarding your personal data:</p>
+        <ul>
+          <li>
+            you have the right to know why your personal data is needed, what
+            will happen to it and how long it will be kept; right of access:
+            you have the right to access the personal data we hold about you,
+          </li>
+          <li>
+            right of rectification: you have the right, at any time, to
+            complete, correct, have deleted or block your personal data,
+          </li>
+          <li>
+            if you give us your consent to process your data, you have the
+            right to revoke that consent and to have your personal data
+            deleted,
+          </li>
+          <li>
+            right to transfer your data: you have the right to request all
+            your personal data from the data controller and to transfer it in
+            full to another data controller,
+          </li>
+          <li>
+            right to object: you may object to the processing of your data; we
+            will comply, unless there are grounds justifying that processing.
+          </li>
+        </ul>
+        <p>
+          To exercise these rights, please contact us (contact details at the
+          bottom of this cookie policy). If you have a complaint about the way
+          we handle your data, we would like to hear about it — but you also
+          have the right to lodge a complaint with the supervisory authority,
+          the CNIL.
+        </p>
+
+        <h2>9. Enabling, disabling and deleting cookies</h2>
+        <p>
+          You can use your internet browser to delete cookies automatically or
+          manually. You can also specify that certain cookies may not be
+          placed. Another option is to change your browser settings so that
+          you receive a message each time a cookie is placed. For more
+          information about these options, refer to the instructions in the
+          Help section of your browser.
+        </p>
+        <p>
+          Please note that our site may not work correctly if all cookies are
+          disabled. If you delete the cookies in your browser, they will be
+          placed again after your consent when you revisit our site.
+        </p>
+
+        <h2>10. Contact details</h2>
+        <p>
+          For questions and/or comments about our cookie policy and this
+          statement, please contact us through the
+          <a href="/en/contact">contact page</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</PageLayout>

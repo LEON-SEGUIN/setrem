@@ -7,7 +7,7 @@ import CTABand from '../../components/CTABand.astro';
 import { autresMarches } from '../../data/marches';
 import betailImg from '../../assets/img/app-betail.webp';
 
-const autres = autresMarches('betail').map((m) => ({
+const autres = autresMarches('betail', 'fr').map((m) => ({
   href: `/applications/${m.slug}`,
   titre: m.titre,
   texte: m.texte,

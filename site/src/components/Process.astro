@@ -2,50 +2,97 @@
 // Les quatre temps d'une ligne SETREM — vocabulaire de scrape/SYNTHESE.md §3.
 // Fond : animation 3D d'un extrudeur (fournie par Leon le 6 août 2026).
 // ⚠️ Footage tiers — droits à régler avant mise en ligne (voir CLAUDE.md).
-const steps = [
-  {
-    index: '01',
-    nav: 'Préconditionnement',
-    title: 'Préparer la matière avant la vis',
-    text:
-      'Les préconditionneurs PBR, monorotor ou birotor, hydratent la formule ' +
-      'de façon homogène pendant trois minutes de rétention : débit régulier, ' +
-      'usure réduite, amidons gélatinisés.',
+import { toLocale } from '../i18n/ui';
+
+const copy = {
+  fr: {
+    titre: "Le process d'une ligne d'extrusion, en quatre temps",
+    steps: [
+      {
+        index: '01',
+        nav: 'Préconditionnement',
+        title: 'Préparer la matière avant la vis',
+        text:
+          'Les préconditionneurs PBR, monorotor ou birotor, hydratent la formule ' +
+          'de façon homogène pendant trois minutes de rétention : débit régulier, ' +
+          'usure réduite, amidons gélatinisés.',
+      },
+      {
+        index: '02',
+        nav: 'Extrusion',
+        title: 'Cuire et texturer dans le fourreau',
+        text:
+          'Le fourreau assemble vis, écluses et chambres en acier haute ' +
+          'résistance, à double enveloppe pour chauffer ou refroidir. Process à ' +
+          'sec ou semi-humide, pour les produits les plus élaborés.',
+      },
+      {
+        index: '03',
+        nav: 'Coupe & séchage',
+        title: 'Calibrer puis stabiliser le produit',
+        text:
+          'Le cutter articulé, à couteaux interchangeables, ouvre directement sur ' +
+          'la filière. Deux technologies de sécheurs — contre-courant et lits ' +
+          "fluidisés — selon le produit et l'eau à évaporer.",
+      },
+      {
+        index: '04',
+        nav: 'Enrobage & pilotage',
+        title: 'Finir et conduire la ligne',
+        text:
+          'Les enrobeurs déposent une couche uniforme de liquide ou de poudre ' +
+          "sur les extrudés. L'automatisme SETREM assure la conduite automatique " +
+          'de la ligne complète.',
+      },
+    ],
   },
-  {
-    index: '02',
-    nav: 'Extrusion',
-    title: 'Cuire et texturer dans le fourreau',
-    text:
-      'Le fourreau assemble vis, écluses et chambres en acier haute ' +
-      'résistance, à double enveloppe pour chauffer ou refroidir. Process à ' +
-      'sec ou semi-humide, pour les produits les plus élaborés.',
+  en: {
+    titre: 'The extrusion line process, in four stages',
+    steps: [
+      {
+        index: '01',
+        nav: 'Preconditioning',
+        title: 'Preparing the material before the screw',
+        text:
+          'PBR preconditioners, single- or twin-rotor, hydrate the formula ' +
+          'evenly over three minutes of retention: steady throughput, reduced ' +
+          'wear, gelatinised starches.',
+      },
+      {
+        index: '02',
+        nav: 'Extrusion',
+        title: 'Cooking and texturing in the barrel',
+        text:
+          'The barrel assembles screw, locks and chambers in high-strength ' +
+          'steel, double-jacketed for heating or cooling. Dry or semi-wet ' +
+          'processing, for the most sophisticated products.',
+      },
+      {
+        index: '03',
+        nav: 'Cutting & drying',
+        title: 'Sizing then stabilising the product',
+        text:
+          'The hinged cutter, with interchangeable knives, opens directly onto ' +
+          'the die. Two dryer technologies — counterflow and fluidised bed — ' +
+          'depending on the product and the water to be evaporated.',
+      },
+      {
+        index: '04',
+        nav: 'Coating & control',
+        title: 'Finishing and running the line',
+        text:
+          'Coaters apply an even layer of liquid or powder onto the extrudates. ' +
+          'SETREM automation handles the automatic control of the complete line.',
+      },
+    ],
   },
-  {
-    index: '03',
-    nav: 'Coupe & séchage',
-    title: 'Calibrer puis stabiliser le produit',
-    text:
-      'Le cutter articulé, à couteaux interchangeables, ouvre directement sur ' +
-      'la filière. Deux technologies de sécheurs — contre-courant et lits ' +
-      "fluidisés — selon le produit et l'eau à évaporer.",
-  },
-  {
-    index: '04',
-    nav: 'Enrobage & pilotage',
-    title: 'Finir et conduire la ligne',
-    text:
-      'Les enrobeurs déposent une couche uniforme de liquide ou de poudre ' +
-      "sur les extrudés. L'automatisme SETREM assure la conduite automatique " +
-      'de la ligne complète.',
-  },
-];
+}[toLocale(Astro.currentLocale)];
+
+const steps = copy.steps;
 ---
 
 <section class="process" id="process" data-process aria-labelledby="process-titre">
-  <h2 class="visually-hidden" id="process-titre">
-    Le process d'une ligne d'extrusion, en quatre temps
-  </h2>
+  <h2 class="visually-hidden" id="process-titre">{copy.titre}</h2>
   <div class="process__spacer">
     <div class="process__viewport">
       <div class="process__frame" data-process-frame>

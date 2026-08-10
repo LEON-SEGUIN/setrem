@@ -7,7 +7,7 @@ import CTABand from '../../components/CTABand.astro';
 import { autresSolutions } from '../../data/solutions';
 import secheurImg from '../../assets/img/secheur.webp';
 
-const autres = autresSolutions('secheurs').map((s) => ({
+const autres = autresSolutions('secheurs', 'fr').map((s) => ({
   href: `/nos-solutions/${s.slug}`,
   titre: s.titre,
   texte: s.texte,

@@ -1,0 +1,152 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import SplitSection from '../../../components/SplitSection.astro';
+import LinkCards from '../../../components/LinkCards.astro';
+import CTABand from '../../../components/CTABand.astro';
+import { autresSolutions } from '../../../data/solutions';
+import secheurImg from '../../../assets/img/secheur.webp';
+
+const autres = autresSolutions('dryers', 'en').map((s) => ({
+  href: `/en/solutions/${s.slug}`,
+  titre: s.titre,
+  texte: s.texte,
+  image: s.image,
+  alt: s.alt,
+}));
+---
+
+<PageLayout
+  title="Dryers — fluidised bed and counterflow | SETREM"
+  description="Two drying technologies, by product and efficiency required: vibrating fluidised bed and counterflow, from 0.8 to 0.9 kWh per kg of water evaporated."
+  path="/en/solutions/dryers"
+>
+  <PageHero
+    kicker="Our solutions"
+    titre="Dryers"
+    lede="A broad range of dryers suited to the needs of extrusion — the type of extruded product and the amount of water to be evaporated. Essential to guarantee that finished products meet quality, safety and shelf-life expectations."
+  />
+
+  <section class="band sheet" aria-label="The drying technologies">
+    <div class="container">
+      <SplitSection
+        kicker="A mature industrial process"
+        titre="Two technologies, depending on the product and the efficiency."
+        image={secheurImg}
+        alt="SETREM industrial dryer"
+      >
+        <p>
+          Two technologies are available, depending on the product being made
+          and the energy efficiency sought: fluidised bed drying and
+          counterflow drying.
+        </p>
+        <h3>Vibrating fluidised bed dryer</h3>
+        <p>
+          Ideal for specific products, small in size or low in density. A flow
+          of hot air passes through the bed of product, and the product is
+          moved forward by vibration. The vibrations allow better circulation
+          of the particles and a more even distribution of the heat,
+          improving drying efficiency.
+        </p>
+        <h3>Counterflow dryer</h3>
+        <p>
+          Hot air passes through one or several beds of product, in a single
+          stage or several stages depending on the throughputs required. It is
+          characterised by low energy consumption — between 0.8 and
+          0.9&nbsp;kWh per kilogram of water evaporated. The air can be heated
+          either with a gas burner or with a steam exchanger.
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <section class="band band--raised" aria-labelledby="avantages-titre">
+    <div class="container">
+      <div class="band__head">
+        <p class="eyebrow">Why drying matters</p>
+        <h2 class="band__title reveal" id="avantages-titre">
+          Moisture, the decisive parameter of the finished product.
+        </h2>
+      </div>
+      <div class="atouts">
+        <article class="atouts__card reveal" style="--ri: 0">
+          <span class="band__num" aria-hidden="true">01</span>
+          <h3>Preservation and shelf life</h3>
+          <p>
+            Drying reduces water activity in feed, inhibits microbial growth
+            and extends shelf life. It allows more efficient storage and
+            transport.
+          </p>
+        </article>
+        <article class="atouts__card reveal" style="--ri: 1">
+          <span class="band__num" aria-hidden="true">02</span>
+          <h3>Quality of the final product</h3>
+          <p>
+            Precise moisture control is essential to maintain the texture,
+            taste and appearance of extruded products. Inappropriate levels
+            give products that are too dry, brittle or unpleasant in texture.
+          </p>
+        </article>
+        <article class="atouts__card reveal" style="--ri: 2">
+          <span class="band__num" aria-hidden="true">03</span>
+          <h3>Process stability</h3>
+          <p>
+            Raw materials that are too wet can cause blockages or inefficient
+            extrusion. Moisture control guarantees the consistency of the
+            final product, especially for puffed or crunchy feed.
+          </p>
+        </article>
+        <article class="atouts__card reveal" style="--ri: 3">
+          <span class="band__num" aria-hidden="true">04</span>
+          <h3>Energy savings</h3>
+          <p>
+            Dryers are often energy-hungry: energy efficiency is a major
+            concern. This is why an air recycling system is necessary.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">The rest of the line</h2>
+      </div>
+      <LinkCards items={autres} cols={4} cta="View the equipment" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>
+
+<style>
+  .atouts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .atouts__card {
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+  }
+
+  .atouts__card h3 {
+    font-size: var(--text-h3);
+    font-weight: 650;
+    margin-bottom: var(--space-3);
+  }
+
+  .atouts__card p {
+    font-size: var(--text-small);
+    color: var(--text-body);
+  }
+
+  @media (max-width: 900px) {
+    .atouts {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

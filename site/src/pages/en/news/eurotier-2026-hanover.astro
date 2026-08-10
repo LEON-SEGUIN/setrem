@@ -1,0 +1,85 @@
+---
+import { Image } from 'astro:assets';
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import CTABand from '../../../components/CTABand.astro';
+import eurotierImg from '../../../assets/img/news-eurotier.webp';
+---
+
+<PageLayout
+  title="EuroTier 2026 in Hanover — SETREM in Hall 12, stand E48"
+  description="Meet SETREM at the EuroTier trade fair in Hanover, from 10 to 13 November 2026, Hall 12 – stand E48: the international trade fair for professional animal farming."
+  path="/en/news/eurotier-2026-hanover"
+>
+  <PageHero
+    kicker="News · Trade fair"
+    titre="EuroTier 2026, in Hanover."
+    lede="From 10 to 13 November 2026, meet us in Hall 12, stand E48."
+    compact
+  />
+
+  <section class="band sheet" aria-label="The EuroTier trade fair">
+    <div class="container">
+      <article class="brve">
+        <figure class="brve__cover reveal">
+          <Image
+            src={eurotierImg}
+            alt="The SETREM stand at the EuroTier trade fair"
+            widths={[700, 1100]}
+            width={1100}
+            quality={70}
+            sizes="(max-width: 900px) 100vw, 900px"
+            loading="eager"
+          />
+        </figure>
+        <div class="brve__body prose">
+          <h2>Innovations for the global animal farming industry</h2>
+          <p>
+            EuroTier is the leading international trade fair in the field of
+            professional animal farming and livestock management. The main
+            innovation platform of the global animal production industry, it
+            offers an overview of innovations and established standards. It
+            brings answers and solutions to current and future challenges.
+          </p>
+          <ul>
+            <li><strong>Dates</strong> — 10 to 13 November 2026</li>
+            <li><strong>Venue</strong> — Hanover exhibition grounds, Germany</li>
+            <li><strong>SETREM stand</strong> — Hall 12, stand E48</li>
+          </ul>
+          <p>
+            <a href="https://www.eurotier.com" rel="noopener">
+              Visit the trade fair website →
+            </a>
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <CTABand
+    titre="Let's arrange a meeting at the fair."
+    texte="To prepare your visit to stand E48, get in touch with the SETREM team."
+  />
+</PageLayout>
+
+<style>
+  .brve {
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+
+  .brve__cover {
+    margin: 0 0 var(--space-8);
+  }
+
+  .brve__cover :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .brve__body :global(h2:first-child) {
+    margin-top: 0;
+  }
+</style>

@@ -5,5 +5,6 @@ Disallow: /modeles
 Disallow: /user/
 Disallow: /rgpd/
 Disallow: /contact/merci
+Disallow: /en/contact/thank-you
 
 Sitemap: https://www.setrem.com/sitemap-index.xml

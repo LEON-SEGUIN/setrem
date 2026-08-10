@@ -1,0 +1,113 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABand from '../../components/CTABand.astro';
+---
+
+<PageLayout
+  title="Resources — brochure and documentation | SETREM"
+  description="SETREM documentation: the “Extrusion solutions” brochure (PDF, 6 pages), the capacity chart and the nine expert insights articles."
+  path="/en/resources"
+>
+  <PageHero
+    kicker="Resources"
+    titre="SETREM documentation."
+    lede="The sales brochure, the capacity chart and the technical articles, gathered in one place."
+  />
+
+  <section class="band sheet" aria-label="Documents and links">
+    <div class="container">
+      <div class="docs">
+        <article class="docs__card reveal" style="--ri: 0">
+          <span class="band__num" aria-hidden="true">01</span>
+          <!-- TODO: contenu client — la plaquette n'existe qu'en français.
+               Faire produire une version anglaise, ou la faire traduire. -->
+          <p class="docs__type">PDF in French · 6 pages · 3.4 MB</p>
+          <h2>“Extrusion solutions” brochure</h2>
+          <p class="docs__texte">
+            The SETREM range, processes and applications, in a single document
+            to share.
+          </p>
+          <a
+            class="btn btn--dark"
+            href="/docs/plaquette-solutions-extrusion.pdf"
+            hreflang="fr"
+            type="application/pdf"
+          >
+            Download the brochure
+          </a>
+        </article>
+
+        <article class="docs__card reveal" style="--ri: 1">
+          <span class="band__num" aria-hidden="true">02</span>
+          <p class="docs__type">Data</p>
+          <h2>The capacity chart</h2>
+          <p class="docs__texte">
+            The throughputs of the six single-screw extruders, application by
+            application, from 40&nbsp;kg/h to 9&nbsp;t/h.
+          </p>
+          <a class="btn btn--light" href="/en/solutions/equipment-capacity-chart">
+            View the chart
+          </a>
+        </article>
+
+        <article class="docs__card reveal" style="--ri: 2">
+          <span class="band__num" aria-hidden="true">03</span>
+          <p class="docs__type">Technical articles</p>
+          <h2>Expert insights</h2>
+          <p class="docs__texte">
+            Nine in-depth articles on the process, its settings and its
+            effects on raw materials.
+          </p>
+          <a class="btn btn--light" href="/en/expert-insights">Read the articles</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>
+
+<style>
+  .docs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .docs__card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-8) var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .docs__type {
+    font-size: var(--text-micro);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+  }
+
+  .docs__card h2 {
+    font-size: var(--text-h3);
+    font-weight: 650;
+  }
+
+  .docs__texte {
+    font-size: var(--text-small);
+    color: var(--text-body);
+    flex: 1;
+  }
+
+  @media (max-width: 900px) {
+    .docs {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

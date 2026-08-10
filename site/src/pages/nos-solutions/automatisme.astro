@@ -7,7 +7,7 @@ import CTABand from '../../components/CTABand.astro';
 import { autresSolutions } from '../../data/solutions';
 import ecranImg from '../../assets/img/ecran-automatisme.webp';
 
-const autres = autresSolutions('automatisme').map((s) => ({
+const autres = autresSolutions('automatisme', 'fr').map((s) => ({
   href: `/nos-solutions/${s.slug}`,
   titre: s.titre,
   texte: s.texte,

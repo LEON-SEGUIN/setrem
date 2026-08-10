@@ -1,13 +1,32 @@
 ---
 // La déclaration, découpée en mots au build pour la révélation
 // mot à mot — sans JS, le texte est simplement rendu tel quel.
-const segments = [
-  { texte: 'Depuis 1986, SETREM conçoit et construit des' },
-  { texte: "lignes complètes d'extrusion", accent: true },
-  { texte: "pour l'alimentation humaine et animale." },
-];
+import { toLocale } from '../i18n/ui';
 
-const mots = segments.flatMap(({ texte, accent }) =>
+const copy = {
+  fr: {
+    eyebrow: 'Le constructeur',
+    segments: [
+      { texte: 'Depuis 1986, SETREM conçoit et construit des' },
+      { texte: "lignes complètes d'extrusion", accent: true },
+      { texte: "pour l'alimentation humaine et animale." },
+    ],
+    aside:
+      "Six extrudeurs monovis, du process à sec au semi-humide. La même mécanique sert le petfood, l'aquaculture, le bétail et l'alimentation humaine — et le traitement des matières premières.",
+  },
+  en: {
+    eyebrow: 'The manufacturer',
+    segments: [
+      { texte: 'Since 1986, SETREM has designed and built' },
+      { texte: 'complete extrusion lines', accent: true },
+      { texte: 'for human and animal food.' },
+    ],
+    aside:
+      'Six single-screw extruders, from dry to semi-wet processing. The same mechanics serve pet food, aquaculture, livestock and human food — and raw material processing.',
+  },
+}[toLocale(Astro.currentLocale)];
+
+const mots = copy.segments.flatMap(({ texte, accent }) =>
   texte.split(' ').map((mot) => ({ mot, accent }))
 );
 ---
@@ -15,7 +34,7 @@ const mots = segments.flatMap(({ texte, accent }) =>
 <section class="mission sheet" aria-labelledby="mission-titre">
   <div class="container">
     <h2 class="eyebrow mission__eyebrow reveal" id="mission-titre">
-      Le constructeur
+      {copy.eyebrow}
     </h2>
 
     <p class="mission__lede" data-words>
@@ -33,11 +52,7 @@ const mots = segments.flatMap(({ texte, accent }) =>
           gamme et les marchés. « A suivi et anticipé les évolutions du
           marché » (l'ancien site) ne disait rien et revenait sur quatre
           pages — remplacé partout par du concret. */}
-      <p class="mission__aside reveal">
-        Six extrudeurs monovis, du process à sec au semi-humide. La même
-        mécanique sert le petfood, l'aquaculture, le bétail et
-        l'alimentation humaine — et le traitement des matières premières.
-      </p>
+      <p class="mission__aside reveal">{copy.aside}</p>
     </div>
   </div>
 </section>

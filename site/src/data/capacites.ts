@@ -2,6 +2,7 @@
 // Valeurs en kg/h. Ne jamais modifier sans validation client.
 // ⚠️ Y160 et Y200 : la plaquette PDF donne des puissances différentes
 // (110–132 kW et 160–200 kW) — arbitrage client en attente.
+import { numberLocale, type Locale } from '../i18n/ui';
 
 export const modeles = [
   { ref: 'S50', chambres: '3 – 5', kw: '22 – 37' },
@@ -12,11 +13,17 @@ export const modeles = [
   { ref: 'Z300', chambres: '7 – 9', kw: '200 – 250' },
 ];
 
-export const applications = [
+// Les valeurs ne sont saisies qu'une fois : seuls les libellés portent
+// une variante par langue. getApplications(locale) rend la forme plate
+// que les composants consomment.
+const applicationsBrutes = [
   {
     id: 'soja-sec',
-    label: 'Soja à sec',
-    detail: 'Préparation à la pression',
+    label: { fr: 'Soja à sec', en: 'Dry soybean' },
+    detail: {
+      fr: 'Préparation à la pression',
+      en: 'Preparation for pressing',
+    },
     valeurs: [
       [100, 200],
       [300, 500],
@@ -28,8 +35,8 @@ export const applications = [
   },
   {
     id: 'soja-humide',
-    label: 'Extrusion humide soja',
-    detail: 'Process semi-humide',
+    label: { fr: 'Extrusion humide soja', en: 'Wet soybean extrusion' },
+    detail: { fr: 'Process semi-humide', en: 'Semi-wet process' },
     valeurs: [
       [400, 500],
       [1000, 1200],
@@ -41,8 +48,11 @@ export const applications = [
   },
   {
     id: 'cereales',
-    label: 'Mélange céréales',
-    detail: 'Traitement des matières premières',
+    label: { fr: 'Mélange céréales', en: 'Cereal blend' },
+    detail: {
+      fr: 'Traitement des matières premières',
+      en: 'Raw material processing',
+    },
     valeurs: [
       [150, 300],
       [700, 1000],
@@ -54,8 +64,14 @@ export const applications = [
   },
   {
     id: 'petfood-gros',
-    label: 'Petfood & poisson Ø > 5 mm',
-    detail: 'Granulés flottants ou coulants',
+    label: {
+      fr: 'Petfood & poisson Ø > 5 mm',
+      en: 'Pet food & fish Ø > 5 mm',
+    },
+    detail: {
+      fr: 'Granulés flottants ou coulants',
+      en: 'Floating or sinking pellets',
+    },
     valeurs: [
       [300, 450],
       [800, 1100],
@@ -67,8 +83,11 @@ export const applications = [
   },
   {
     id: 'petfood-fin',
-    label: 'Petfood & poisson Ø < 5 mm',
-    detail: 'Granulés fins',
+    label: {
+      fr: 'Petfood & poisson Ø < 5 mm',
+      en: 'Pet food & fish Ø < 5 mm',
+    },
+    detail: { fr: 'Granulés fins', en: 'Fine pellets' },
     valeurs: [
       [150, 300],
       [500, 800],
@@ -80,12 +99,26 @@ export const applications = [
   },
 ];
 
+export const getApplications = (locale: Locale) =>
+  applicationsBrutes.map((a) => ({
+    id: a.id,
+    label: a.label[locale],
+    detail: a.detail[locale],
+    valeurs: a.valeurs,
+  }));
+
 // Échelle commune : le max de toute la gamme (Z300 extrusion humide)
 export const MAX = 9000;
 
-export const fmt = (n: number) => n.toLocaleString('fr-FR');
+export const fmt = (n: number, locale: Locale) =>
+  n.toLocaleString(numberLocale[locale]);
 
 // Mention obligatoire, à reproduire partout où les valeurs apparaissent
-export const disclaimer =
-  'Les productions sont fournies à titre indicatif. Elles dépendent de la ' +
-  'formule, des matières premières et de la granulométrie.';
+export const disclaimer: Record<Locale, string> = {
+  fr:
+    'Les productions sont fournies à titre indicatif. Elles dépendent de la ' +
+    'formule, des matières premières et de la granulométrie.',
+  en:
+    'Throughputs are given as an indication only. They depend on the ' +
+    'formula, the raw materials and the particle size.',
+};

@@ -1,15 +1,16 @@
 ---
 // Bandeau sombre de fin de page — la ponctuation sombre de la charte.
 // Un seul par page, juste avant le footer.
+import { ui, toLocale, contact } from '../i18n/ui';
+
 interface Props {
   titre?: string;
   texte?: string;
 }
 
-const {
-  titre = "Parlez-nous de votre projet d'extrusion.",
-  texte = "Mise en route, conseil en formulation, stock de pièces détachées : l'équipe technique SETREM vous accompagne sur toute la vie de votre ligne.",
-} = Astro.props;
+const locale = toLocale(Astro.currentLocale);
+const t = ui[locale];
+const { titre = t.cta.titre, texte = t.cta.texte } = Astro.props;
 ---
 
 <section class="cta sheet" aria-labelledby="cta-titre">
@@ -40,8 +41,8 @@ const {
     <h2 class="cta__title reveal" id="cta-titre">{titre}</h2>
     <p class="cta__texte reveal">{texte}</p>
     <div class="cta__actions reveal">
-      <a class="btn cta__btn" href="/contact">Contactez-nous</a>
-      <a class="cta__tel" href="tel:+33232250847">+33 2 32 25 08 47</a>
+      <a class="btn cta__btn" href={t.nav.contact.href}>{t.cta.bouton}</a>
+      <a class="cta__tel" href={contact.telHref}>{contact.tel}</a>
     </div>
   </div>
 </section>

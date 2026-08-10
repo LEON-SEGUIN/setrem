@@ -1,0 +1,75 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import LinkCards from '../../../components/LinkCards.astro';
+import ShowcaseBand from '../../../components/ShowcaseBand.astro';
+import CTABand from '../../../components/CTABand.astro';
+import { marches } from '../../../data/marches';
+import sojaImg from '../../../assets/img/article-graine-soja.webp';
+
+const items = marches.en.map((m) => ({
+  href: `/en/applications/${m.slug}`,
+  titre: m.titre,
+  texte: m.texte,
+  image: m.image,
+  alt: m.alt,
+}));
+---
+
+<PageLayout
+  title="Applications — pet food, aquaculture, human food, livestock | SETREM"
+  description="Four markets, one and the same screw: pet food, aquaculture, human food, livestock. Complete lines, dryer included, from 40 kg/h to 9 t/h."
+  path="/en/applications"
+>
+  <PageHero
+    kicker="Applications"
+    titre="Four markets, one and the same screw."
+    lede="Machines made to measure for your products, with complete extrusion solutions including the dryer. Capacities ranging from 40 kg/h to 9 t/h."
+  />
+
+  <section class="band sheet" aria-labelledby="marches-titre">
+    <h2 class="visually-hidden" id="marches-titre">The four markets served</h2>
+    <div class="container">
+      <LinkCards items={items} cols={4} cta="View the market" />
+    </div>
+  </section>
+
+  <ShowcaseBand
+    id="mp-titre"
+    eyebrow="And also"
+    titre="The processing of raw materials."
+    accent="raw materials."
+    texte="SETREM extruders are also used for the processing of raw materials — soybean, rapeseed, wheat and other cereals — and in preparation for the mechanical extraction of oil from oilseeds."
+    image={sojaImg}
+    alt="Soybeans, a raw material processed by extrusion"
+    compact
+  >
+    <p class="mp-liens reveal" style="--ri: 2">
+      <a href="/en/expert-insights/raw-material-processing-soybean">
+        Soybean processing →
+      </a>
+      <a href="/en/expert-insights/raw-material-processing-cereals">
+        Cereal processing →
+      </a>
+      <a href="/en/expert-insights/soybean-processing-method">
+        Preparation for oil extraction →
+      </a>
+    </p>
+  </ShowcaseBand>
+
+  <CTABand />
+</PageLayout>
+
+<style>
+  .mp-liens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+
+  .mp-liens a:hover {
+    color: var(--highlight);
+  }
+</style>

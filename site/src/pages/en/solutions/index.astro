@@ -1,0 +1,94 @@
+---
+import { Image } from 'astro:assets';
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import LinkCards from '../../../components/LinkCards.astro';
+import ShowcaseBand from '../../../components/ShowcaseBand.astro';
+import CTABand from '../../../components/CTABand.astro';
+import { solutions } from '../../../data/solutions';
+import ligneComplete from '../../../assets/img/ligne-complete.webp';
+import atelierImg from '../../../assets/img/atelier-extrudeurs.webp';
+
+const items = solutions.en.map((s) => ({
+  href: `/en/solutions/${s.slug}`,
+  titre: s.titre,
+  texte: s.texte,
+  image: s.image,
+  alt: s.alt,
+}));
+---
+
+<PageLayout
+  title="Our extrusion solutions — extruders, dryers, coaters, automation | SETREM"
+  description="Single-screw extruders, dryers, coaters, automation: SETREM builds every piece of equipment on a line, from the preconditioner to the control software."
+  path="/en/solutions"
+>
+  <PageHero
+    kicker="Our solutions"
+    titre="Every machine on a complete line."
+    lede="Hopper, feeder, preconditioner, barrel, cutter, dryer, coater, automation: eight components, a single manufacturer."
+  />
+
+  <section class="band sheet" aria-labelledby="equip-titre">
+    <h2 class="visually-hidden" id="equip-titre">The equipment of an extrusion line</h2>
+    <div class="container">
+      <!-- Le tout avant les parties : la page annonce « chaque machine
+           d'une ligne complète », on montre d'abord la ligne. -->
+      <figure class="ligne reveal">
+        <Image
+          src={ligneComplete}
+          alt="Complete SETREM extrusion line: preconditioner, extruder and pneumatic conveying"
+          widths={[700, 1100, 1600]}
+          width={1600}
+          quality={70}
+          sizes="(max-width: 900px) 100vw, 1100px"
+          loading="eager"
+        />
+      </figure>
+      <LinkCards items={items} cols={3} cta="View the equipment" />
+    </div>
+  </section>
+
+  <!-- La ponctuation sombre de la page. Emplacement unique du texte
+       service du client, mot pour mot : il figurait aussi sur
+       /nos-solutions/automatisme, où il était hors sujet. Le CTABand de
+       cette page est réécrit plus bas pour ne pas répéter la même liste
+       à un écran d'intervalle. -->
+  <ShowcaseBand
+    id="service-titre"
+    eyebrow="SETREM, the service too"
+    titre="A machine delivered is only the beginning."
+    accent="is only the beginning."
+    texte="The technical team provides assistance with the commissioning of your extruder and its expertise in formulation. SETREM holds a stock of spare parts, supplied as quickly as possible."
+    image={atelierImg}
+    alt="SETREM single-screw extruders lined up in the workshop before shipping"
+  />
+
+  <CTABand
+    titre="A line to build, a line to upgrade?"
+    texte="Describe the product you are aiming for and the throughput you need: that is where we start to design the line."
+  />
+</PageLayout>
+
+<style>
+  /* Le visuel est un détourage sur fond blanc : il lui faut une carte
+     blanche, sinon le rectangle se découpe sur le fond acier. */
+  .ligne {
+    margin: 0 0 var(--space-12);
+    padding: var(--space-8) var(--space-6);
+    background: var(--surface-raised);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Le visuel est presque carré : le brider en largeur le rend
+     démesuré en hauteur. C'est la hauteur qui commande. */
+  .ligne :global(img) {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 24rem;
+    margin-inline: auto;
+  }
+</style>

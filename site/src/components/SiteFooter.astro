@@ -1,8 +1,10 @@
 ---
 import { Image } from 'astro:assets';
 import logoW from '../assets/img/logo-w.svg';
+import { ui, toLocale, contact } from '../i18n/ui';
 
 const annee = new Date().getFullYear();
+const t = ui[toLocale(Astro.currentLocale)].footer;
 ---
 
 <footer class="footer">
@@ -12,56 +14,40 @@ const annee = new Date().getFullYear();
       <!-- Le pied de page reprend l'identité sous un autre angle que la
            déclaration de l'accueil : le métier (constructeur) et l'objet
            (l'extrudeur monovis), pas la date — elle est ailleurs. -->
-      <p class="footer__tagline">
-        Constructeur d'extrudeurs monovis et de lignes complètes
-        d'extrusion, pour l'alimentation humaine et animale.
-      </p>
+      <p class="footer__tagline">{t.tagline}</p>
     </div>
 
-    <nav class="footer__col" aria-label="Plan du site">
-      <p class="footer__head">Le site</p>
+    <nav class="footer__col" aria-label={t.planAria}>
+      <p class="footer__head">{t.siteHead}</p>
       <ul>
-        <li><a href="/qui-sommes-nous">Qui sommes-nous</a></li>
-        <li><a href="/nos-solutions">Nos solutions</a></li>
-        <li><a href="/applications">Applications</a></li>
-        <li><a href="/la-ligne-pilote">La ligne pilote</a></li>
-        <li><a href="/loil-de-lexpert">L'œil de l'expert</a></li>
-        <li><a href="/actualites">Actualités</a></li>
-        <li><a href="/ressources">Ressources</a></li>
-        <li><a href="/contact">Contact</a></li>
+        {t.site.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
       </ul>
     </nav>
 
     <div class="footer__col">
-      <p class="footer__head">Coordonnées</p>
+      <p class="footer__head">{t.coordonneesHead}</p>
       <address class="footer__address">
-        ZI Les Pâtis, 7 rue Robert Dumont<br />
-        27400 Acquigny, France<br />
-        <a href="tel:+33232250847">+33 2 32 25 08 47</a>
+        {contact.zone}, {contact.rue}<br />
+        {contact.ville}, {t.pays}<br />
+        <a href={contact.telHref}>{contact.tel}</a>
       </address>
-      <a
-        class="footer__linkedin"
-        href="https://www.linkedin.com/company/setremextrusion"
-        rel="noopener"
-      >
+      <a class="footer__linkedin" href={contact.linkedin} rel="noopener">
         LinkedIn
       </a>
     </div>
 
     <div class="footer__col">
-      <p class="footer__head">Informations</p>
+      <p class="footer__head">{t.infosHead}</p>
       <ul>
         <!-- TODO: contenu client — mentions légales (SIRET, TVA, dirigeant)
              indisponibles : /mentions-legales de l'ancien site est en erreur. -->
-        <li><a href="/mentions-legales">Mentions légales</a></li>
-        <li><a href="/politique-de-cookies">Politique de cookies</a></li>
-        <li><a href="/conditions-generales">Conditions générales</a></li>
+        {t.infos.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
       </ul>
     </div>
   </div>
 
   <div class="container footer__bottom">
-    <p>© {annee} SETREM — Acquigny, France</p>
+    <p>© {annee} {t.bas}</p>
   </div>
 </footer>
 

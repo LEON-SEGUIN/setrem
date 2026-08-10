@@ -1,0 +1,105 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import SplitSection from '../../../components/SplitSection.astro';
+import LinkCards from '../../../components/LinkCards.astro';
+import CTABand from '../../../components/CTABand.astro';
+import { autresMarches } from '../../../data/marches';
+import aquaImg from '../../../assets/img/app-aquaculture.webp';
+import ligneImg from '../../../assets/img/ligne-extrusion-aquaculture.webp';
+
+const autres = autresMarches('aquaculture', 'en').map((m) => ({
+  href: `/en/applications/${m.slug}`,
+  titre: m.titre,
+  texte: m.texte,
+  image: m.image,
+  alt: m.alt,
+}));
+---
+
+<PageLayout
+  title="Aquaculture — floating and sinking feed by extrusion | SETREM"
+  description="Only extrusion produces floating feed. Density control, pellets from 0.8 to 30 mm, fresh materials in the preconditioner: the SETREM system."
+  path="/en/applications/aquaculture"
+>
+  <PageHero
+    kicker="Applications"
+    titre="Aquaculture"
+    lede="Feed high in digestible energy, less dependent on fishmeal and fish oil."
+  />
+
+  <section class="band sheet" aria-label="Extrusion for aquaculture">
+    <div class="container">
+      <SplitSection
+        kicker="The market"
+        titre="The fastest-growing sector in the world."
+        image={aquaImg}
+        alt="Aquaculture ponds"
+      >
+        <p>
+          Aquaculture is the fastest-growing animal feed sector anywhere in the
+          world, with an annual output of 34&nbsp;million tonnes. A quarter of
+          the fish consumed by humans is produced by aquaculture.
+        </p>
+        <p>
+          Feed intended for aquaculture must have high levels of digestible
+          energy and of amino acids available for growth, and be administered
+          in the form of pellets or extrudates. For this activity to remain
+          viable and profitable, fishmeal and fish oil will have to be used far
+          less intensively in the future.
+        </p>
+        <p>
+          Extrusion is the only technology that allows floating feed to be
+          produced — for carp, tilapia, pangasius and others. It also brings
+          many advantages for sinking feed:
+        </p>
+        <ul>
+          <li>better water stability,</li>
+          <li>higher percentages of fat.</li>
+        </ul>
+      </SplitSection>
+
+      <SplitSection
+        kicker="The SETREM extrusion system"
+        titre="Density under control, from floating to sinking."
+        image={ligneImg}
+        alt="Complete SETREM extrusion line for aquaculture"
+        reverse
+      >
+        {/* Les deux listes de l'ancienne page disaient deux fois la même
+            chose sur la densité, et les deux derniers points étaient les
+            mêmes que sur /applications/animaux-domestiques. Fusionnées en
+            une seule, sans rien perdre. */}
+        <p>The SETREM extrusion system allows:</p>
+        <ul>
+          <li>
+            density control, to better master the sinking speed of the feed in
+            water — from floating to semi-floating, all the way to sinking,
+          </li>
+          <li>
+            the production of different pellet sizes, from 0.8&nbsp;mm in
+            diameter up to 30&nbsp;mm,
+          </li>
+          <li>the addition of fresh materials in the preconditioner.</li>
+        </ul>
+        <p>
+          The line is delivered complete, dryer included.
+          <a href="/en/solutions/equipment-capacity-chart">
+            See the capacity chart →
+          </a>
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">The other markets</h2>
+      </div>
+      <LinkCards items={autres} cols={3} cta="View the market" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>

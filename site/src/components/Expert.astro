@@ -1,36 +1,51 @@
 ---
 import ArticleCard from './ArticleCard.astro';
 import { articles } from '../data/articles';
+import { toLocale } from '../i18n/ui';
+
+const locale = toLocale(Astro.currentLocale);
+const liste = articles[locale];
+
+const copy = {
+  fr: {
+    titre: "L'œil de l'expert : la cuisson-extrusion, expliquée.",
+    sub: "Facteurs antinutritionnels, gélatinisation de l'amidon, protéines by-pass : ce que la cuisson-extrusion change dans la matière, expliqué article par article.",
+    base: '/loil-de-lexpert',
+    articles: 'articles',
+    tous: "Voir plus d'articles",
+  },
+  en: {
+    titre: 'Expert insights: extrusion cooking, explained.',
+    sub: 'Antinutritional factors, starch gelatinisation, bypass proteins: what extrusion cooking changes in the material, explained article by article.',
+    base: '/en/expert-insights',
+    articles: 'articles',
+    tous: 'See more articles',
+  },
+}[locale];
 
 // Les neuf articles, dans l'ordre du fichier de données. Le carrousel les
 // fait tous défiler : aucun n'est privilégié, et les neuf liens sont dans
 // le HTML servi (le duplicata nécessaire à la boucle est cloné en JS et
 // sorti de l'arbre d'accessibilité — voir scripts/rail.js).
-const total = String(articles.length).padStart(2, '0');
+const total = String(liste.length).padStart(2, '0');
 ---
 
 <section class="expert sheet" aria-labelledby="expert-titre">
   <div class="container">
-    <h2 class="expert__title reveal" id="expert-titre">
-      L'œil de l'expert : la cuisson-extrusion, expliquée.
-    </h2>
+    <h2 class="expert__title reveal" id="expert-titre">{copy.titre}</h2>
     {/* « Du traitement de la graine de soja aux réactions de Maillard »
         est la formule de /loil-de-lexpert : ici on annonce plutôt ce que
         le procédé fait à la matière. */}
-    <p class="expert__sub reveal">
-      Facteurs antinutritionnels, gélatinisation de l'amidon, protéines
-      by-pass : ce que la cuisson-extrusion change dans la matière,
-      expliqué article par article.
-    </p>
+    <p class="expert__sub reveal">{copy.sub}</p>
   </div>
 
   <div class="expert__rail" data-rail>
     <ul class="expert__track" data-rail-track>
       {
-        articles.map((a, i) => (
+        liste.map((a, i) => (
           <li class="expert__item" data-rail-item>
             <ArticleCard
-              href={`/loil-de-lexpert/${a.slug}`}
+              href={`${copy.base}/${a.slug}`}
               titre={a.titre}
               extrait={a.extrait}
               image={a.image}
@@ -53,11 +68,9 @@ const total = String(articles.length).padStart(2, '0');
       <span class="expert__gauge-thumb expert__gauge-thumb--echo"></span>
     </span>
     <p class="expert__count">
-      <span class="expert__count-n">{total}</span> articles
+      <span class="expert__count-n">{total}</span> {copy.articles}
     </p>
-    <a class="btn btn--dark expert__all" href="/loil-de-lexpert">
-      Voir plus d'articles
-    </a>
+    <a class="btn btn--dark expert__all" href={copy.base}>{copy.tous}</a>
   </div>
 </section>
 

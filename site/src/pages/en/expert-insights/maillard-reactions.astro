@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import ArticleLayout from '../../../layouts/ArticleLayout.astro';
+import figMaillard from '../../../assets/img/fig-maillard-temperature.webp';
+---
+
+<ArticleLayout slug="maillard-reactions">
+  <p>
+    Proteins and sugars react together to form complexes that are
+    indigestible in the rumen: bypass proteins. These Maillard compounds are
+    dissolved thanks to the acid pH of the abomasum; the amino acids they
+    contain therefore become fully available again for absorption in the
+    intestine.
+  </p>
+  <p>
+    Maillard reactions occur in the presence of amino acids and sugars at
+    temperatures between 0 and 150&nbsp;°C, a pH between 6 and 10 and a
+    moisture level of around 15%. As the graph below shows, temperature
+    has a strong influence on the speed of the reaction.
+  </p>
+  <!-- TODO: contenu client — cette figure porte du texte français
+       incrusté dans l'image : faire produire une version anglaise.
+       L'alt et la légende sont traduits, pas le visuel. -->
+  <figure>
+    <Image
+      src={figMaillard}
+      alt="Graph: influence of temperature on the speed of the Maillard reaction"
+      widths={[600, 900]}
+      width={900}
+      quality={70}
+      sizes="(max-width: 900px) 100vw, 700px"
+      loading="lazy"
+    />
+    <figcaption>
+      Influence of temperature on the Maillard reaction.
+    </figcaption>
+  </figure>
+  <p>
+    During extrusion cooking, it is therefore possible to adjust the
+    parameters — temperature and residence time of the mix — in order to
+    trigger Maillard reactions or not. It is worth encouraging these
+    reactions for the production of ruminant feed, but it will be important
+    to limit them as far as possible for the production of poultry feed, for
+    example: Maillard compounds reduce protein availability for monogastric
+    species.
+  </p>
+  <p>
+    Good control of extrusion cooking therefore makes it possible to vary the
+    characteristics of the product according to the anatomy of the target
+    species.
+  </p>
+</ArticleLayout>

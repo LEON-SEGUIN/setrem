@@ -7,20 +7,45 @@ import PageHero from '../components/PageHero.astro';
 import LinkCards from '../components/LinkCards.astro';
 import CTABand from '../components/CTABand.astro';
 import { articles, autresArticles } from '../data/articles';
+import { toLocale } from '../i18n/ui';
 
 interface Props {
   slug: string;
 }
 
 const { slug } = Astro.props;
-const article = articles.find((a) => a.slug === slug);
+const locale = toLocale(Astro.currentLocale);
+const article = articles[locale].find((a) => a.slug === slug);
 if (!article) {
-  throw new Error(`Article inconnu : ${slug}`);
+  throw new Error(`Article inconnu (${locale}) : ${slug}`);
 }
 
-const path = `/loil-de-lexpert/${article.slug}`;
-const lies = autresArticles(article.slug).map((a) => ({
-  href: `/loil-de-lexpert/${a.slug}`,
+const copy = {
+  fr: {
+    kicker: "L'œil de l'expert",
+    base: '/loil-de-lexpert',
+    suite: 'Poursuivre la lecture',
+    tous: "Tous les articles de l'œil de l'expert →",
+    ctaTitre: 'Une question sur votre procédé ?',
+    ctaTexte:
+      "L'équipe technique SETREM répond aux questions de formulation comme de conduite d'extrusion.",
+    suffixe: "L'œil de l'expert — SETREM",
+  },
+  en: {
+    kicker: 'Expert insights',
+    base: '/en/expert-insights',
+    suite: 'Keep reading',
+    tous: 'All expert insights articles →',
+    ctaTitre: 'A question about your process?',
+    ctaTexte:
+      'The SETREM technical team answers questions on formulation as well as on running an extrusion line.',
+    suffixe: 'Expert insights — SETREM',
+  },
+}[locale];
+
+const path = `${copy.base}/${article.slug}`;
+const lies = autresArticles(article.slug, locale).map((a) => ({
+  href: `${copy.base}/${a.slug}`,
   titre: a.titre,
   texte: a.extrait,
   image: a.image,
@@ -32,7 +57,7 @@ const jsonLd = {
   '@type': 'TechArticle',
   headline: article.titre,
   description: article.description,
-  inLanguage: 'fr',
+  inLanguage: locale,
   image: new URL(article.image.src, Astro.site).toString(),
   author: { '@type': 'Organization', name: 'SETREM' },
   publisher: { '@type': 'Organization', name: 'SETREM' },
@@ -41,7 +66,7 @@ const jsonLd = {
 ---
 
 <PageLayout
-  title={`${article.titre} | L'œil de l'expert — SETREM`}
+  title={`${article.titre} | ${copy.suffixe}`}
   description={article.description}
   path={path}
   jsonLdExtra={jsonLd}
@@ -51,7 +76,7 @@ const jsonLd = {
       est dans le texte, pas dans le pied de page. */}
   <div class="progress" data-progress aria-hidden="true"></div>
 
-  <PageHero kicker="L'œil de l'expert" titre={article.titre} lede={article.extrait} compact />
+  <PageHero kicker={copy.kicker} titre={article.titre} lede={article.extrait} compact />
 
   <div class="article-band sheet">
     <div class="container">
@@ -78,11 +103,11 @@ const jsonLd = {
   <section class="band band--raised band--tight" aria-labelledby="lies-titre">
     <div class="container">
       <div class="band__head">
-        <h2 class="band__title reveal" id="lies-titre">Poursuivre la lecture</h2>
+        <h2 class="band__title reveal" id="lies-titre">{copy.suite}</h2>
       </div>
       <LinkCards items={lies} cols={3} />
       <p class="article__tous reveal">
-        <a href="/loil-de-lexpert">Tous les articles de l'œil de l'expert →</a>
+        <a href={copy.base}>{copy.tous}</a>
       </p>
     </div>
   </section>
@@ -90,10 +115,7 @@ const jsonLd = {
   <!-- Le lecteur d'un article technique n'est pas dans la même intention
        qu'un visiteur de page produit : le bandeau générique (« Parlez-nous
        de votre projet ») revenait à l'identique au bas des neuf articles. -->
-  <CTABand
-    titre="Une question sur votre procédé ?"
-    texte="L'équipe technique SETREM répond aux questions de formulation comme de conduite d'extrusion."
-  />
+  <CTABand titre={copy.ctaTitre} texte={copy.ctaTexte} />
 </PageLayout>
 
 <style>

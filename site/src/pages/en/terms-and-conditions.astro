@@ -1,0 +1,88 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+
+// TODO: contenu client — faire valider avant mise en ligne. La traduction
+// anglaise n'a pas été relue par un juriste : le litige relève du droit
+// français, seul le texte français fait foi.
+---
+
+<PageLayout
+  title="Terms and conditions — SETREM"
+  description="Terms and conditions of use of the setrem.com website: intellectual property, content and links, liability, applicable law."
+  path="/en/terms-and-conditions"
+>
+  <PageHero kicker="Information" titre="Terms and conditions" compact />
+
+  <section class="band sheet" aria-label="Terms and conditions">
+    <div class="container">
+      <div class="prose prose--flow">
+        <h2>SETREM</h2>
+        <p>
+          Single-member SARL with capital of €300,000<br />
+          SIRET: 323&nbsp;514&nbsp;745&nbsp;00039<br />
+          ZI Les Pâtis, 7 rue Robert Dumont, 27400 Acquigny, France<br />
+          Intra-community VAT number: FR&nbsp;77&nbsp;323&nbsp;514&nbsp;745
+        </p>
+        <p>
+          Publication director: Arnaud Delique<br />
+          Host: OVH SAS with capital of €10,069,020,
+          2 rue Kellermann, 59100 Roubaix, France
+          <!-- TODO: contenu client — hébergeur à confirmer pour le nouveau site -->
+        </p>
+
+        <h2>Intellectual property</h2>
+        <p>
+          The site and each of the elements, including but not limited to the
+          trademarks, logos, icons, infographics and photographs, that make it
+          up are protected under international intellectual property law. The
+          content appearing on the site is the property of SETREM and of its
+          partners who have previously granted authorisation for its use. Any
+          use, reproduction or representation, by any process whatsoever, and
+          on any medium whatsoever, of all or part of the site and/or of the
+          elements that make it up is not permitted without the express
+          consent of SETREM.
+        </p>
+        <p>
+          The texts, layouts, illustrations, photographs, documentation and
+          other elements appearing on this site are protected by copyright.
+          Any copying, adaptation, translation, representation or modification
+          of all or part of the site is strictly prohibited without the prior
+          written agreement of SETREM.
+        </p>
+
+        <h2>Content — Links</h2>
+        <p>
+          SETREM reserves the right to modify the content of the site at any
+          time without notice. Any link to the site must be the subject of
+          prior written authorisation from SETREM.
+        </p>
+
+        <h2>Exclusion of liability</h2>
+        <p>
+          Under no circumstances may SETREM be held liable for any damage
+          whatsoever, direct or indirect, material or immaterial, or loss of
+          programs or data, that may result from the existence, modification,
+          consultation and/or use of all or part of the site or of other sites
+          that are or may be linked to it.
+        </p>
+        <p>
+          Should links be created with other sites, by SETREM or through any
+          search tool, SETREM may under no circumstances be held liable for
+          the content of those other sites.
+        </p>
+
+        <h2>Law — Disputes</h2>
+        <p>
+          Any dispute relating to the site shall be governed exclusively by
+          French law and the courts of Rouen shall have sole jurisdiction.
+        </p>
+
+        <h2>Credits — Design, production and development</h2>
+        <p>Content and copywriting: SETREM</p>
+        <!-- TODO: contenu client — crédits de la refonte à compléter
+             (direction artistique, développement, iconographie). -->
+      </div>
+    </div>
+  </section>
+</PageLayout>

@@ -1,0 +1,93 @@
+---
+import { Image } from 'astro:assets';
+import ArticleLayout from '../../../layouts/ArticleLayout.astro';
+import figComparatif from '../../../assets/img/fig-comparatif-soja.webp';
+---
+
+<ArticleLayout slug="raw-material-processing-soybean">
+  <p>
+    Raw soybean contains biologically active substances with an
+    antinutritional effect. The most significant are essentially proteases
+    and haemagglutinins, but saponins and factors inducing allergies, goitre
+    and rickets are also present.
+  </p>
+
+  <h2>How does extrusion work?</h2>
+  <p>
+    Extrusion consists in passing soybeans, ground and compressed inside a
+    barrel, through a die by means of a screw turning at high speed.
+  </p>
+  <h3>The aim of processing soybeans by extrusion is threefold</h3>
+  <ul>
+    <li>to reduce the content of antinutritional factors,</li>
+    <li>not to damage the proteins,</li>
+    <li>
+      to rupture the cells containing the oil, in order to improve the energy
+      value.
+    </li>
+  </ul>
+  <p>
+    This method consists in bringing the soybeans to a high temperature —
+    160&nbsp;°C at the die outlet — for a very short time. The internal
+    configuration of the machine ensures adequate friction and shear
+    conditions, which weaken the cell walls of the bean. The free water in the
+    bean is brought to a temperature well above vaporisation point, but
+    remains liquid because of the high pressures it withstands inside the body
+    of the extruder. At the die outlet, the abrupt return to atmospheric
+    pressure causes this water to evaporate instantly.
+  </p>
+  <h3>This evaporation has the effect of</h3>
+  <ul>
+    <li>bursting all the cells,</li>
+    <li>
+      absorbing the calories needed to produce this steam — around 6% of
+      the initial weight of the beans.
+    </li>
+  </ul>
+  <p>
+    The almost instantaneous return of the processed product to a temperature
+    of around 100&nbsp;°C halts practically all browning reactions. This
+    method is therefore akin to HT-ST (High Temperature–Short Time)
+    treatments, somewhat similar to the UHT treatment used to produce
+    long-life milk.
+  </p>
+
+  <h2>The energy content is higher</h2>
+  <ul>
+    <li>because its water content is low,</li>
+    <li>
+      because the process used to obtain it allows the practically complete
+      destruction of the cell structures of the soybean, and thereby better
+      digestion of the energy it contains.
+    </li>
+  </ul>
+
+  <h2>The product is more stable</h2>
+  <p>
+    Extrusion also destroys the lipases and the lipoxidase contained in the
+    raw soybean — these enzymes promote the hydrolysis and the oxidation of
+    fats. Moreover, its reduced free water content after extrusion ensures its
+    preservation: stored properly for months, the product
+  </p>
+  <ul>
+    <li>does not turn rancid,</li>
+    <li>does not oxidise,</li>
+    <li>does not go mouldy.</li>
+  </ul>
+
+  <!-- TODO: contenu client — cette figure porte du texte français
+       incrusté dans l'image : faire produire une version anglaise.
+       L'alt et la légende sont traduits, pas le visuel. -->
+  <figure>
+    <Image
+      src={figComparatif}
+      alt="Comparative table of the characteristics of raw and extruded soybeans"
+      widths={[600, 900]}
+      width={900}
+      quality={70}
+      sizes="(max-width: 900px) 100vw, 700px"
+      loading="lazy"
+    />
+    <figcaption>Comparative table on soybeans.</figcaption>
+  </figure>
+</ArticleLayout>

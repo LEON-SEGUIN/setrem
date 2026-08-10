@@ -1,0 +1,196 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ShowcaseBand from '../../components/ShowcaseBand.astro';
+import CTABand from '../../components/CTABand.astro';
+import piloteImg from '../../assets/img/ligne-pilote.webp';
+---
+
+<PageLayout
+  title="The pilot line — test your product before investing | SETREM"
+  description="The SETREM trial line is available to food industry manufacturers: R&D trials and validation of an extrusion process before investing."
+  path="/en/pilot-line"
+>
+  <PageHero
+    kicker="Research & development"
+    titre="Test your product before investing."
+    lede="The pilot line is our research and development tool. This unit is available to food industry manufacturers to validate the feasibility of new products."
+  />
+
+  <section class="band sheet" aria-labelledby="usages-titre">
+    <div class="container">
+      <div class="band__head">
+        <p class="eyebrow">The trial line built into SETREM</p>
+        <h2 class="band__title reveal" id="usages-titre">
+          Two ways to use it.
+        </h2>
+      </div>
+
+      <div class="usages">
+        <article class="usages__card reveal" style="--ri: 0">
+          <p class="usages__num" aria-hidden="true">01</p>
+          <h3>Research & development trials</h3>
+          <p>
+            Run trials as part of a specific research and development project
+            — exploring a raw material, a texture, a new product.
+          </p>
+        </article>
+        <article class="usages__card reveal" style="--ri: 1">
+          <p class="usages__num" aria-hidden="true">02</p>
+          <h3>Validating a process</h3>
+          <p>
+            Carry out tests to validate a new process or an extrusion project
+            with one precise given formula — before committing to the
+            industrial investment.
+          </p>
+        </article>
+      </div>
+      <!-- Phrase du client, présente sur l'accueil de l'ancien site mais
+           nulle part sur sa page ligne pilote : elle a sa place ici. -->
+      <p class="usages__note reveal" style="--ri: 2">
+        We define the terms of use together, tailored to your project.
+      </p>
+      <!-- TODO: contenu client — préciser ces modalités (durée d'un essai,
+           quantités de matière à fournir, accompagnement technique,
+           confidentialité des formules) pour étoffer la page. -->
+    </div>
+  </section>
+
+  <!-- La machine elle-même, en plein format : c'est l'objet de la page,
+       elle ne pouvait pas rester une vignette légendée. -->
+  <ShowcaseBand
+    id="atelier-essais"
+    eyebrow="The trial workshop"
+    titre="The pilot line, in the SETREM workshop in Acquigny."
+    accent="in Acquigny."
+    image={piloteImg}
+    alt="The SETREM pilot line in the trial workshop"
+  />
+  <!-- TODO: contenu client — décrire la composition de la ligne pilote
+       (modèle d'extrudeur, préconditionneur, séchage, débits d'essai).
+       Rien de tout cela n'est documenté sur le site actuel : ne pas le
+       déduire de la photo. -->
+
+  <section class="band band--raised" aria-label="From pilot to production">
+    <div class="container">
+      <div class="suite">
+        <div class="suite__col reveal">
+          <h2 class="suite__titre">From pilot to production.</h2>
+          <p class="suite__texte">
+            Once feasibility is confirmed, the same screw simply changes
+            scale: six single-screw extruders cover throughputs from
+            40&nbsp;kg/h to 9&nbsp;t/h.
+          </p>
+        </div>
+        <div class="suite__liens reveal" style="--ri: 1">
+          <a class="btn btn--dark" href="/en/contact">Request a trial</a>
+          <a class="suite__lien" href="/en/solutions/extruders">
+            Discover the range →
+          </a>
+          <a class="suite__lien" href="/en/solutions/equipment-capacity-chart">
+            See the capacity chart →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Le chapô de la page dit déjà « à la disposition des industriels de
+       l'agro-alimentaire » : le bandeau final passe à l'action. -->
+  <CTABand
+    titre="A product to validate? Let's talk about a trial."
+    texte="Tell us what you are looking to manufacture and with which raw materials: that is where we start."
+  />
+</PageLayout>
+
+<style>
+  .usages {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .usages__card {
+    padding: var(--space-8) var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .usages__num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-h2);
+    color: var(--blue-300);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: var(--space-4);
+  }
+
+  .usages__card h3 {
+    font-size: var(--text-h3);
+    font-weight: 650;
+    margin-bottom: var(--space-3);
+  }
+
+  .usages__card p:last-child {
+    color: var(--text-body);
+    font-size: var(--text-small);
+  }
+
+  /* La phrase qui referme les deux cartes : elle porte l'engagement,
+     donc elle est centrée sous la paire plutôt que rangée dans l'une
+     des deux colonnes. */
+  .usages__note {
+    margin: var(--space-8) auto 0;
+    max-width: 46ch;
+    text-align: center;
+    font-size: var(--text-small);
+    color: var(--text-muted);
+  }
+
+  .suite {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: var(--space-8);
+    align-items: center;
+  }
+
+  .suite__titre {
+    font-size: var(--text-h2);
+    font-weight: 650;
+  }
+
+  .suite__texte {
+    margin-top: var(--space-3);
+    color: var(--text-muted);
+    max-width: 44ch;
+  }
+
+  .suite__liens {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    justify-content: flex-end;
+  }
+
+  .suite__lien {
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+
+  .suite__lien:hover {
+    color: var(--highlight);
+  }
+
+  @media (max-width: 900px) {
+    .usages,
+    .suite {
+      grid-template-columns: 1fr;
+    }
+
+    .suite__liens {
+      justify-content: flex-start;
+    }
+  }
+</style>

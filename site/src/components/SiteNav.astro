@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import logo from '../assets/img/logo.svg';
 import logoW from '../assets/img/logo-w.svg';
+import { ui, toLocale, getAlternatePath } from '../i18n/ui';
 
 interface Props {
   /** « dark » : la barre survole une section sombre en haut de page —
@@ -12,21 +13,25 @@ interface Props {
 
 const { variant = 'light' } = Astro.props;
 
-const links = [
-  { href: '/nos-solutions', label: 'Nos solutions' },
-  { href: '/applications', label: 'Applications' },
-  { href: '/la-ligne-pilote', label: 'La ligne pilote' },
-  { href: '/loil-de-lexpert', label: "L'œil de l'expert" },
-  { href: '/actualites', label: 'Actualités' },
-];
+const locale = toLocale(Astro.currentLocale);
+const t = ui[locale].nav;
+const links = t.liens;
+const accueil = locale === 'en' ? '/en' : '/';
+
+// Sans jumelle traduite (page hors table), le sélecteur ramène à l'accueil
+// de l'autre langue plutôt que vers un 404.
+const autreLocale = locale === 'fr' ? 'en' : 'fr';
+const autreDefaut = autreLocale === 'en' ? '/en' : '/';
+const ici = Astro.url.pathname.replace(/(.)\/$/, '$1');
+const autreLien = getAlternatePath(ici, autreLocale) ?? autreDefaut;
 ---
 
 <header
   class:list={['nav-wrap', { 'nav-wrap--dark': variant === 'dark' }]}
   data-nav
 >
-  <nav class="nav container" aria-label="Navigation principale">
-    <a class="nav__logo" href="/" aria-label="SETREM — accueil">
+  <nav class="nav container" aria-label={t.aria}>
+    <a class="nav__logo" href={accueil} aria-label={t.accueil}>
       <Image
         src={logo}
         alt="SETREM"
@@ -52,7 +57,7 @@ const links = [
       aria-controls="nav-menu"
       data-nav-toggle
     >
-      <span class="visually-hidden">Menu</span>
+      <span class="visually-hidden">{t.menu}</span>
       <span class="nav__toggle-bar" aria-hidden="true"></span>
       <span class="nav__toggle-bar" aria-hidden="true"></span>
     </button>
@@ -67,8 +72,22 @@ const links = [
           </li>
         ))
       }
+      <li class="nav__lang-item">
+        <a
+          class="nav__lang"
+          href={autreLien}
+          hreflang={autreLocale}
+          lang={autreLocale}
+          aria-label={t.langue.aria}
+        >
+          <span aria-hidden="true">{t.langue.code}</span>
+          <span class="visually-hidden">{t.langue.autre}</span>
+        </a>
+      </li>
       <li class="nav__cta-item">
-        <a class="btn btn--dark nav__cta" href="/contact">Contactez-nous</a>
+        <a class="btn btn--dark nav__cta" href={t.contact.href}>
+          {t.contact.label}
+        </a>
       </li>
     </ul>
   </nav>
@@ -164,6 +183,38 @@ const links = [
     color: var(--accent);
   }
 
+  /* Le sélecteur de langue se lit comme une mention, pas comme un sixième
+     lien de navigation : un code de deux lettres, encadré, en retrait. */
+  .nav__lang {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem var(--space-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    color: var(--text-muted);
+    font-size: var(--text-micro);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    transition:
+      color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
+  }
+
+  .nav__lang:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  :global(.nav-wrap--dark:not(.is-scrolled):not(.is-open)) .nav__lang {
+    color: var(--steel-300);
+    border-color: var(--steel-700);
+  }
+
+  :global(.nav-wrap--dark:not(.is-scrolled):not(.is-open)) .nav__lang:hover {
+    color: var(--blue-200);
+    border-color: var(--steel-500);
+  }
+
   .nav__toggle {
     display: none;
   }
@@ -220,6 +271,12 @@ const links = [
     .nav__link {
       display: block;
       padding: var(--space-3);
+    }
+
+    /* Aligné sur le texte des liens, qui portent un padding de space-3 */
+    .nav__lang {
+      align-self: flex-start;
+      margin: var(--space-2) 0 var(--space-2) var(--space-3);
     }
 
     .nav__cta {

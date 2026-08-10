@@ -1,0 +1,156 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import SplitSection from '../../../components/SplitSection.astro';
+import LinkCards from '../../../components/LinkCards.astro';
+import CTABand from '../../../components/CTABand.astro';
+import { autresMarches } from '../../../data/marches';
+import humaineImg from '../../../assets/img/app-alimentation-humaine.webp';
+
+const autres = autresMarches('human-food', 'en').map((m) => ({
+  href: `/en/applications/${m.slug}`,
+  titre: m.titre,
+  texte: m.texte,
+  image: m.image,
+  alt: m.alt,
+}));
+---
+
+<PageLayout
+  title="Human food — TVP, infant flours, snacks, breakfast cereals | SETREM"
+  description="Four families of highly nutritious foods produced by extrusion: textured vegetable proteins, infant flours, snacks, breakfast cereals."
+  path="/en/applications/human-food"
+>
+  <PageHero
+    kicker="Applications"
+    titre="Human food"
+    lede="Four families of products, a single cooking process: textured vegetable proteins, infant food, snacks and breakfast cereals."
+  />
+
+  <section class="band sheet" aria-label="The product families">
+    <div class="container">
+      {/* Le chapô de la page énumère déjà les quatre familles : ce bloc
+          pose l'enjeu et n'y revient pas. */}
+      <SplitSection
+        kicker="What is at stake"
+        titre="Feeding a growing population."
+        image={humaineImg}
+        alt="Extruded human food products"
+      >
+        <p>
+          With the rapid growth of the world population, food is a major
+          challenge: solutions must be found to meet everyone's nutritional
+          needs. Extrusion cooking is one of those levers — it turns simple
+          raw materials into highly nutritious foods, stable and ready to use.
+        </p>
+      </SplitSection>
+
+      <SplitSection
+        kicker="Family 01"
+        titre="Textured vegetable proteins (TVP)."
+      >
+        <p>
+          On average, 4.9&nbsp;kg of vegetable protein is needed to produce
+          1&nbsp;kg of animal protein. It is therefore necessary to produce
+          vegetable proteins that can replace animal proteins, to ensure
+          sustainable global food security. Extrusion cooking makes it
+          possible to turn vegetable proteins into a meat analogue known as
+          textured vegetable protein (TVP).
+        </p>
+        <p>
+          They were created to have the same sensory characteristics as animal
+          proteins: appearance, texture, mouthfeel. They allow all or part of
+          the meat in a dish to be replaced — bolognese sauce, nuggets,
+          burgers, sausages — but are also eaten as a dish in their own right
+          in many countries such as China, Taiwan, Japan and South Korea.
+        </p>
+        <h3>The advantages of TVP</h3>
+        <ul>
+          <li>
+            they suit the dietary restrictions of various religions, cultures
+            and forms of vegetarianism,
+          </li>
+          <li>lower cost than animal proteins,</li>
+          <li>long shelf life,</li>
+          <li>easy to use.</li>
+        </ul>
+        <p>
+          All vegetable proteins can be textured, but soybeans are by far the
+          most widely used in the manufacture of TVP: supplies are plentiful
+          and the price is low.
+        </p>
+      </SplitSection>
+
+      <SplitSection kicker="Family 02" titre="Infant food.">
+        <p>
+          Extrusion cooking makes it possible to produce ready-to-use powders
+          to which water alone need be added to obtain instantly rehydrated
+          food, fully gelatinised and cooked. The extruded blend is sterile:
+          it is wholesome and safe for children. Care must nevertheless be
+          taken over the quality of the water or milk added, as well as over
+          the storage conditions of the product once rehydrated.
+        </p>
+        <p>
+          These porridges play an important role in the food independence of
+          developing countries: highly energetic and low in cost, they are a
+          means of fighting child malnutrition. Extrusion makes it possible to
+          use any raw material — each country can therefore adapt its recipes
+          to locally available resources. SETREM also adapts its machines to
+          the energy availability and environmental constraints of the
+          country.
+        </p>
+        <p>
+          <a href="/en/expert-insights/infant-flour-production-by-extrusion-cooking">
+            Read the article: producing infant flours by extrusion cooking →
+          </a>
+        </p>
+      </SplitSection>
+
+      <SplitSection
+        kicker="Families 03 & 04"
+        titre="Snacks and breakfast cereals."
+      >
+        {/* « Les formes extrudées sont très variées afin de répondre à
+            toutes les sollicitations du marché » ouvrait aussi le bloc
+            petfood, mot pour mot : gardé là-bas, reformulé ici. */}
+        <p>
+          A snack can take almost any shape: potato- or maize-based doughs
+          formed to shape, directly expanded extrudates, co-extruded
+          products. Extrusion makes it possible to give snacks different
+          properties depending on the audience:
+        </p>
+        <ul>
+          <li>low in calories, containing resistant starch,</li>
+          <li>refined in taste for adults,</li>
+          <li>attractive in shape and colour for children.</li>
+        </ul>
+        <p>
+          Widespread in North America and Central Europe, breakfast cereals
+          represent a fast-growing market: 10 to 20% in Italy, 20 to
+          25% in Eastern Europe, 15 to 20% in Latin America.
+          Manufacturers mainly target three audiences: children, consumers
+          concerned with nutrition and health, and consumers looking for
+          products high in energy. As with snacks, extrusion makes it possible
+          to produce a whole range of products suited to the expectations of
+          these different audiences.
+        </p>
+        <p>
+          <a href="/en/solutions/equipment-capacity-chart">
+            See the capacity chart →
+          </a>
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">The other markets</h2>
+      </div>
+      <LinkCards items={autres} cols={3} cta="View the market" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>

@@ -1,0 +1,47 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+---
+
+<PageLayout
+  title="Thank you — your request has been received | SETREM"
+  description="Thank you for taking the time to fill in our request form. Your enquiry is being processed."
+  path="/en/contact/thank-you"
+  noindex
+>
+  <PageHero
+    kicker="Contact"
+    titre="Thank you, we have received it."
+    lede="Thank you for taking the time to fill in our request form. Your enquiry has been received and is being processed. We will contact you shortly about the next steps."
+    compact
+  />
+
+  <section class="band sheet band--tight" aria-label="Continue your visit">
+    <div class="container">
+      <p class="retours reveal">
+        <a class="btn btn--dark" href="/en">Back to the home page</a>
+        <a class="retours__lien" href="/en/expert-insights">
+          In the meantime, our expert insights →
+        </a>
+      </p>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .retours {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+  }
+
+  .retours__lien {
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+
+  .retours__lien:hover {
+    color: var(--highlight);
+  }
+</style>

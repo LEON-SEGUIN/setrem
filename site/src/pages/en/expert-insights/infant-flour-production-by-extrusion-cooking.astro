@@ -1,0 +1,158 @@
+---
+import { Image } from 'astro:assets';
+import ArticleLayout from '../../../layouts/ArticleLayout.astro';
+import figLigne from '../../../assets/img/fig-ligne-farines.webp';
+import bouillieImg from '../../../assets/img/article-farines-bouillie.webp';
+---
+
+<ArticleLayout slug="infant-flour-production-by-extrusion-cooking">
+  <p>
+    Precooked flours are today a great success with consumers compared with
+    native flours, because of their convenience, their improved nutritional
+    and organoleptic qualities, and their extended shelf life.
+  </p>
+  <p>
+    Extrusion cooking stands apart from other processes through several
+    competitive advantages: versatility; ease of integration into complete
+    production lines; wide scope for adjustment and automation; high energy
+    efficiency; high production capacity; and the specific nutritional and
+    physico-chemical characteristics it gives to the flours thus processed.
+  </p>
+
+  <h2>Production line and process control</h2>
+  <p>
+    The manufacture of extruded flours goes through the stages described in
+    the following diagram:
+  </p>
+  <!-- TODO: contenu client — cette figure porte du texte français
+       incrusté dans l'image : faire produire une version anglaise.
+       L'alt et la légende sont traduits, pas le visuel. -->
+  <figure>
+    <Image
+      src={figLigne}
+      alt="Diagram of the stages of an extruded flour production line"
+      widths={[600, 900]}
+      width={900}
+      quality={70}
+      sizes="(max-width: 900px) 100vw, 700px"
+      loading="lazy"
+    />
+    <figcaption>The stages in the manufacture of extruded flours.</figcaption>
+  </figure>
+  <p>
+    As regards the equipment and its operation, the following points will need
+    particular attention:
+  </p>
+  <ul>
+    <li>
+      control of hygienic quality (HACCP approach): limiting the risk of water
+      pick-up after extrusion,
+    </li>
+    <li>control of the degree of cooking,</li>
+    <li>
+      control of the correct formulation of the flour: effective dosing and
+      mixing systems, in particular for the mineral and vitamin premix to be
+      incorporated and its even distribution throughout the flour,
+    </li>
+    <li>
+      control of the final particle size, to limit the presence of hard spots
+      when the porridges are reconstituted; a sieving system with recycling of
+      rejects.
+    </li>
+  </ul>
+
+  <h2>Applications of extruded flours in human food</h2>
+  <p>
+    Extruded flours are mainly used as a complementary food, in infant
+    nutrition or in humanitarian intervention programmes. In both cases, they
+    are obtained by formulating blends of flours and by systematic mineral and
+    vitamin fortification. The aim is to balance as well as possible the
+    qualitative and quantitative intake of macro- and micro-constituents, in
+    order to come as close as possible to nutritional recommendations
+    regarding:
+  </p>
+  <ul>
+    <li>the energy value provided by the fats,</li>
+    <li>
+      the nutritional quality of the proteins incorporated: the amino acid
+      composition can be adjusted through a good cereal/pulse
+      complementarity,
+    </li>
+    <li>essential micronutrients (minerals, vitamins, ω3 fatty acids),</li>
+    <li>
+      limiting the factors liable to cause intolerance or discomfort, such as
+      gluten and fibre for the young child.
+    </li>
+  </ul>
+
+  <figure>
+    <Image
+      src={bouillieImg}
+      alt="Reconstituted infant porridge"
+      widths={[600, 900]}
+      width={900}
+      quality={70}
+      sizes="(max-width: 900px) 100vw, 700px"
+      loading="lazy"
+    />
+  </figure>
+
+  <h2>Infant flours produced by extrusion cooking</h2>
+  <p>
+    As regards infant flours, the WHO recommends using them only from
+    6&nbsp;months. At that age, infant flours can be introduced as a
+    complement and then as a gradual substitute for breastfeeding, after
+    rehydration with water or milk. The rehydration rate depends on the age of
+    the child, so as to suit its physiological needs: a slight thickening of
+    the infant milk given in a bottle (follow-on formula), then increasingly
+    thick porridges given with a spoon (children over 12&nbsp;months).
+  </p>
+  <p>
+    At this level, extrusion cooking is of specific interest because of the
+    strongly fluidising behaviour that starch dextrinisation gives to the
+    reconstituted porridges. This makes it possible, for the same viscosity
+    threshold, to increase very appreciably the rate at which dry matter is
+    incorporated into the reconstituted porridges — and therefore to increase
+    their nutritional and energy density by as much.
+  </p>
+  <p>
+    Another factor to take into account is how cooked and how instant these
+    flours are. They fall into three groups:
+  </p>
+  <ul>
+    <li>flours to be cooked, which still need at least 15&nbsp;minutes of cooking,</li>
+    <li>precooked flours, to be boiled for 5 to 10&nbsp;minutes,</li>
+    <li>instant flours, requiring no further cooking.</li>
+  </ul>
+  <p>
+    Starch digestibility is correlated with its degree of gelatinisation, a
+    process known to develop through cooking in excess water. As regards
+    extrusion cooking, this explains why a wet process is preferable to a dry
+    one. It also makes it possible to precook the starch base first and then,
+    after processing, to add the heat-sensitive vitamins as well as any
+    protein enrichment (milk proteins) and sugar. Such a protocol prevents the
+    development of Maillard reactions, which would, under the effect of
+    cooking, immobilise the lysine by reaction with the sugar. Instant flours
+    also limit the energy cost and preparation time: they improve convenience
+    while optimising nutritional and hygienic quality (sterilising cooking),
+    as well as the preservation of the flours.
+  </p>
+
+  <h2>Nutritional supplements used in food aid</h2>
+  <p>
+    In humanitarian contexts, precooked flours can be incorporated into the
+    basic food rations distributed to general beneficiaries. For higher-risk
+    groups — young children, pregnant or breastfeeding women, patients
+    suffering from various conditions, including AIDS — they can be added as
+    supplementary rations to strengthen nutritional intake, as prevention
+    against malnutrition or as treatment of moderate malnutrition.
+  </p>
+  <p>
+    Between 200,000 and 300,000&nbsp;tonnes of such flours are distributed
+    each year by the World Food Programme, a large part of them produced
+    locally and almost exclusively by extrusion cooking. Since this process
+    allows a wide range of raw materials to be incorporated, each country can
+    adapt its recipes to locally available resources.
+  </p>
+  <p><small>Credit: © Dominique Bounie</small></p>
+</ArticleLayout>

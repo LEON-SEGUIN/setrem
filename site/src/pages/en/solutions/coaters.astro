@@ -1,0 +1,83 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import SplitSection from '../../../components/SplitSection.astro';
+import LinkCards from '../../../components/LinkCards.astro';
+import CTABand from '../../../components/CTABand.astro';
+import { autresSolutions } from '../../../data/solutions';
+import enrobageImg from '../../../assets/img/enrobage.webp';
+import croquettesImg from '../../../assets/img/croquettes-extrudees.webp';
+
+const autres = autresSolutions('coaters', 'en').map((s) => ({
+  href: `/en/solutions/${s.slug}`,
+  titre: s.titre,
+  texte: s.texte,
+  image: s.image,
+  alt: s.alt,
+}));
+---
+
+<PageLayout
+  title="Coaters — liquid and powder coating of extrudates | SETREM"
+  description="An even layer of liquid or powder on the extrudate: up to 12% fat in atmospheric coating, or a powder for palatability."
+  path="/en/solutions/coaters"
+>
+  <PageHero
+    kicker="Our solutions"
+    titre="Coaters"
+    lede="Applying an even layer of liquid or powder onto extruded products: coaters improve palatability in pet food and increase the energy content of the feed for aquaculture."
+  />
+
+  <section class="band sheet" aria-label="The coating process">
+    <div class="container">
+      <SplitSection
+        kicker="How it works"
+        titre="A dosing, a spray, a continuous mixing."
+        image={enrobageImg}
+        alt="Coating of extruded products during production"
+      >
+        <p>
+          Coaters are essential to guarantee a consistent quality of the
+          finished product and to meet consumer expectations in terms of
+          taste, texture and appearance.
+        </p>
+        <p>
+          The kibbles are dosed and, according to that dosing, a percentage of
+          liquid is sprayed onto the surface of the kibble. A continuous
+          mixing system evens out the coating. The kibbles can also be dusted
+          with a blend that adds palatability to the product.
+        </p>
+      </SplitSection>
+
+      <SplitSection
+        kicker="Two types of coating"
+        titre="Liquid or powder, depending on the product."
+        image={croquettesImg}
+        alt="Extruded kibbles"
+        reverse
+      >
+        <h3>Liquid coating</h3>
+        <p>
+          To add aromas and flavours, oils and animal fats are used — up to
+          12% in atmospheric coating.
+        </p>
+        <h3>Powder coating</h3>
+        <p>
+          Used in pet food, the powder is applied to intensify the taste and
+          make the product more palatable.
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">The rest of the line</h2>
+      </div>
+      <LinkCards items={autres} cols={4} cta="View the equipment" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>

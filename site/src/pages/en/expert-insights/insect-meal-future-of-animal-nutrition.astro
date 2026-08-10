@@ -1,0 +1,120 @@
+---
+import { Image } from 'astro:assets';
+import ArticleLayout from '../../../layouts/ArticleLayout.astro';
+import elevageImg from '../../../assets/img/article-insectes-elevage.webp';
+---
+
+<ArticleLayout slug="insect-meal-future-of-animal-nutrition">
+  <p>
+    This population growth will lead to a shortage of water, farmland and
+    biodiversity for producing the animal proteins needed for livestock
+    farming and human nutrition. A sustainable solution, an alternative to
+    traditional animal meals (meat and fish), would be the production and use
+    of insect proteins.
+  </p>
+
+  <h2>Why insects?</h2>
+  <p>
+    Insects have always been part of the diet of animals and of humans. Close
+    to 2.5&nbsp;billion people eat them regularly, and they are an integral
+    part of the diet of most wild animals:
+  </p>
+  <ul>
+    <li>40% in trout,</li>
+    <li>up to 50% in growing poultry, pheasants or partridges,</li>
+    <li>5% in wild boar,</li>
+    <li>3% in felines and canines.</li>
+  </ul>
+  <p>
+    Insects are rich in high-quality proteins, in fatty acids and in essential
+    amino acids: they are therefore ideal candidates to replace the animal
+    proteins used in particular in fish and pet food.
+  </p>
+
+  <figure>
+    <Image
+      src={elevageImg}
+      alt="Insect farming for meal production"
+      widths={[600, 900]}
+      width={900}
+      quality={70}
+      sizes="(max-width: 900px) 100vw, 700px"
+      loading="lazy"
+    />
+  </figure>
+
+  <h2>A development challenge</h2>
+  <p>
+    Long-term demand for insect meal in animal nutrition can be estimated at
+    100,000&nbsp;tonnes per year. To meet that demand, it is important to find
+    efficient large-scale farming methods. In France, their number keeps
+    growing, but farmers run into certain technical and regulatory barriers.
+  </p>
+  <p>
+    Industrial farming is energy-hungry: storing larvae in bulk causes heating
+    and, since insects are ectothermic — they do not regulate their own
+    temperature — the temperature of the farming premises must be controlled.
+    To dissipate that heat, systems are needed that stir the mix and
+    circulate air between the layers — systems that consume large amounts of
+    electricity. The choice of species, control of reproduction, management of
+    the raw material supply and the sizing and processing of the finished
+    products will determine the viability of the production.
+  </p>
+  <p>The sector also faces regulatory obstacles:</p>
+  <ul>
+    <li>
+      a ban on the use of proteins of animal origin in feed for farm animals,
+    </li>
+    <li>
+      restrictions on the substrates permitted as insect feed: no manure or
+      slurry, no catering waste or expired food.
+    </li>
+  </ul>
+  <p>
+    Nevertheless, since 1&nbsp;July 2017, insect meal has been authorised in
+    feed for farmed fish.
+  </p>
+
+  <h2>Trials carried out</h2>
+  <p>
+    Trials carried out with 3&nbsp;mm extruded feed containing 30%
+    <i lang="la">Hermetia illucens</i> meal show a digestibility of crude
+    protein and of lipids higher than that of plant meals.
+  </p>
+  <div class="table-scroll">
+    <table class="table-data">
+      <caption class="visually-hidden">
+        Digestibility of extruded feed containing 30% insect meal, in sea bass
+        and trout, as a percentage
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Digestibility</th>
+          <th scope="col">Sea bass</th>
+          <th scope="col">Trout</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Crude protein</th>
+          <td>91.8%</td>
+          <td>87.1%</td>
+        </tr>
+        <tr>
+          <th scope="row">Lipids</th>
+          <td>93.5%</td>
+          <td>92.9%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    Insect meals therefore offer many advantages: rich in high-quality
+    proteins, in fatty acids and in essential amino acids, and highly
+    digestible, they allow farming that preserves natural resources. For these
+    meals to become an essential component of animal feed rather than a niche
+    market, price is the decisive factor: they must be able to compete with
+    fishmeal in fish feed and with meat meal in pet food, the only outlets
+    where they are currently authorised.
+  </p>
+</ArticleLayout>

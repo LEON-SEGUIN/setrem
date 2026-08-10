@@ -1,0 +1,207 @@
+---
+import { Image } from 'astro:assets';
+import ArticleLayout from '../../../layouts/ArticleLayout.astro';
+import figProcede from '../../../assets/img/fig-procede-soja.webp';
+---
+
+<ArticleLayout slug="soybean-processing-method">
+  <p>
+    The bean contains in particular proteases (trypsin inhibitors) that
+    prevent the beans from being digested, haemagglutinins (lectins) that
+    prevent the absorption of nutrients, and allergenic factors that can
+    affect milk-fed calves in particular.
+  </p>
+  <p>
+    In order to make the most of the nutritional components of soybean,
+    extrusion is the best treatment. It improves protein digestibility by
+    11%, lysine by 14%, methionine by 11% and cystine by
+    5% compared with the raw bean, and it also lowers the crude amino
+    acid content and therefore the undigested protein fraction.
+  </p>
+
+  <h2>Technical study</h2>
+  <p>
+    In order to obtain a product with a reasonable energy contribution, making
+    it easier to balance the ration, it is worth partially de-oiling the
+    extruded beans. In this way, the fat content falls from 20% to
+    around 5.4% in the meal, while recovering a high value-added
+    product: soybean oil. In animal feed, the element mainly sought after is
+    the protein level: lowering the fat content therefore raises the protein
+    content of the meal while recovering a co-product.
+  </p>
+  <p>
+    The conventional process has two phases, as the diagram below shows. In
+    order to lower the fat content of the meal further, one solution under
+    study consists in adding a special chamber to the extruder barrel to
+    recover oil. The fat content at the extruder outlet is then 1 to 2%
+    lower, making the work of the press easier, so that it can produce meal
+    with a lower fat content.
+  </p>
+  <figure>
+    <Image
+      src={figProcede}
+      alt="Diagram of the two-phase soybean processing method: extrusion then pressing"
+      widths={[600, 900]}
+      width={900}
+      quality={70}
+      sizes="(max-width: 900px) 100vw, 700px"
+      loading="lazy"
+    />
+    <figcaption>The conventional process, in two phases.</figcaption>
+  </figure>
+
+  <h2>Dry extrusion</h2>
+  <p>
+    Dry extrusion cooks the beans at a high temperature — around 150&nbsp;°C —
+    for a very short time, a few tens of seconds. The heat comes from the
+    mechanical energy created by the shear and friction forces inside the
+    extruder. In the barrel, the water naturally present in the beans remains
+    liquid because of the high pressure (several tens of bars); at the die
+    outlet, the beans return to atmospheric pressure, which causes:
+  </p>
+  <ul>
+    <li>
+      instant evaporation of the water, bringing the extruded beans to a
+      moisture level of 6%,
+    </li>
+    <li>
+      the destruction of the walls of the cells containing the oil, making the
+      work of the press easier,
+    </li>
+    <li>
+      an abrupt drop in temperature, halting all browning reactions.
+    </li>
+  </ul>
+
+  <h2>Mechanical pressing</h2>
+  <p>
+    Extrusion de-oils the beans better than a flaking–cooking–pressing method:
+    at the extruder outlet, the cells containing the fats have been destroyed
+    and the oil is free. The extruder works as a preparation stage for the
+    press, which gives the press a better yield, allows it to work at a higher
+    throughput and gives it a lower wear rate. Trials show that the meal
+    contains on average 1.3% less oil. Moreover, extrusion followed by
+    pressing produces higher yields, of both oil and meal, while incurring
+    less loss.
+  </p>
+
+  <h3>Mass balance</h3>
+  <div class="table-scroll">
+    <table class="table-data">
+      <caption class="visually-hidden">
+        Mass balances for 1,000 kilograms of beans, extrusion–pressing versus
+        flaking–cooking–pressing
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Per 1,000 kg of beans</th>
+          <th scope="col">Meal (kg)</th>
+          <th scope="col">Oil (kg)</th>
+          <th scope="col">Water lost (kg)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">EP — average oil yield</th>
+          <td>788.8</td>
+          <td>145.7</td>
+          <td>65.6</td>
+        </tr>
+        <tr>
+          <th scope="row">FCP — average oil yield</th>
+          <td>774.5</td>
+          <td>140.5</td>
+          <td>85.2</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <small>EP = extrusion–pressing · FCP = flaking–cooking–pressing.</small>
+  </p>
+  <p>
+    As the table below shows, extrusion–pressing produces meal containing
+    close to 45% protein, and divides the antitrypsic factors by 4. In
+    addition, the processed product is very stable, allowing storage for
+    several months thanks to the destruction of the lipases and the
+    lipoxidase, as well as to a low free water content — which avoids adding
+    preservatives, the product being affected neither by rancidity, nor by
+    oxidation, nor by mould.
+  </p>
+
+  <h3>Composition of soybean products</h3>
+  <div class="table-scroll">
+    <table class="table-data">
+      <caption class="visually-hidden">
+        Comparative composition of the raw bean and of the extruded then
+        pressed meal
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Moisture (%)</th>
+          <th scope="col">Fat (%)</th>
+          <th scope="col">Protein (%)</th>
+          <th scope="col">Antitrypsic factors (TIU/mg raw)</th>
+          <th scope="col">Protein solubility</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Raw bean</th>
+          <td>11.8</td>
+          <td>19.3</td>
+          <td>34.6</td>
+          <td>35.5</td>
+          <td>92</td>
+        </tr>
+        <tr>
+          <th scope="row">Meal</th>
+          <td>6.9</td>
+          <td>5.4</td>
+          <td>44.9</td>
+          <td>6.5</td>
+          <td>77</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Economic study</h2>
+  <p>
+    From an economic point of view, it is important to know the cost of this
+    treatment per tonne of soybean. Assuming a plant producing
+    20,000&nbsp;tonnes per year — that is, an average of 3&nbsp;tonnes per
+    hour — the costs are summarised in the table below:
+  </p>
+  <div class="table-scroll">
+    <table class="table-data">
+      <caption class="visually-hidden">
+        Partial costs of extrusion–pressing treatment in euros per tonne
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Partial costs (€/t)</th>
+          <th scope="col">Extrusion–pressing</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Depreciation</th><td>3.60</td></tr>
+        <tr><th scope="row">Financial charges</th><td>0.50</td></tr>
+        <tr><th scope="row">Insurance, cash flow</th><td>1.15</td></tr>
+        <tr><th scope="row">Maintenance</th><td>1.51</td></tr>
+        <tr><th scope="row">Thermal energy</th><td>0</td></tr>
+        <tr><th scope="row">Electrical energy</th><td>15.30</td></tr>
+        <tr><th scope="row">Labour</th><td>10.50</td></tr>
+        <tr><th scope="row">Total (€/t of beans crushed)</th><td>32.56</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <small>Data: interest 2%, electricity €0.05775/kWh.</small>
+  </p>
+  <p>
+    The cost, excluding raw material, of one tonne of soybean extruded then
+    pressed comes to less than €35.
+  </p>
+</ArticleLayout>

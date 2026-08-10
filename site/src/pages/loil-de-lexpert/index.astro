@@ -22,7 +22,7 @@ import { articles } from '../../data/articles';
     <div class="container">
       <ul class="expert-grid">
         {
-          articles.map((a, i) => (
+          articles.fr.map((a, i) => (
             <li class="reveal" style={`--ri: ${i % 3}`}>
               <ArticleCard
                 href={`/loil-de-lexpert/${a.slug}`}

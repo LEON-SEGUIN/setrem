@@ -5,11 +5,12 @@
 Refonte complète du site du client SETREM. Le site actuel est daté : l'objectif
 est une refonte moderne, pas un rafraîchissement visuel.
 
-Statut : le site complet est intégré en maquette (34 pages : accueil animé,
-solutions, applications, ligne pilote, qui sommes-nous, 9 articles experts,
-actualités, contact, ressources, pages légales, 404 — plus les redirections
-301 de `scrape/URLS.md`). Reste : contenus client manquants (TODO dans le
-code), backend du formulaire de contact, hébergement et mise en ligne.
+Statut : le site complet est intégré en maquette, **en français et en anglais**
+(34 pages par langue : accueil animé, solutions, applications, ligne pilote,
+qui sommes-nous, 9 articles experts, actualités, contact, ressources, pages
+légales, 404 — plus les redirections 301 de `scrape/URLS.md`). Reste :
+contenus client manquants (TODO dans le code), backend du formulaire de
+contact, hébergement et mise en ligne.
 
 ---
 
@@ -106,6 +107,24 @@ L'essentiel :
 
 **Astro 5** (choix validé le 6 août 2026) — HTML 100 % statique au build,
 JS livré uniquement pour les animations. Le projet vit dans **`site/`**.
+
+- **Bilingue FR/EN** (10 août 2026) : `i18n` d'Astro, `defaultLocale: 'fr'`,
+  `prefixDefaultLocale: false`. Le français reste à la racine (aucune URL
+  existante n'a bougé), l'anglais vit sous `/en` avec des **segments d'URL
+  traduits** (`/en/solutions/extruders`, pas `/en/nos-solutions/extrudeurs`).
+  - `site/src/i18n/routes.ts` — la table des paires FR↔EN, **source unique**
+    pour le sélecteur de langue et les balises `hreflang`. Toute nouvelle
+    page s'y ajoute par paire, sinon le sélecteur retombe sur l'accueil.
+  - `site/src/i18n/ui.ts` — les chaînes partagées (nav, pied de page, CTA par
+    défaut) et le **glossaire technique** FR→EN à respecter en traduction.
+  - Les composants lisent `Astro.currentLocale` directement (jamais de prop
+    `locale` à faire descendre) ; ceux qui portent du texte en dur ont un
+    objet local `copy = { fr: …, en: … }[locale]`.
+  - Les data files (`articles`, `marches`, `solutions`) sont des
+    `Record<Locale, T[]>` avec un **slug propre à chaque langue** ;
+    `capacites.ts` expose `getApplications(locale)` et `fmt(n, locale)`.
+  - Le sitemap liste les deux langues à plat : l'appariement pour Google
+    passe par les `hreflang` de `Layout.astro`, pas par le sitemap.
 
 - Polices auto-hébergées via `@fontsource-variable/archivo` et
   `@fontsource-variable/inter` (familles enregistrées : `Archivo Variable`,
@@ -207,8 +226,22 @@ propres, et surtout les **9 articles techniques** de « L'œil de l'expert »
       reprennent — validation client obligatoire avant mise en ligne
 - [ ] **Formulaire de contact** : à brancher sur un backend (service de
       formulaires ou endpoint hébergeur) avec redirection vers
-      `/contact/merci` — aujourd'hui il pointe directement sur la page merci
-      sans rien envoyer
+      `/contact/merci` (et `/en/contact/thank-you` côté anglais) —
+      aujourd'hui il pointe directement sur la page merci sans rien envoyer
+- [ ] **Relecture de la version anglaise** par un locuteur natif du métier :
+      la traduction est fidèle au français mais n'a pas été relue. Les trois
+      pages légales anglaises sont une traduction de confort — seul le texte
+      français fait foi, le droit applicable étant français
+- [ ] **Visuels à refaire en anglais** : cinq images portent du texte français
+      incrusté (`fig-maillard-temperature`, `fig-ligne-farines`,
+      `fig-comparatif-soja`, `article-maillard`, et surtout
+      `ecran-automatisme` — l'IHM qui illustre la page automatisme, où un
+      prospect anglophone voit un logiciel qu'il ne peut pas lire). Cette
+      dernière affiche aussi le nom d'un client en en-tête : à valider ou à
+      masquer. TODO posés dans le code
+- [ ] **Plaquette PDF en anglais** : les pages `/en/resources` et
+      `/en/solutions/equipment-capacity-chart` renvoient au PDF français,
+      signalé comme tel
 - [ ] **Redirections 301** : la config Astro (`astro.config.mjs`) génère des
       pages meta-refresh — configurer de vraies 301 serveur chez l'hébergeur
       (plan complet dans `scrape/URLS.md`)
@@ -224,8 +257,6 @@ propres, et surtout les **9 articles techniques** de « L'œil de l'expert »
       toute mise en ligne
 - [ ] **Arbitrer** : le tableau des capacités et la plaquette PDF donnent des
       puissances différentes pour les Y160 et Y200 (cf. `scrape/SYNTHESE.md`)
-- [ ] **Version anglaise ?** L'activité est mondiale, la baseline du logo est déjà
-      en anglais, le site est 100 % FR
 
 **Contenu**
 

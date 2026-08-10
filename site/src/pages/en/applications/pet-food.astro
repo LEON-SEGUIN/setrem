@@ -1,0 +1,97 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import SplitSection from '../../../components/SplitSection.astro';
+import LinkCards from '../../../components/LinkCards.astro';
+import CTABand from '../../../components/CTABand.astro';
+import { autresMarches } from '../../../data/marches';
+import petfoodImg from '../../../assets/img/extrudeur-petfood.webp';
+import croquettesImg from '../../../assets/img/croquettes-chien.webp';
+
+const autres = autresMarches('pet-food', 'en').map((m) => ({
+  href: `/en/applications/${m.slug}`,
+  titre: m.titre,
+  texte: m.texte,
+  image: m.image,
+  alt: m.alt,
+}));
+---
+
+<PageLayout
+  title="Pet food — extrusion of feed for cats and dogs | SETREM"
+  description="Dry and semi-moist feed and co-extruded treats for dogs and cats: SETREM pet food lines, twin-rotor preconditioner included."
+  path="/en/applications/pet-food"
+>
+  <PageHero
+    kicker="Applications"
+    titre="Pet food"
+    lede="Palatable, wholesome and digestible feed — with a twin-rotor preconditioner that accepts even fresh meat."
+  />
+
+  <section class="band sheet" aria-label="Pet food extrusion">
+    <div class="container">
+      <SplitSection
+        kicker="The market"
+        titre="Consistency and digestibility, the twofold challenge."
+        image={petfoodImg}
+        alt="SETREM extruder in pet food production"
+      >
+        <p>
+          In the production of feed for dogs and cats, the challenge is
+          twofold: the consistency of the product matters as much as its
+          digestibility for the animal.
+        </p>
+        <p>
+          SETREM has built genuine experience in designing these lines. The
+          extruded shapes are highly varied, in order to meet every demand of
+          the market. The feed can be dry, semi-moist, or treats such as
+          co-extruded products.
+        </p>
+        <p>
+          The design of the twin-rotor preconditioner allows the inclusion of
+          high-moisture by-products, such as fresh meat.
+        </p>
+      </SplitSection>
+
+      {/* L'ancienne liste « avantages » de cette page (produits élaborés,
+          40 kg/h – 9 t/h, sécheur inclus) était la même que sur
+          /applications/aquaculture et que le chapô de /applications :
+          remplacée par les débits réels du petfood, lus dans le tableau
+          des capacités. */}
+      <SplitSection
+        kicker="The throughputs"
+        titre="From 150 kg/h to 8.5 tonnes per hour."
+        image={croquettesImg}
+        alt="Dog kibbles"
+        reverse
+      >
+        <p>
+          The throughputs read across two particle sizes, above and below
+          5&nbsp;mm in diameter. The S50 starts at 150&nbsp;kg/h in fine
+          pellets; the Z300 reaches 8,500&nbsp;kg/h in pellets larger than
+          5&nbsp;mm.
+        </p>
+        <p>
+          The line is delivered complete: preconditioner, extruder, dryer and
+          coater.
+        </p>
+        <p>
+          <a href="/en/solutions/equipment-capacity-chart">
+            See the capacity chart →
+          </a>
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">The other markets</h2>
+      </div>
+      <LinkCards items={autres} cols={3} cta="View the market" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>

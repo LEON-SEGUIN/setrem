@@ -2,7 +2,15 @@
 import PageLayout from '../../layouts/PageLayout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CTABand from '../../components/CTABand.astro';
-import { modeles, applications, fmt, disclaimer } from '../../data/capacites';
+import {
+  modeles,
+  getApplications,
+  fmt,
+  disclaimer,
+} from '../../data/capacites';
+
+const applications = getApplications('fr');
+const nb = (n: number) => fmt(n, 'fr');
 
 // ⚠️ Y160 / Y200 : la plaquette PDF donne d'autres puissances (110–132 et
 // 160–200 kW) — arbitrage client en attente, ne pas trancher ici.
@@ -49,7 +57,7 @@ const stats = [
         <h2 class="band__title reveal" id="tableau-titre">
           Capacités par modèle et par application.
         </h2>
-        <p class="band__sub reveal">{disclaimer}</p>
+        <p class="band__sub reveal">{disclaimer.fr}</p>
       </div>
 
       <div class="table-scroll reveal">
@@ -75,7 +83,7 @@ const stats = [
                   <td>{m.kw}</td>
                   {applications.map((app) => (
                     <td>
-                      {fmt(app.valeurs[j][0])} – {fmt(app.valeurs[j][1])}
+                      {nb(app.valeurs[j][0])} – {nb(app.valeurs[j][1])}
                     </td>
                   ))}
                 </tr>

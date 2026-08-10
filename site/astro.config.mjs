@@ -3,12 +3,27 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 // Chemins hors index : ni sitemap, ni valeur SEO
-const horsSitemap = ['/contact/merci', '/news', '/les-ressources'];
+// (Astro écarte /404 tout seul, mais pas son jumeau /en/404.)
+const horsSitemap = [
+  '/contact/merci',
+  '/en/contact/thank-you',
+  '/en/404',
+  '/news',
+  '/les-ressources',
+];
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.setrem.com',
   trailingSlash: 'never',
+  // Le français reste à la racine : aucune URL existante ne bouge.
+  // L'anglais vit sous /en. Les segments sont traduits, la table des
+  // paires FR↔EN est dans src/i18n/routes.ts.
+  i18n: {
+    defaultLocale: 'fr',
+    locales: ['fr', 'en'],
+    routing: { prefixDefaultLocale: false },
+  },
   // Les pages HTML (~15 Ko compressées) sont préchargées quand leurs
   // liens entrent à l'écran : la navigation paraît instantanée.
   prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },

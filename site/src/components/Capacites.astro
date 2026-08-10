@@ -1,25 +1,61 @@
 ---
 // Données réelles du tableau des capacités : src/data/capacites.ts
 // (partagées avec /nos-solutions/tableau-des-capacites-des-equipements).
-import { modeles, applications, MAX, fmt, disclaimer } from '../data/capacites';
+import {
+  modeles,
+  getApplications,
+  MAX,
+  fmt,
+  disclaimer,
+} from '../data/capacites';
+import { toLocale } from '../i18n/ui';
+
+const locale = toLocale(Astro.currentLocale);
+const applications = getApplications(locale);
+const nb = (n: number) => fmt(n, locale);
+
+const copy = {
+  fr: {
+    titre: 'Capacités : de 40 kg/h à 9 t/h.',
+    sub: 'Du S50 au Z300, cinq applications sur une seule échelle. Les productions sont indicatives : formule, matières premières et granulométrie font varier les valeurs.',
+    tabsAria: 'Capacités par application',
+    chambres: 'chambres',
+    voirTableau: 'Voir le tableau complet des capacités',
+    caption:
+      'Capacités des extrudeurs SETREM en kilogrammes par heure, par modèle et par application',
+    thModele: 'Modèle',
+    thChambres: 'Chambres',
+    thPuissance: 'Puissance (kW)',
+    lien: 'Consulter la page dédiée aux capacités →',
+    lienHref: '/nos-solutions/tableau-des-capacites-des-equipements',
+  },
+  en: {
+    titre: 'Capacities: from 40 kg/h to 9 t/h.',
+    sub: 'From the S50 to the Z300, five applications on a single scale. Throughputs are indicative: formula, raw materials and particle size make the figures vary.',
+    tabsAria: 'Capacities by application',
+    chambres: 'chambers',
+    voirTableau: 'View the full capacity table',
+    caption:
+      'SETREM extruder capacities in kilograms per hour, by model and by application',
+    thModele: 'Model',
+    thChambres: 'Chambers',
+    thPuissance: 'Power (kW)',
+    lien: 'See the dedicated capacities page →',
+    lienHref: '/en/solutions/equipment-capacity-chart',
+  },
+}[locale];
 ---
 
 <section class="capa" aria-labelledby="capa-titre">
   <div class="container">
     <div class="capa__head">
-      <h2 class="capa__title reveal" id="capa-titre">
-        Capacités : de 40&nbsp;kg/h à 9&nbsp;t/h.
-      </h2>
+      <h2 class="capa__title reveal" id="capa-titre">{copy.titre}</h2>
       {/* « Six extrudeurs monovis couvrent l'ensemble des débits » est le
           chapô de la page dédiée : ici on décrit la lecture du graphique. */}
-      <p class="capa__sub reveal">
-        Du S50 au Z300, cinq applications sur une seule échelle. Les
-        productions sont indicatives : formule, matières premières et
-        granulométrie font varier les valeurs.
-      </p>
+      <p class="capa__sub reveal">{copy.sub}</p>
     </div>
 
-    <div class="capa__tabs reveal" role="tablist" aria-label="Capacités par application" data-tabs>
+    <div class="capa__tabs reveal" role="tablist" aria-label={copy.tabsAria} data-tabs>
       {
         applications.map((app, i) => (
           <button
@@ -58,7 +94,8 @@ import { modeles, applications, MAX, fmt, disclaimer } from '../data/capacites';
                   <div class="bars__meta">
                     <span class="model-ref bars__ref">{modeles[j].ref}</span>
                     <span class="bars__kw">
-                      {modeles[j].kw} kW · {modeles[j].chambres} chambres
+                      {modeles[j].kw} kW · {modeles[j].chambres}{' '}
+                      {copy.chambres}
                     </span>
                   </div>
                   <div class="bars__track">
@@ -72,7 +109,7 @@ import { modeles, applications, MAX, fmt, disclaimer } from '../data/capacites';
                     </div>
                   </div>
                   <p class="bars__value">
-                    {fmt(min)} – {fmt(max)}
+                    {nb(min)} – {nb(max)}
                     <span class="bars__unit">kg/h</span>
                   </p>
                 </li>
@@ -81,9 +118,9 @@ import { modeles, applications, MAX, fmt, disclaimer } from '../data/capacites';
 
             <div class="bars__axis" aria-hidden="true">
               <span>0</span>
-              <span>3 000</span>
-              <span>6 000</span>
-              <span>9 000 kg/h</span>
+              <span>{nb(3000)}</span>
+              <span>{nb(6000)}</span>
+              <span>{nb(9000)} kg/h</span>
             </div>
           </div>
         ))
@@ -91,18 +128,15 @@ import { modeles, applications, MAX, fmt, disclaimer } from '../data/capacites';
     </div>
 
     <details class="capa__table reveal">
-      <summary>Voir le tableau complet des capacités</summary>
+      <summary>{copy.voirTableau}</summary>
       <div class="capa__table-scroll">
         <table>
-          <caption class="visually-hidden">
-            Capacités des extrudeurs SETREM en kilogrammes par heure, par
-            modèle et par application
-          </caption>
+          <caption class="visually-hidden">{copy.caption}</caption>
           <thead>
             <tr>
-              <th scope="col">Modèle</th>
-              <th scope="col">Chambres</th>
-              <th scope="col">Puissance (kW)</th>
+              <th scope="col">{copy.thModele}</th>
+              <th scope="col">{copy.thChambres}</th>
+              <th scope="col">{copy.thPuissance}</th>
               {applications.map((app) => <th scope="col">{app.label}</th>)}
             </tr>
           </thead>
@@ -115,7 +149,7 @@ import { modeles, applications, MAX, fmt, disclaimer } from '../data/capacites';
                   <td>{m.kw}</td>
                   {applications.map((app) => (
                     <td>
-                      {fmt(app.valeurs[j][0])} – {fmt(app.valeurs[j][1])}
+                      {nb(app.valeurs[j][0])} – {nb(app.valeurs[j][1])}
                     </td>
                   ))}
                 </tr>
@@ -124,11 +158,9 @@ import { modeles, applications, MAX, fmt, disclaimer } from '../data/capacites';
           </tbody>
         </table>
       </div>
-      <p class="capa__disclaimer">{disclaimer}</p>
+      <p class="capa__disclaimer">{disclaimer[locale]}</p>
       <p class="capa__link">
-        <a href="/nos-solutions/tableau-des-capacites-des-equipements">
-          Consulter la page dédiée aux capacités →
-        </a>
+        <a href={copy.lienHref}>{copy.lien}</a>
       </p>
     </details>
   </div>

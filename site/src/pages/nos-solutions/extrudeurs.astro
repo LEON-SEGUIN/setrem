@@ -10,7 +10,7 @@ import { modeles } from '../../data/capacites';
 import extrudeursImg from '../../assets/img/extrudeurs-solutions.webp';
 import futImg from '../../assets/img/fut-extrudeur.webp';
 
-const autres = autresSolutions('extrudeurs').map((s) => ({
+const autres = autresSolutions('extrudeurs', 'fr').map((s) => ({
   href: `/nos-solutions/${s.slug}`,
   titre: s.titre,
   texte: s.texte,

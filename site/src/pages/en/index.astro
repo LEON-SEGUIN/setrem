@@ -1,0 +1,30 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SiteNav from '../../components/SiteNav.astro';
+import Hero from '../../components/Hero.astro';
+import Mission from '../../components/Mission.astro';
+import Process from '../../components/Process.astro';
+import Bento from '../../components/Bento.astro';
+import Capacites from '../../components/Capacites.astro';
+import Expert from '../../components/Expert.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+---
+
+<Layout
+  title="SETREM — Complete extrusion lines for human and animal food"
+  description="Since 1986, SETREM has built complete extrusion lines: six single-screw extruders from 22 to 250 kW and a pilot line to validate your products."
+  path="/en"
+>
+  <SiteNav />
+  <main>
+    <Hero />
+    <Mission />
+    <Process />
+    <Bento />
+    <Capacites />
+    <Expert />
+  </main>
+  <SiteFooter />
+
+  <script src="../../scripts/scroll.js"></script>
+</Layout>

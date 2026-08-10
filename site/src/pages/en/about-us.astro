@@ -1,0 +1,94 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SplitSection from '../../components/SplitSection.astro';
+import ShowcaseBand from '../../components/ShowcaseBand.astro';
+import CTABand from '../../components/CTABand.astro';
+import extrusionImg from '../../assets/img/extrusion-setrem.webp';
+import futImg from '../../assets/img/fut-extrudeur.webp';
+import monovisImg from '../../assets/img/extrudeur-monovis.webp';
+---
+
+<PageLayout
+  title="About us — extruder manufacturer since 1986 | SETREM"
+  description="A manufacturer, not a reseller: since 1986, SETREM has designed and built its single-screw extruders in Acquigny, Normandy. The whole line comes from the same house."
+  path="/en/about-us"
+>
+  <PageHero
+    kicker="About us"
+    titre="A manufacturer, not a reseller."
+    lede="Since 1986, SETREM has designed, built and commissioned its own machines — from Acquigny, in Normandy, and for the whole world."
+  />
+  <!-- TODO: contenu client — chiffres d'entreprise (effectif, pays desservis,
+       lignes installées, certifications) : aucun sur le site actuel. -->
+
+  <section class="band sheet" aria-label="The company">
+    <div class="container">
+      {/* Cette page parle de la maison, pas du produit : la fiche
+          technique de l'extrudeur (process, capacités, avantages) vit une
+          seule fois, sur /nos-solutions/extrudeurs. */}
+      <SplitSection
+        kicker="The trade"
+        titre="Designing the machine, then building it."
+        image={extrusionImg}
+        alt="SETREM extrusion line in production"
+      >
+        <p>
+          SETREM does not resell equipment: it designs and builds it. From the
+          hopper to the automation, every component of a line comes from the
+          same house — which is what makes it possible to adjust the machine
+          to a formula, rather than the other way round.
+        </p>
+        <p>
+          Flexibility in operation, low running cost and the quality of the
+          extruded products are recognised strengths of SETREM equipment, much
+          appreciated by manufacturers.
+        </p>
+      </SplitSection>
+
+      <SplitSection
+        kicker="Fully versatile equipment"
+        titre="From pet food to oil milling, the same mechanics."
+        image={futImg}
+        alt="Barrel of a SETREM single-screw extruder"
+        reverse
+      >
+        <ul>
+          <li>Pet food — feed for dogs and cats and more</li>
+          <li>Feed for aquatic species, floating or sinking</li>
+          <li>
+            Livestock feed — high-production dairy cows, other cattle, sheep,
+            pigs, poultry (layers, broilers), horses and more
+          </li>
+        </ul>
+        <p>But also used for:</p>
+        <ul>
+          <li>
+            the processing of raw materials: soybean, rapeseed, wheat and
+            other cereals,
+          </li>
+          <li>
+            preparation for the mechanical extraction of oil from oilseeds.
+          </li>
+        </ul>
+        <p>
+          <a href="/en/applications">Discover the applications →</a>
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <!-- L'atelier en plein format et sur fond sombre : la photo portait la
+       section, elle était réduite à une illustration sous un titre. -->
+  <ShowcaseBand
+    id="atelier-titre"
+    eyebrow="The workshop"
+    titre="Built in Acquigny, Normandy."
+    accent="Normandy."
+    texte="ZI Les Pâtis, 7 rue Robert Dumont, 27400 Acquigny, France."
+    image={monovisImg}
+    alt="SETREM single-screw extruder being assembled in the workshop"
+  />
+
+  <CTABand />
+</PageLayout>

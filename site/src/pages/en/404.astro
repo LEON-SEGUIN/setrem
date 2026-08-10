@@ -1,0 +1,43 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+---
+
+<PageLayout
+  title="Page not found (404) — SETREM"
+  description="The page you are looking for does not exist or has been moved."
+  path="/en/404"
+  noindex
+>
+  <PageHero
+    kicker="Error 404"
+    titre="Oops! Page not found."
+    lede="It looks like the page you are looking for does not exist or has been moved."
+    compact
+  />
+
+  <section class="band sheet band--tight" aria-label="Options">
+    <div class="container">
+      <div class="prose prose--flow reveal">
+        <p>Here are a few options to help you find what you are looking for:</p>
+        <ul>
+          <li>check the URL to make sure it is correct,</li>
+          <li>go back to the home page to explore our other content.</li>
+        </ul>
+        <p>
+          If you are still having trouble, do get in touch with us through our
+          <a href="/en/contact">contact form</a>.
+        </p>
+      </div>
+      <p class="retour reveal" style="--ri: 1">
+        <a class="btn btn--dark" href="/en">Back to the home page</a>
+      </p>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .retour {
+    margin-top: var(--space-8);
+  }
+</style>

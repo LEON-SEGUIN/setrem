@@ -1,0 +1,46 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import LinkCards from '../../../components/LinkCards.astro';
+import CTABand from '../../../components/CTABand.astro';
+import eurotierImg from '../../../assets/img/news-eurotier.webp';
+import voeuxImg from '../../../assets/img/news-voeux-2026.webp';
+
+const items = [
+  {
+    href: '/en/news/eurotier-2026-hanover',
+    titre: 'EuroTier 2026: 10 to 13 November in Hanover',
+    texte: 'Meet SETREM at the EuroTier trade fair in Hanover — Hall 12, stand E48.',
+    image: eurotierImg,
+    alt: 'EuroTier trade fair',
+  },
+  {
+    href: '/en/news/2026-a-new-year-taking-shape',
+    titre: '2026, a new year taking shape',
+    texte: 'We send you our very best wishes for the year 2026.',
+    image: voeuxImg,
+    alt: 'SETREM greetings for 2026',
+  },
+];
+---
+
+<PageLayout
+  title="News — trade fairs and company life | SETREM"
+  description="SETREM news: trade fairs, appointments and company life. Next appointment: EuroTier 2026 in Hanover, from 10 to 13 November."
+  path="/en/news"
+>
+  <PageHero
+    kicker="News"
+    titre="SETREM appointments."
+    lede="Trade fairs and company life: the latest news from Acquigny."
+  />
+
+  <section class="band sheet" aria-labelledby="actus-titre">
+    <h2 class="visually-hidden" id="actus-titre">SETREM news</h2>
+    <div class="container">
+      <LinkCards items={items} cols={2} cta="Read the story" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>

@@ -5,6 +5,12 @@ import '../styles/global.css';
 // bout de la chaîne HTML → CSS → @font-face.
 import archivoLatin from '@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2?url';
 import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import {
+  ui,
+  toLocale,
+  localeAlternates,
+  getAlternatePath,
+} from '../i18n/ui';
 
 interface Props {
   title: string;
@@ -19,17 +25,32 @@ interface Props {
 
 const { title, description, path = '/', noindex = false, jsonLdExtra } = Astro.props;
 
+const locale = toLocale(Astro.currentLocale);
+const t = ui[locale];
+
 const site = Astro.site ?? new URL('https://www.setrem.com');
 const canonical = new URL(path, site);
 const ogImage = new URL('/og.png', site);
+
+// hreflang : les deux membres de la paire, plus x-default sur le français
+// (la langue d'origine du contenu).
+const pathFr = locale === 'fr' ? path : getAlternatePath(path, 'fr');
+const pathEn = locale === 'en' ? path : getAlternatePath(path, 'en');
+const alternates =
+  pathFr && pathEn
+    ? [
+        { hreflang: 'fr', href: new URL(pathFr, site).toString() },
+        { hreflang: 'en', href: new URL(pathEn, site).toString() },
+        { hreflang: 'x-default', href: new URL(pathFr, site).toString() },
+      ]
+    : [];
 
 // Données réelles — voir scrape/SYNTHESE.md. Ne rien inventer ici.
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   name: 'SETREM',
-  description:
-    "Depuis 1986, SETREM conçoit et construit des lignes complètes d'extrusion pour l'alimentation humaine et animale.",
+  description: t.jsonLd.description,
   url: site.toString(),
   telephone: '+33232250847',
   foundingDate: '1986',
@@ -45,7 +66,7 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -53,6 +74,11 @@ const jsonLd = {
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
+    {
+      alternates.map((a) => (
+        <link rel="alternate" hreflang={a.hreflang} href={a.href} />
+      ))
+    }
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
@@ -66,7 +92,7 @@ const jsonLd = {
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="SETREM" />
-    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:locale" content={localeAlternates[locale]} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />

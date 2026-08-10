@@ -1,0 +1,116 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import SplitSection from '../../../components/SplitSection.astro';
+import LinkCards from '../../../components/LinkCards.astro';
+import CTABand from '../../../components/CTABand.astro';
+import { autresMarches } from '../../../data/marches';
+import betailImg from '../../../assets/img/app-betail.webp';
+
+const autres = autresMarches('livestock', 'en').map((m) => ({
+  href: `/en/applications/${m.slug}`,
+  titre: m.titre,
+  texte: m.texte,
+  image: m.image,
+  alt: m.alt,
+}));
+---
+
+<PageLayout
+  title="Livestock — extrusion of compound feed and pellets | SETREM"
+  description="The stages and benefits of extruding livestock feed: digestibility, uniform and stable pellets, contaminants eliminated, flexible formulation."
+  path="/en/applications/livestock"
+>
+  <PageHero
+    kicker="Applications"
+    titre="Livestock"
+    lede="High-production dairy cows, other cattle, sheep, pigs, poultry (layers, broilers), horses: one and the same line, as many formulas."
+  />
+
+  <section class="band sheet" aria-label="The process and its benefits">
+    <div class="container">
+      <SplitSection
+        kicker="The process"
+        titre="Five stages, from raw material to pellet."
+        image={betailImg}
+        alt="Livestock on a farm"
+      >
+        <p>
+          The extrusion of livestock feed is an industrial process used to
+          manufacture compound feed or pellets: mixing of the raw materials,
+          cooking under high pressure and temperature, then passing through a
+          die.
+        </p>
+        <ol>
+          <li>
+            <strong>Preparation of the ingredients</strong> — cereals, pulses,
+            animal or vegetable proteins are cleaned, ground and mixed
+            according to precise formulas.
+          </li>
+          <li>
+            <strong>Mixing and conditioning</strong> — the ingredients form an
+            even paste; water, additives or binding agents can be added at
+            this stage.
+          </li>
+          <li>
+            <strong>Extrusion cooking</strong> — heat, pressure and shear
+            gelatinise the starch, denature the proteins and sterilise the
+            product.
+          </li>
+          <li>
+            <strong>Forming and cutting</strong> — the die gives the product
+            its shape, and a blade cuts the extrudates to the desired length.
+          </li>
+          <li>
+            <strong>Drying and cooling</strong> — the extrudates are dried then
+            cooled to stabilise the product and make it easier to store.
+          </li>
+        </ol>
+      </SplitSection>
+
+      <SplitSection
+        kicker="The benefits"
+        titre="What extrusion changes for the farmer."
+        reverse
+      >
+        <ul>
+          <li>
+            <strong>Improved digestibility</strong> — starch gelatinisation and
+            protein denaturation make the nutrients more accessible to the
+            animals.
+          </li>
+          <li>
+            <strong>Uniformity and stability</strong> — even, stable pellets
+            that are easy to handle, store and distribute.
+          </li>
+          <li>
+            <strong>Elimination of contaminants</strong> — the high heat kills
+            pathogens and inactivates certain toxins, making the feed safer.
+          </li>
+          <li>
+            <strong>Flexible formulation</strong> — extrusion allows a variety
+            of ingredients to be incorporated, including nutritional
+            additives, to meet the specific needs of the animals.
+          </li>
+        </ul>
+        <p>
+          <a href="/en/expert-insights/the-extruder-an-unmatched-tool-for-livestock-production">
+            Read the article: the extruder, an unmatched tool for livestock
+            production →
+          </a>
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">The other markets</h2>
+      </div>
+      <LinkCards items={autres} cols={3} cta="View the market" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>

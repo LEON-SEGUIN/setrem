@@ -8,7 +8,7 @@ import { autresSolutions } from '../../data/solutions';
 import enrobageImg from '../../assets/img/enrobage.webp';
 import croquettesImg from '../../assets/img/croquettes-extrudees.webp';
 
-const autres = autresSolutions('enrobeurs').map((s) => ({
+const autres = autresSolutions('enrobeurs', 'fr').map((s) => ({
   href: `/nos-solutions/${s.slug}`,
   titre: s.titre,
   texte: s.texte,

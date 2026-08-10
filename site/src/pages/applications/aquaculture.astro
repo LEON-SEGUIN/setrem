@@ -8,7 +8,7 @@ import { autresMarches } from '../../data/marches';
 import aquaImg from '../../assets/img/app-aquaculture.webp';
 import ligneImg from '../../assets/img/ligne-extrusion-aquaculture.webp';
 
-const autres = autresMarches('aquaculture').map((m) => ({
+const autres = autresMarches('aquaculture', 'fr').map((m) => ({
   href: `/applications/${m.slug}`,
   titre: m.titre,
   texte: m.texte,

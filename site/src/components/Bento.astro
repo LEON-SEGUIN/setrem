@@ -3,6 +3,84 @@ import { Image } from 'astro:assets';
 import atelier from '../assets/img/atelier-extrudeurs.webp';
 import laboratoire from '../assets/img/extrudeur-laboratoire.webp';
 import extrudeurAtelier from '../assets/img/extrudeur-atelier.webp';
+import { toLocale, contact as coord } from '../i18n/ui';
+
+const locale = toLocale(Astro.currentLocale);
+
+const copy = {
+  fr: {
+    titreA: "Un partenaire industriel, de l'essai pilote",
+    titreB: 'à la ligne en production.',
+    cta: 'Lancer un projet',
+    ctaHref: '/contact',
+    sub: "SETREM réunit la construction des machines, la mise en route, le conseil en formulation et un stock de pièces détachées.",
+    gammeEyebrow: 'La gamme',
+    altAtelier: 'Extrudeurs monovis SETREM alignés en atelier',
+    piloteEyebrow: 'La ligne pilote',
+    citation: "« Testez la faisabilité de votre produit avant d'investir. »",
+    piloteMeta:
+      "Une unité de recherche et développement intégrée à l'atelier d'Acquigny, ouverte aux industriels de l'agro-alimentaire.",
+    piloteLien: 'Découvrir la ligne pilote',
+    piloteHref: '/la-ligne-pilote',
+    ligneEyebrow: 'Une ligne complète',
+    altLaboratoire:
+      "Organes d'une ligne d'extrusion SETREM : vannes, flexibles et fourreau",
+    composants: [
+      'Trémie',
+      'Doseur',
+      'Préconditionneur PBR',
+      'Fourreau & vis',
+      'Cutter',
+      'Sécheurs',
+      'Enrobeurs',
+      'Automatisme',
+    ],
+    depuisEyebrow: 'Depuis',
+    depuisNote:
+      "Constructeur français d'extrudeurs monovis, à Acquigny, Normandie",
+    altExtrudeur: "Fourreau d'extrudeur SETREM en cours d'assemblage en atelier",
+    contactEyebrow: 'Parler à SETREM',
+    contactAria: 'Aller à la page contact',
+    contactHref: '/contact',
+    pays: 'France',
+  },
+  en: {
+    titreA: 'An industrial partner, from the pilot trial',
+    titreB: 'to the line in production.',
+    cta: 'Start a project',
+    ctaHref: '/en/contact',
+    sub: 'SETREM brings together machine construction, commissioning, formulation advice and a stock of spare parts.',
+    gammeEyebrow: 'The range',
+    altAtelier: 'SETREM single-screw extruders lined up in the workshop',
+    piloteEyebrow: 'The pilot line',
+    citation: '“Test the feasibility of your product before investing.”',
+    piloteMeta:
+      'A research and development unit built into the Acquigny workshop, open to food industry manufacturers.',
+    piloteLien: 'Discover the pilot line',
+    piloteHref: '/en/pilot-line',
+    ligneEyebrow: 'A complete line',
+    altLaboratoire:
+      'Components of a SETREM extrusion line: valves, hoses and barrel',
+    composants: [
+      'Hopper',
+      'Feeder',
+      'PBR preconditioner',
+      'Barrel & screw',
+      'Cutter',
+      'Dryers',
+      'Coaters',
+      'Automation',
+    ],
+    depuisEyebrow: 'Since',
+    depuisNote:
+      'French manufacturer of single-screw extruders, in Acquigny, Normandy',
+    altExtrudeur: 'SETREM extruder barrel being assembled in the workshop',
+    contactEyebrow: 'Talk to SETREM',
+    contactAria: 'Go to the contact page',
+    contactHref: '/en/contact',
+    pays: 'France',
+  },
+}[locale];
 
 // Gamme réelle — scrape/SYNTHESE.md §3
 const gamme = [
@@ -16,16 +94,7 @@ const gamme = [
 
 // Composition d'une ligne complète — dans l'ordre du process.
 // Numérotés : la valeur d'usage est la séquence, pas la liste.
-const composants = [
-  'Trémie',
-  'Doseur',
-  'Préconditionneur PBR',
-  'Fourreau & vis',
-  'Cutter',
-  'Sécheurs',
-  'Enrobeurs',
-  'Automatisme',
-];
+const composants = copy.composants;
 
 // Deux rangées qui défilent en sens inverse : la coupure se fait au
 // milieu du process, chaque rangée reste lisible seule.
@@ -41,20 +110,15 @@ const rangeeB = composants.slice(4);
           redeviennent du texte courant sous 900 px, où il faut 3 lignes.
           L'insécable y protège encore le terme « essai pilote ». */}
       <h2 class="partner__title reveal" id="partner-titre">
-        <span class="partner__ligne">
-          Un partenaire industriel, de l'essai&nbsp;pilote
-        </span>
-        <span class="partner__ligne">à la ligne en production.</span>
+        <span class="partner__ligne">{copy.titreA}</span>
+        <span class="partner__ligne">{copy.titreB}</span>
       </h2>
-      <a class="btn btn--light partner__cta reveal" href="/contact">
-        Lancer un projet <span aria-hidden="true">↗</span>
+      <a class="btn btn--light partner__cta reveal" href={copy.ctaHref}>
+        {copy.cta} <span aria-hidden="true">↗</span>
       </a>
     </div>
 
-    <p class="partner__sub reveal">
-      SETREM réunit la construction des machines, la mise en route, le conseil
-      en formulation et un stock de pièces détachées.
-    </p>
+    <p class="partner__sub reveal">{copy.sub}</p>
 
     <div class="bento">
       <!-- La gamme — carte haute, pleine hauteur -->
@@ -63,7 +127,7 @@ const rangeeB = composants.slice(4);
           <div class="media__frame" style="--drift: 24s; --dx: -3.4%; --dy: -4.2%">
             <Image
               src={atelier}
-              alt="Extrudeurs monovis SETREM alignés en atelier"
+              alt={copy.altAtelier}
               widths={[500, 800, 1100]}
               width={1100}
               quality={70}
@@ -74,7 +138,7 @@ const rangeeB = composants.slice(4);
           <div class="media__scrim" aria-hidden="true"></div>
         </div>
         <div class="card__body">
-          <p class="eyebrow eyebrow--media">La gamme</p>
+          <p class="eyebrow eyebrow--media">{copy.gammeEyebrow}</p>
           <ul class="ladder">
             {
               gamme.map(({ ref, kw }) => (
@@ -92,21 +156,18 @@ const rangeeB = composants.slice(4);
       <!-- La ligne pilote — carte claire, la voix du client -->
       <article class="card card--quote">
         <div class="card__body card__body--pad">
-          <p class="eyebrow">La ligne pilote</p>
+          <p class="eyebrow">{copy.piloteEyebrow}</p>
           {/* Même phrase que l'ancien site, redécoupée : l'accroche seule
               en citation, le reste en appui. La carte « voix » de la
               référence tient en deux lignes — c'est ce qui lui donne son
               calme, et ce qui tenait la grille trop haute ici. */}
-          <blockquote class="quote">
-            « Testez la faisabilité de votre produit avant d'investir. »
-          </blockquote>
+          <blockquote class="quote">{copy.citation}</blockquote>
           <!-- TODO: contenu client — remplacer par un témoignage industriel
                signé (nom, fonction, société) dès qu'il est recueilli -->
           <p class="quote__meta">
-            Une unité de recherche et développement intégrée à l'atelier
-            d'Acquigny, ouverte aux industriels de l'agro-alimentaire.
-            <a class="quote__link" href="/la-ligne-pilote">
-              Découvrir la ligne pilote <span aria-hidden="true">↗</span>
+            {copy.piloteMeta}
+            <a class="quote__link" href={copy.piloteHref}>
+              {copy.piloteLien} <span aria-hidden="true">↗</span>
             </a>
           </p>
         </div>
@@ -121,7 +182,7 @@ const rangeeB = composants.slice(4);
           >
             <Image
               src={laboratoire}
-              alt="Organes d'une ligne d'extrusion SETREM : vannes, flexibles et fourreau"
+              alt={copy.altLaboratoire}
               widths={[500, 800, 1100]}
               width={1100}
               quality={70}
@@ -132,7 +193,7 @@ const rangeeB = composants.slice(4);
           <div class="media__scrim media__scrim--deep" aria-hidden="true"></div>
         </div>
         <div class="card__body">
-          <p class="eyebrow eyebrow--media">Une ligne complète</p>
+          <p class="eyebrow eyebrow--media">{copy.ligneEyebrow}</p>
           <div class="marquees">
             {
               [rangeeA, rangeeB].map((rangee, r) => (
@@ -174,7 +235,7 @@ const rangeeB = composants.slice(4);
           >
             <Image
               src={extrudeurAtelier}
-              alt="Fourreau d'extrudeur SETREM en cours d'assemblage en atelier"
+              alt={copy.altExtrudeur}
               widths={[500, 800, 1100]}
               width={1100}
               quality={70}
@@ -185,11 +246,9 @@ const rangeeB = composants.slice(4);
           <div class="media__scrim media__scrim--even" aria-hidden="true"></div>
         </div>
         <div class="card__body card__body--center">
-          <p class="eyebrow eyebrow--media">Depuis</p>
+          <p class="eyebrow eyebrow--media">{copy.depuisEyebrow}</p>
           <p class="depuis__annee">1986</p>
-          <p class="depuis__note">
-            Constructeur français d'extrudeurs monovis, à Acquigny, Normandie
-          </p>
+          <p class="depuis__note">{copy.depuisNote}</p>
         </div>
       </article>
 
@@ -197,19 +256,19 @@ const rangeeB = composants.slice(4);
       <article class="card card--contact">
         <div class="card__body card__body--pad card__body--row">
           <div>
-            <p class="eyebrow">Parler à SETREM</p>
+            <p class="eyebrow">{copy.contactEyebrow}</p>
             <p class="contact__tel">
-              <a href="tel:+33232250847">+33 2 32 25 08 47</a>
+              <a href={coord.telHref}>{coord.tel}</a>
             </p>
             <p class="contact__adresse">
-              ZI Les Pâtis, 7 rue Robert Dumont<br />27400 Acquigny, France
+              {coord.zone}, {coord.rue}<br />{coord.ville}, {copy.pays}
             </p>
             <!-- TODO: contenu client — e-mail public à confirmer -->
           </div>
           <a
             class="contact__fleche"
-            href="/contact"
-            aria-label="Aller à la page contact"
+            href={copy.contactHref}
+            aria-label={copy.contactAria}
           >
             <span aria-hidden="true">↗</span>
           </a>

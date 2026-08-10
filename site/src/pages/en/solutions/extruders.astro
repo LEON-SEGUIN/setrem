@@ -1,0 +1,192 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import SplitSection from '../../../components/SplitSection.astro';
+import PinnedSteps from '../../../components/PinnedSteps.astro';
+import LinkCards from '../../../components/LinkCards.astro';
+import CTABand from '../../../components/CTABand.astro';
+import { autresSolutions } from '../../../data/solutions';
+import { modeles } from '../../../data/capacites';
+import extrudeursImg from '../../../assets/img/extrudeurs-solutions.webp';
+import futImg from '../../../assets/img/fut-extrudeur.webp';
+
+const autres = autresSolutions('extruders', 'en').map((s) => ({
+  href: `/en/solutions/${s.slug}`,
+  titre: s.titre,
+  texte: s.texte,
+  image: s.image,
+  alt: s.alt,
+}));
+
+// L'anatomie de la machine, dans l'ordre où la matière la traverse.
+// Textes du client (scrape/SYNTHESE.md §3), redécoupés en chapitres :
+// c'était une liste numérotée dans un bloc texte — c'est le contenu le
+// plus mécanique de la page, il méritait le plein écran.
+const anatomie = [
+  {
+    nav: 'Hopper',
+    titre: 'The hopper',
+    texte:
+      'While providing sufficient storage for the formula, it guarantees perfect extraction of the product.',
+  },
+  {
+    nav: 'Feeder',
+    titre: 'The feeder',
+    texte:
+      'It regulates the flow of raw materials. Depending on the application, it can be single-screw or twin-screw.',
+  },
+  {
+    nav: 'Preconditioner',
+    titre: 'The preconditioner',
+    texte:
+      'Single- or twin-rotor, upstream of the extruder: increased throughput, steady operation, reduced wear, even hydration, a retention time of 3 minutes, and greater palatability and starch gelatinisation.',
+  },
+  {
+    nav: 'Barrel',
+    titre: 'The modular components',
+    texte:
+      'The barrel is made up of different models of screws, locks and chambers in high-strength steel, double-jacketed so they can be heated or cooled.',
+  },
+  {
+    nav: 'Cutter',
+    titre: 'The cutter',
+    texte:
+      'Interchangeable knives for optimal cutting quality, hinged and integral with the machine. Its easy opening makes the die very accessible, and SETREM dies produce many shapes of feed.',
+  },
+];
+---
+
+<PageLayout
+  title="Single-screw extruders — the S50 to Z300 range | SETREM"
+  description="Six single-screw extruders from 22 to 250 kW, dry or semi-wet. Hopper, feeder, preconditioner, modular barrel, cutter: the anatomy of an extruder."
+  path="/en/solutions/extruders"
+>
+  <PageHero
+    kicker="Our solutions"
+    titre="Single-screw extruders"
+    lede="Six models, from 22 to 250 kW and from 3 to 9 chambers. A single screw, for pet food as well as for textured vegetable protein."
+  />
+
+  <section class="band sheet" aria-label="The single-screw extruder">
+    <div class="container">
+      {/* Emplacement unique de la fiche produit : process couverts,
+          amplitude de capacité et les quatre arguments du client (repris
+          tels quels du site et de la plaquette). Ils figuraient aussi sur
+          /qui-sommes-nous, en version tronquée à trois — les autres pages
+          renvoient ici plutôt que de recopier. */}
+      <SplitSection
+        kicker="The heart of the line"
+        titre="Suited to dry as well as semi-wet processing."
+        image={extrudeursImg}
+        alt="SETREM single-screw extruders lined up in the workshop"
+      >
+        <p>
+          Equally suited to dry and semi-wet processing, single-screw
+          extruders make it possible to manufacture the most sophisticated
+          products. SETREM offers complete lines, with capacities from
+          40&nbsp;kg/h to 9&nbsp;t/h.
+        </p>
+        <ul>
+          <li>Flexible and robust in operation</li>
+          <li>Low running cost</li>
+          <li>Quality of the extruded products</li>
+          <li>Maximum profitability</li>
+        </ul>
+      </SplitSection>
+    </div>
+  </section>
+
+  <PinnedSteps
+    id="anatomie"
+    titre="The anatomy of a SETREM extruder, component by component"
+    eyebrow="The functional mechanical components"
+    image={futImg}
+    alt="Barrel of a SETREM single-screw extruder, chambers and screw exposed"
+    steps={anatomie}
+  />
+
+  <section class="band" aria-labelledby="gamme-titre">
+    <div class="container">
+      <div class="band__head">
+        <p class="eyebrow">The range</p>
+        <h2 class="band__title reveal" id="gamme-titre">
+          From the S50 to the Z300.
+        </h2>
+      </div>
+      <ul class="gamme-grid">
+        {
+          modeles.map((m, i) => (
+            <li class="gamme-grid__card reveal" style={`--ri: ${i}`}>
+              <span class="model-ref gamme-grid__ref">{m.ref}</span>
+              <span class="gamme-grid__kw">{m.kw} kW</span>
+              <span class="gamme-grid__chambres">{m.chambres} chambers</span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="gamme-grid__note reveal">
+        <a href="/en/solutions/equipment-capacity-chart">
+          See the capacity chart, application by application →
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">The rest of the line</h2>
+      </div>
+      <LinkCards items={autres} cols={4} cta="View the equipment" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>
+
+<style>
+  .gamme-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .gamme-grid__card {
+    display: grid;
+    gap: var(--space-1);
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .gamme-grid__ref {
+    font-size: var(--text-h3);
+    color: var(--blue-800);
+  }
+
+  .gamme-grid__kw {
+    font-weight: 600;
+    font-size: var(--text-small);
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .gamme-grid__chambres {
+    font-size: var(--text-micro);
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .gamme-grid__note {
+    margin-top: var(--space-6);
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+
+  @media (max-width: 900px) {
+    .gamme-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

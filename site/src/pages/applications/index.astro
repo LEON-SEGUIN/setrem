@@ -7,7 +7,7 @@ import CTABand from '../../components/CTABand.astro';
 import { marches } from '../../data/marches';
 import sojaImg from '../../assets/img/article-graine-soja.webp';
 
-const items = marches.map((m) => ({
+const items = marches.fr.map((m) => ({
   href: `/applications/${m.slug}`,
   titre: m.titre,
   texte: m.texte,

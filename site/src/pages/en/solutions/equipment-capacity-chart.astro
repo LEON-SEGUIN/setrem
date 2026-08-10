@@ -1,0 +1,180 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import CTABand from '../../../components/CTABand.astro';
+import {
+  modeles,
+  getApplications,
+  fmt,
+  disclaimer,
+} from '../../../data/capacites';
+
+const applications = getApplications('en');
+const nb = (n: number) => fmt(n, 'en');
+
+// ⚠️ Y160 / Y200 : la plaquette PDF donne d'autres puissances (110–132 et
+// 160–200 kW) — arbitrage client en attente, ne pas trancher ici.
+
+// ⚠️ Le chiffre de tête est lu dans le tableau affiché juste en dessous
+// (minimum : S50 en soja à sec, 100 kg/h — maximum : Z300 en extrusion
+// humide, 9 000 kg/h). L'ancien site annonce « 40 kg/h » d'amplitude
+// basse, valeur qui n'apparaît nulle part dans le tableau : l'afficher
+// ici contredisait la donnée à l'écran. Repris ailleurs sur le site tel
+// que le client l'écrit — arbitrage client en attente (ligne pilote ?
+// autre application ?).
+const stats = [
+  { valeur: '100 kg/h – 9 t/h', label: 'of output, from the S50 to the Z300' },
+  { valeur: '22 – 250', label: 'kW of installed power' },
+  { valeur: '3 – 9', label: 'chambers per barrel' },
+];
+---
+
+<PageLayout
+  title="Equipment capacity chart — S50 to Z300 | SETREM"
+  description="The capacities of the six SETREM single-screw extruders in kg/h: dry soybean, wet extrusion, cereal blend, pet food and fish, from the S50 to the Z300."
+  path="/en/solutions/equipment-capacity-chart"
+>
+  <PageHero
+    kicker="Our solutions"
+    titre="The capacity chart."
+    lede="Six single-screw extruders cover the whole range of throughputs, from the pilot line to industrial production. All values are expressed in kilograms per hour."
+  >
+    <ul class="phero-stats">
+      {
+        stats.map(({ valeur, label }) => (
+          <li>
+            <span class="phero-stats__valeur">{valeur}</span>
+            <span class="phero-stats__label">{label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </PageHero>
+
+  <section class="band sheet" aria-labelledby="tableau-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="tableau-titre">
+          Capacities by model and by application.
+        </h2>
+        <p class="band__sub reveal">{disclaimer.en}</p>
+      </div>
+
+      <div class="table-scroll reveal">
+        <table class="table-data table-data--flow">
+          <caption class="visually-hidden">
+            SETREM extruder capacities in kilograms per hour, by model and by
+            application
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Model</th>
+              <th scope="col">Chambers</th>
+              <th scope="col">Power (kW)</th>
+              {applications.map((app) => <th scope="col">{app.label}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {
+              modeles.map((m, j) => (
+                <tr>
+                  <th scope="row" class="model-ref">{m.ref}</th>
+                  <td>{m.chambres}</td>
+                  <td>{m.kw}</td>
+                  {applications.map((app) => (
+                    <td>
+                      {nb(app.valeurs[j][0])} – {nb(app.valeurs[j][1])}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="suite reveal">
+        <a class="btn btn--dark" href="/en/contact">Discuss your throughput</a>
+        <a class="suite__lien" href="/en/solutions/extruders">
+          Discover the extruders →
+        </a>
+        <a class="suite__lien" href="/en/pilot-line">
+          Test your formula on the pilot line →
+        </a>
+        <!-- TODO: contenu client — la plaquette n'existe qu'en français.
+             Faire produire une version anglaise, ou la faire traduire. -->
+        <a
+          class="suite__lien"
+          href="/docs/plaquette-solutions-extrusion.pdf"
+          hreflang="fr"
+          type="application/pdf"
+        >
+          Download the brochure (PDF in French, 3.4 MB) →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>
+
+<style>
+  .phero-stats {
+    margin-top: var(--space-8);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+  }
+
+  html.js .phero-stats {
+    animation: stats-in 0.9s var(--ease-out) 0.6s both;
+  }
+
+  @keyframes stats-in {
+    from {
+      opacity: 0;
+      translate: 0 24px;
+    }
+  }
+
+  .phero-stats li {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .phero-stats__valeur {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-h3);
+    color: var(--blue-800);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .phero-stats__label {
+    font-size: var(--text-small);
+    color: var(--steel-700);
+  }
+
+  .suite {
+    margin-top: var(--space-8);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+  }
+
+  .suite__lien {
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+
+  .suite__lien:hover {
+    color: var(--highlight);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.js .phero-stats {
+      animation: none;
+    }
+  }
+</style>

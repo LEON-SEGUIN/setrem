@@ -1,0 +1,73 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import SplitSection from '../../../components/SplitSection.astro';
+import LinkCards from '../../../components/LinkCards.astro';
+import CTABand from '../../../components/CTABand.astro';
+import { autresSolutions } from '../../../data/solutions';
+import ecranImg from '../../../assets/img/ecran-automatisme.webp';
+
+const autres = autresSolutions('automation', 'en').map((s) => ({
+  href: `/en/solutions/${s.slug}`,
+  titre: s.titre,
+  texte: s.texte,
+  image: s.image,
+  alt: s.alt,
+}));
+---
+
+<PageLayout
+  title="Automation — automatic control software | SETREM"
+  description="Automatic control software developed for extrusion: extruder start-up and shutdown sequences, full control throughout production."
+  path="/en/solutions/automation"
+>
+  <PageHero
+    kicker="Our solutions"
+    titre="Automation"
+    lede="Running an extruder means holding a throughput, a temperature and a pressure together. The SETREM software takes care of it."
+  />
+
+  <section class="band sheet" aria-label="The control software">
+    <div class="container">
+      {/* TODO: contenu client — la copie d'écran est une IHM en français
+          (« Demande sécheur », « % humidité en sortie extrudeur ») : sur la
+          page anglaise, un prospect voit un logiciel qu'il ne peut pas lire.
+          Demander une capture en anglais. Elle porte en outre le nom d'un
+          client en en-tête — à valider ou à masquer. */}
+      <SplitSection
+        kicker="Innovative automatic control software"
+        titre="Start-up, production, shutdown: the line under control."
+        image={ecranImg}
+        alt="Screen of the SETREM production control software"
+      >
+        <p>
+          This program sets up the start-up and shutdown sequences of the
+          extruder, as well as full control throughout production.
+        </p>
+        {/* Le paragraphe « SETREM, le service aussi » était repris ici mot
+            pour mot depuis /nos-solutions, où il est à sa place : il n'a
+            rien à voir avec le logiciel de conduite. Retiré. */}
+        <!-- TODO: contenu client — l'automatisme tient en 50 mots sur le
+             site actuel. À recueillir pour étoffer : supervision, gestion
+             des recettes, enregistrement des paramètres de production,
+             alarmes, télémaintenance. -->
+        <p>
+          <a href="/en/solutions">
+            See the other equipment on the line →
+          </a>
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">The rest of the line</h2>
+      </div>
+      <LinkCards items={autres} cols={4} cta="View the equipment" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>

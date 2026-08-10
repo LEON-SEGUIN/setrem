@@ -1,0 +1,63 @@
+---
+import ArticleLayout from '../../../layouts/ArticleLayout.astro';
+
+// Volumes réels de la gamme PBR — scrape (article PBR)
+const gammePbr = [
+  ['PBR160', '25'],
+  ['PBR220', '79'],
+  ['PBR350', '297'],
+  ['PBR420', '510'],
+  ['PBR500', '925'],
+  ['PBR620', '1,758'],
+];
+---
+
+<ArticleLayout slug="our-pbr-preconditioners">
+  <p>
+    The first type, well known to manufacturers, allows hydration of around 5
+    to 7% water, injected in the form of water and/or steam. The
+    temperature can reach 90&nbsp;°C, with a retention time that generally
+    does not exceed 30&nbsp;seconds — although this time can be increased with
+    a larger volume.
+  </p>
+  <p>
+    Depending on the application, the single-rotor preconditioner is sometimes
+    sufficient. However, when mixing and pre-cooking functions are needed, it
+    is preferable to work with twin-rotor preconditioners. It is not unusual
+    to obtain retention times of 3&nbsp;minutes with moisture levels of around
+    25 to 27%. The quality of the mixing owes much to the configuration
+    of the paddles on the two shafts: each has its own function, one mixing
+    with small paddles, the other holding the product back with paddles of a
+    larger surface area.
+  </p>
+  <p>
+    Mixing with water is helped by the injectors, which form a spray; other
+    injections are provided for, such as slurries or oil, in order to
+    guarantee the evenness of the mix before extrusion.
+  </p>
+
+  <h2>The PBR range</h2>
+  <div class="table-scroll">
+    <table class="table-data">
+      <caption class="visually-hidden">
+        Volumes of the PBR preconditioners in litres
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Type</th>
+          <th scope="col">Volume (litres)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          gammePbr.map(([type, volume]) => (
+            <tr>
+              <th scope="row" class="model-ref">{type}</th>
+              <td>{volume}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</ArticleLayout>
