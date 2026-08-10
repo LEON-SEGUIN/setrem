@@ -1,7 +1,7 @@
 ---
 // En-tête des pages intérieures : même langage que le hero de l'accueil
 // (dégradé acier, Archivo léger et géant, entrée masquée, arcs en rotation)
-// mais content-first et court — le contenu commence dès le premier scroll.
+// mais content-first et court - le contenu commence dès le premier scroll.
 interface Props {
   kicker: string;
   titre: string;
@@ -58,7 +58,7 @@ const { kicker, titre, lede, compact = false } = Astro.props;
   /* Épinglé sous la suite, comme le hero de l'accueil : la feuille de
      la première bande le recouvre au scroll (main est isolé, voir
      global.css) et scroll.js le fond pendant le recouvrement. C'est ce
-     mouvement — plus que les arcs — qui fait reconnaître l'accueil dans
+     mouvement - plus que les arcs - qui fait reconnaître l'accueil dans
      le reste du site. Sans JS il ne bouge pas : il reste simplement en
      tête de page, entier. */
   .phero {
@@ -104,7 +104,7 @@ const { kicker, titre, lede, compact = false } = Astro.props;
     padding-bottom: calc(var(--section) * 0.45);
   }
 
-  /* L'hélice de la marque, décadrée en haut à droite — la signature
+  /* L'hélice de la marque, décadrée en haut à droite - la signature
      de l'accueil, en filigrane sur toutes les pages. */
   .phero__orbit {
     position: absolute;

@@ -1,16 +1,16 @@
-// Données réelles du tableau des capacités — scrape/SYNTHESE.md §3.
+// Données réelles du tableau des capacités - scrape/SYNTHESE.md §3.
 // Valeurs en kg/h. Ne jamais modifier sans validation client.
 // ⚠️ Y160 et Y200 : la plaquette PDF donne des puissances différentes
-// (110–132 kW et 160–200 kW) — arbitrage client en attente.
+// (110-132 kW et 160-200 kW) - arbitrage client en attente.
 import { numberLocale, type Locale } from '../i18n/ui';
 
 export const modeles = [
-  { ref: 'S50', chambres: '3 – 5', kw: '22 – 37' },
-  { ref: 'X100', chambres: '4 – 5', kw: '75' },
-  { ref: 'X125', chambres: '5 – 6', kw: '90' },
-  { ref: 'Y160', chambres: '5 – 6', kw: '110' },
-  { ref: 'Y200', chambres: '6 – 7', kw: '160' },
-  { ref: 'Z300', chambres: '7 – 9', kw: '200 – 250' },
+  { ref: 'S50', chambres: '3 - 5', kw: '22 - 37' },
+  { ref: 'X100', chambres: '4 - 5', kw: '75' },
+  { ref: 'X125', chambres: '5 - 6', kw: '90' },
+  { ref: 'Y160', chambres: '5 - 6', kw: '110' },
+  { ref: 'Y200', chambres: '6 - 7', kw: '160' },
+  { ref: 'Z300', chambres: '7 - 9', kw: '200 - 250' },
 ];
 
 // Les valeurs ne sont saisies qu'une fois : seuls les libellés portent

@@ -12,25 +12,25 @@ import {
 const applications = getApplications('en');
 const nb = (n: number) => fmt(n, 'en');
 
-// ⚠️ Y160 / Y200 : la plaquette PDF donne d'autres puissances (110–132 et
-// 160–200 kW) — arbitrage client en attente, ne pas trancher ici.
+// ⚠️ Y160 / Y200 : la plaquette PDF donne d'autres puissances (110-132 et
+// 160-200 kW) - arbitrage client en attente, ne pas trancher ici.
 
 // ⚠️ Le chiffre de tête est lu dans le tableau affiché juste en dessous
-// (minimum : S50 en soja à sec, 100 kg/h — maximum : Z300 en extrusion
+// (minimum : S50 en soja à sec, 100 kg/h - maximum : Z300 en extrusion
 // humide, 9 000 kg/h). L'ancien site annonce « 40 kg/h » d'amplitude
 // basse, valeur qui n'apparaît nulle part dans le tableau : l'afficher
 // ici contredisait la donnée à l'écran. Repris ailleurs sur le site tel
-// que le client l'écrit — arbitrage client en attente (ligne pilote ?
+// que le client l'écrit - arbitrage client en attente (ligne pilote ?
 // autre application ?).
 const stats = [
-  { valeur: '100 kg/h – 9 t/h', label: 'of output, from the S50 to the Z300' },
-  { valeur: '22 – 250', label: 'kW of installed power' },
-  { valeur: '3 – 9', label: 'chambers per barrel' },
+  { valeur: '100 kg/h - 9 t/h', label: 'of output, from the S50 to the Z300' },
+  { valeur: '22 - 250', label: 'kW of installed power' },
+  { valeur: '3 - 9', label: 'chambers per barrel' },
 ];
 ---
 
 <PageLayout
-  title="Equipment capacity chart — S50 to Z300 | SETREM"
+  title="Equipment capacity chart - S50 to Z300 | SETREM"
   description="The capacities of the six SETREM single-screw extruders in kg/h: dry soybean, wet extrusion, cereal blend, pet food and fish, from the S50 to the Z300."
   path="/en/solutions/equipment-capacity-chart"
 >
@@ -83,7 +83,7 @@ const stats = [
                   <td>{m.kw}</td>
                   {applications.map((app) => (
                     <td>
-                      {nb(app.valeurs[j][0])} – {nb(app.valeurs[j][1])}
+                      {nb(app.valeurs[j][0])} - {nb(app.valeurs[j][1])}
                     </td>
                   ))}
                 </tr>
@@ -101,7 +101,7 @@ const stats = [
         <a class="suite__lien" href="/en/pilot-line">
           Test your formula on the pilot line →
         </a>
-        <!-- TODO: contenu client — la plaquette n'existe qu'en français.
+        <!-- TODO: contenu client - la plaquette n'existe qu'en français.
              Faire produire une version anglaise, ou la faire traduire. -->
         <a
           class="suite__lien"

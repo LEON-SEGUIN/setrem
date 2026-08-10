@@ -3,9 +3,9 @@
 // Le texte passe dans le slot (balisage libre : prose, listes, tableaux).
 //
 // Trois mouvements, tous progressifs :
-//  — le titre se révèle mot à mot (le geste de la section Mission),
-//  — l'image s'ouvre depuis un cadre resserré (le geste du process),
-//  — puis elle glisse dans son cadre au scroll (data-parallax, lu par
+//  - le titre se révèle mot à mot (le geste de la section Mission),
+//  - l'image s'ouvre depuis un cadre resserré (le geste du process),
+//  - puis elle glisse dans son cadre au scroll (data-parallax, lu par
 //    le moteur de scripts/scroll.js).
 // Sans JS : titre, texte et image sont là, entiers et immobiles.
 import { Image } from 'astro:assets';
@@ -44,7 +44,7 @@ const {
 // machines SETREM sont photographiées aussi bien en portrait (sécheur,
 // 2000 × 2712) qu'en paysage (extrudeurs, 2000 × 1500), et un ratio
 // unique coupait les premières en plein milieu. Bornes : ni plus haut
-// que 4/5, ni plus large que 8/5 — au-delà la colonne se déséquilibre.
+// que 4/5, ni plus large que 8/5 - au-delà la colonne se déséquilibre.
 const ratio = image
   ? Math.min(Math.max(image.width / image.height, 0.8), 1.6)
   : 1;
@@ -111,7 +111,7 @@ const ratio = image
   }
 
   /* Le titre est rendu par <Words> : c'est le composant enfant qui porte
-     l'attribut de portée, pas ce fichier — d'où le :global. Le nom reste
+     l'attribut de portée, pas ce fichier - d'où le :global. Le nom reste
      assez spécifique pour ne rien atteindre d'autre. */
   .split :global(.split__title) {
     font-size: var(--text-h2);

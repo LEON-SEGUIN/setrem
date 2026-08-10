@@ -1,5 +1,5 @@
 ---
-// Section épinglée réutilisable — le geste du process de l'accueil, porté
+// Section épinglée réutilisable - le geste du process de l'accueil, porté
 // aux pages intérieures : l'image s'ouvre d'une carte centrée au plein
 // écran, puis les chapitres se relaient pendant que le scroll continue.
 // Pilotée par initPins() dans scripts/scroll.js (attributs data-pin*).
@@ -7,7 +7,7 @@
 // Le pilote du process de l'accueil n'est pas mutualisé avec celui-ci :
 // il est réglé, validé, et asservit en plus une tête de lecture vidéo.
 //
-// Sans JS : pas de hauteur imposée, pas de sticky — l'image reste en tête
+// Sans JS : pas de hauteur imposée, pas de sticky - l'image reste en tête
 // et les chapitres défilent dessous, tout le texte est lu. En mouvement
 // réduit : image ouverte d'emblée, chapitres tous visibles.
 import { Image } from 'astro:assets';
@@ -150,7 +150,7 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
   /* Trois couches : un lavis bleu très faible qui ramène les photos
      d'atelier dans la teinte froide de la marque, un dégradé vertical
      pour le contraste général, et un lavis latéral parce que le texte
-     vit en bas à gauche — sur une machine en inox, le seul dégradé
+     vit en bas à gauche - sur une machine en inox, le seul dégradé
      vertical laissait le corps de texte à la limite du lisible. */
   .pin__scrim {
     position: absolute;
@@ -212,7 +212,7 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
   }
 
   /* Entrée / sortie échelonnées : index, titre puis texte. Le chapitre
-     sortant file vers le haut pendant que l'entrant monte par le bas —
+     sortant file vers le haut pendant que l'entrant monte par le bas -
      un flux continu, jamais un aller-retour. */
   html.js .pin__step > * {
     opacity: 0;
@@ -364,7 +364,7 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
 
   /* La sur-échelle et le contre-glissement n'ont plus de raison d'être
      une fois la section dépliée : sans ce retour à l'échelle 1, l'image
-     déborde de 6 % — le seul défilement horizontal du site. */
+     déborde de 6 % - le seul défilement horizontal du site. */
   .pin.is-static .pin__frame :global(img) {
     transform: none;
   }
@@ -402,7 +402,7 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
     /* Sur mobile, 100vh déborde sous la barre d'outils du navigateur,
        et 100svh laisse une bande de fond sombre quand la barre se
        rétracte : le viewport dynamique (dvh) suit la hauteur réellement
-       visible — la section reste plein écran dans les deux états. */
+       visible - la section reste plein écran dans les deux états. */
     html.js .pin__viewport {
       height: 100dvh;
     }

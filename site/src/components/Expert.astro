@@ -26,7 +26,7 @@ const copy = {
 // Les neuf articles, dans l'ordre du fichier de données. Le carrousel les
 // fait tous défiler : aucun n'est privilégié, et les neuf liens sont dans
 // le HTML servi (le duplicata nécessaire à la boucle est cloné en JS et
-// sorti de l'arbre d'accessibilité — voir scripts/rail.js).
+// sorti de l'arbre d'accessibilité - voir scripts/rail.js).
 const total = String(liste.length).padStart(2, '0');
 ---
 
@@ -154,7 +154,7 @@ const total = String(liste.length).padStart(2, '0');
   }
 
   /* Survol : la carte visée reste en pleine lumière, les autres
-     s'effacent — c'est le contraste qui désigne, pas un cadre. */
+     s'effacent - c'est le contraste qui désigne, pas un cadre. */
   @media (hover: hover) {
     .expert__rail:hover .expert__item {
       opacity: 0.42;
@@ -180,7 +180,7 @@ const total = String(liste.length).padStart(2, '0');
      position (--g) l'avancement dans la boucle. Son bord droit touche le
      bout de la ligne au moment exact où le 09 achève d'entrer.
      Le second curseur est le même, décalé d'une longueur de piste : quand
-     le premier sort par la droite, il entre par la gauche — la boucle du
+     le premier sort par la droite, il entre par la gauche - la boucle du
      rail, en petit. */
 
   .expert__gauge {

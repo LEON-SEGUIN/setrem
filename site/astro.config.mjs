@@ -37,7 +37,7 @@ export default defineConfig({
       },
     }),
   ],
-  // Plan de redirections — scrape/URLS.md. En statique, Astro génère des
+  // Plan de redirections - scrape/URLS.md. En statique, Astro génère des
   // pages <meta http-equiv="refresh"> : à doubler de vraies 301 côté
   // serveur quand l'hébergeur sera connu.
   redirects: {

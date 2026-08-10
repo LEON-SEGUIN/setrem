@@ -1,4 +1,4 @@
-// Les 4 marchés de la page /applications — textes de la passerelle actuelle.
+// Les 4 marchés de la page /applications - textes de la passerelle actuelle.
 // Ils servent d'accroche en carte (sur /applications et en pied des trois
 // autres pages marché). Le chapô de chaque page marché dit autre chose :
 // arriver sur la page et relire mot pour mot la carte cliquée ne donne

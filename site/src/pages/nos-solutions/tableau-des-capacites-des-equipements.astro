@@ -12,25 +12,25 @@ import {
 const applications = getApplications('fr');
 const nb = (n: number) => fmt(n, 'fr');
 
-// ⚠️ Y160 / Y200 : la plaquette PDF donne d'autres puissances (110–132 et
-// 160–200 kW) — arbitrage client en attente, ne pas trancher ici.
+// ⚠️ Y160 / Y200 : la plaquette PDF donne d'autres puissances (110-132 et
+// 160-200 kW) - arbitrage client en attente, ne pas trancher ici.
 
 // ⚠️ Le chiffre de tête est lu dans le tableau affiché juste en dessous
-// (minimum : S50 en soja à sec, 100 kg/h — maximum : Z300 en extrusion
+// (minimum : S50 en soja à sec, 100 kg/h - maximum : Z300 en extrusion
 // humide, 9 000 kg/h). L'ancien site annonce « 40 kg/h » d'amplitude
 // basse, valeur qui n'apparaît nulle part dans le tableau : l'afficher
 // ici contredisait la donnée à l'écran. Repris ailleurs sur le site tel
-// que le client l'écrit — arbitrage client en attente (ligne pilote ?
+// que le client l'écrit - arbitrage client en attente (ligne pilote ?
 // autre application ?).
 const stats = [
-  { valeur: '100 kg/h – 9 t/h', label: 'de production, du S50 au Z300' },
-  { valeur: '22 – 250', label: 'kW de puissance installée' },
-  { valeur: '3 – 9', label: 'chambres par fourreau' },
+  { valeur: '100 kg/h - 9 t/h', label: 'de production, du S50 au Z300' },
+  { valeur: '22 - 250', label: 'kW de puissance installée' },
+  { valeur: '3 - 9', label: 'chambres par fourreau' },
 ];
 ---
 
 <PageLayout
-  title="Tableau des capacités des équipements — S50 à Z300 | SETREM"
+  title="Tableau des capacités des équipements - S50 à Z300 | SETREM"
   description="Les capacités des six extrudeurs monovis SETREM en kg/h : soja à sec, extrusion humide, mélange céréales, petfood et poisson, du S50 au Z300."
   path="/nos-solutions/tableau-des-capacites-des-equipements"
 >
@@ -83,7 +83,7 @@ const stats = [
                   <td>{m.kw}</td>
                   {applications.map((app) => (
                     <td>
-                      {nb(app.valeurs[j][0])} – {nb(app.valeurs[j][1])}
+                      {nb(app.valeurs[j][0])} - {nb(app.valeurs[j][1])}
                     </td>
                   ))}
                 </tr>

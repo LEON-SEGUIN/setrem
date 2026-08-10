@@ -1,7 +1,7 @@
 ---
-// Les quatre temps d'une ligne SETREM — vocabulaire de scrape/SYNTHESE.md §3.
+// Les quatre temps d'une ligne SETREM - vocabulaire de scrape/SYNTHESE.md §3.
 // Fond : animation 3D d'un extrudeur (fournie par Leon le 6 août 2026).
-// ⚠️ Footage tiers — droits à régler avant mise en ligne (voir CLAUDE.md).
+// ⚠️ Footage tiers - droits à régler avant mise en ligne (voir CLAUDE.md).
 import { toLocale } from '../i18n/ui';
 
 const copy = {
@@ -32,8 +32,8 @@ const copy = {
         title: 'Calibrer puis stabiliser le produit',
         text:
           'Le cutter articulé, à couteaux interchangeables, ouvre directement sur ' +
-          'la filière. Deux technologies de sécheurs — contre-courant et lits ' +
-          "fluidisés — selon le produit et l'eau à évaporer.",
+          'la filière. Deux technologies de sécheurs - contre-courant et lits ' +
+          "fluidisés - selon le produit et l'eau à évaporer.",
       },
       {
         index: '04',
@@ -73,7 +73,7 @@ const copy = {
         title: 'Sizing then stabilising the product',
         text:
           'The hinged cutter, with interchangeable knives, opens directly onto ' +
-          'the die. Two dryer technologies — counterflow and fluidised bed — ' +
+          'the die. Two dryer technologies - counterflow and fluidised bed - ' +
           'depending on the product and the water to be evaporated.',
       },
       {
@@ -196,7 +196,7 @@ const steps = copy.steps;
     width: 100%;
     height: auto;
     /* Vidéo purement décorative (aria-hidden, pilotée par le scroll) :
-       sans ça, Safari superpose son player flottant au survol — barre de
+       sans ça, Safari superpose son player flottant au survol - barre de
        lecture, durée, image dans l'image. Une vidéo non interactive
        n'en reçoit pas. */
     pointer-events: none;
@@ -261,7 +261,7 @@ const steps = copy.steps;
 
   /* Entrée / sortie échelonnées : index, titre puis texte.
      Le chapitre sortant file vers le haut pendant que l'entrant
-     monte par le bas — un flux continu, jamais un aller-retour. */
+     monte par le bas - un flux continu, jamais un aller-retour. */
   html.js .process__step > * {
     opacity: 0;
     translate: 0 40px;
@@ -403,7 +403,7 @@ const steps = copy.steps;
     /* Sur mobile, 100vh déborde sous la barre d'outils du navigateur,
        et 100svh laisse une bande de fond sombre quand la barre se
        rétracte : le viewport dynamique (dvh) suit la hauteur réellement
-       visible — l'animation reste plein écran dans les deux états. */
+       visible - l'animation reste plein écran dans les deux états. */
     html.js .process__viewport {
       height: 100dvh;
     }
@@ -411,8 +411,8 @@ const steps = copy.steps;
 
   /* ---- Mouvement réduit : la section redevient une liste illustrée ----
      initMotion() s'arrête net dans ce mode (--p posé à 1, puis plus
-     rien) : sans ce repli, le spacer garde ses 460vh de course — un
-     gouffre noir de quatre écrans — et seul le premier chapitre est
+     rien) : sans ce repli, le spacer garde ses 460vh de course - un
+     gouffre noir de quatre écrans - et seul le premier chapitre est
      visible. Même parti que .pin.is-static dans PinnedSteps. */
   @media (prefers-reduced-motion: reduce) {
     html.js .process__spacer {

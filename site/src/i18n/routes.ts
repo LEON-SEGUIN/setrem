@@ -1,6 +1,6 @@
 // Paires FR↔EN de chaque page. Les segments d'URL sont traduits : on ne
 // peut donc pas déduire l'adresse anglaise en préfixant « /en ». Cette
-// table est la source unique — sélecteur de langue et hreflang en
+// table est la source unique - sélecteur de langue et hreflang en
 // dépendent tous les deux.
 
 export type Locale = 'fr' | 'en';

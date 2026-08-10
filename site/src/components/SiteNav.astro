@@ -5,7 +5,7 @@ import logoW from '../assets/img/logo-w.svg';
 import { ui, toLocale, getAlternatePath } from '../i18n/ui';
 
 interface Props {
-  /** « dark » : la barre survole une section sombre en haut de page —
+  /** « dark » : la barre survole une section sombre en haut de page -
       logo blanc (la déclinaison prévue par la charte) et liens clairs
       tant qu'elle n'est pas passée en carte flottante. */
   variant?: 'light' | 'dark';
@@ -233,7 +233,7 @@ const autreLien = getAlternatePath(ici, autreLocale) ?? autreDefaut;
       transition: transform var(--duration-base) var(--ease-out);
     }
 
-    /* Menu ouvert : les deux barres se croisent — l'état se lit sur le
+    /* Menu ouvert : les deux barres se croisent - l'état se lit sur le
        bouton lui-même. (Les barres sont les 2e et 3e span du bouton,
        après le libellé masqué.) */
     :global(.nav-wrap.is-open) .nav__toggle-bar:nth-of-type(2) {

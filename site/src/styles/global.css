@@ -1,5 +1,5 @@
 /* ============================================================
-   SETREM — Styles globaux
+   SETREM - Styles globaux
    Les valeurs viennent de tokens.css (copie de brand/tokens.css,
    source de vérité : à resynchroniser si la charte évolue).
    ============================================================ */
@@ -32,7 +32,7 @@ html {
 
 /* Dès que Lenis prend la main il pose la classe .lenis, et c'est lui qui
    glisse : les deux lissages ne doivent pas s'additionner. (Viser
-   .lenis-smooth serait faux — cette classe-là ne dure que le temps d'un
+   .lenis-smooth serait faux - cette classe-là ne dure que le temps d'un
    défilement.) */
 html.lenis {
   scroll-behavior: auto;
@@ -199,7 +199,7 @@ html.js .reveal.is-visible {
    Le geste du process de l'accueil (l'image qui s'ouvre depuis un cadre
    resserré), en version « à l'entrée dans l'écran » plutôt que pilotée
    au scroll. Se pose sur une <figure> en plus de .reveal.
-   Sans JS, .is-visible n'arrive jamais — mais html.js conditionne l'état
+   Sans JS, .is-visible n'arrive jamais - mais html.js conditionne l'état
    masqué, donc l'image est simplement là, ouverte. */
 
 html.js .reveal--clip {
@@ -254,7 +254,7 @@ html.js .reveal--clip.is-visible img {
 }
 
 /* La ponctuation sombre de la charte : une à deux sections par page.
-   C'est l'alternance clair/sombre qui donne son relief à l'accueil —
+   C'est l'alternance clair/sombre qui donne son relief à l'accueil -
    les pages intérieures y ont droit aussi. */
 .band--dark {
   background: var(--surface-dark);
@@ -312,7 +312,7 @@ html.js .reveal--clip.is-visible img {
 }
 
 /* ---- Numérotation de section ----
-   Les chapitres 01–04 de l'accueil : le rang est une donnée de lecture,
+   Les chapitres 01-04 de l'accueil : le rang est une donnée de lecture,
    pas un ornement. Aria-hidden côté balisage, le titre suffit. */
 
 .band__num {
@@ -467,7 +467,7 @@ html:not(.js) .progress {
 /* ---- Entrée des blocs de prose ----
    Les articles font 550 à 1 180 mots : poser un .reveal sur chaque
    paragraphe demanderait de baliser neuf fichiers, et surtout ferait
-   dépendre le corps du texte de la bonne exécution d'un module JS —
+   dépendre le corps du texte de la bonne exécution d'un module JS -
    inacceptable pour le contenu qui porte tout le référencement.
    D'où l'animation liée au scroll, en pur CSS : là où le navigateur ne
    la connaît pas, la règle n'existe simplement pas et le texte est
@@ -521,7 +521,7 @@ html:not(.js) .progress {
 
 /* Les six modèles arrivent l'un après l'autre, comme les barres de
    l'accueil. Même parti que la prose : animation liée au scroll, en pur
-   CSS, donc jamais d'état masqué posé par défaut — la donnée la plus
+   CSS, donc jamais d'état masqué posé par défaut - la donnée la plus
    vendeuse du site ne peut pas dépendre d'un module JS. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {

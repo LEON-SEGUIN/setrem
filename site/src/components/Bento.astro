@@ -82,17 +82,17 @@ const copy = {
   },
 }[locale];
 
-// Gamme réelle — scrape/SYNTHESE.md §3
+// Gamme réelle - scrape/SYNTHESE.md §3
 const gamme = [
-  { ref: 'S50', kw: '22 – 37 kW' },
+  { ref: 'S50', kw: '22 - 37 kW' },
   { ref: 'X100', kw: '75 kW' },
   { ref: 'X125', kw: '90 kW' },
   { ref: 'Y160', kw: '110 kW' },
   { ref: 'Y200', kw: '160 kW' },
-  { ref: 'Z300', kw: '200 – 250 kW' },
+  { ref: 'Z300', kw: '200 - 250 kW' },
 ];
 
-// Composition d'une ligne complète — dans l'ordre du process.
+// Composition d'une ligne complète - dans l'ordre du process.
 // Numérotés : la valeur d'usage est la séquence, pas la liste.
 const composants = copy.composants;
 
@@ -121,7 +121,7 @@ const rangeeB = composants.slice(4);
     <p class="partner__sub reveal">{copy.sub}</p>
 
     <div class="bento">
-      <!-- La gamme — carte haute, pleine hauteur -->
+      <!-- La gamme - carte haute, pleine hauteur -->
       <article class="card card--gamme" data-inview>
         <div class="media">
           <div class="media__frame" style="--drift: 24s; --dx: -3.4%; --dy: -4.2%">
@@ -144,7 +144,6 @@ const rangeeB = composants.slice(4);
               gamme.map(({ ref, kw }) => (
                 <li class="ladder__row">
                   <span class="model-ref ladder__ref">{ref}</span>
-                  <span class="ladder__rule" aria-hidden="true" />
                   <span class="ladder__val">{kw}</span>
                 </li>
               ))
@@ -153,16 +152,16 @@ const rangeeB = composants.slice(4);
         </div>
       </article>
 
-      <!-- La ligne pilote — carte claire, la voix du client -->
+      <!-- La ligne pilote - carte claire, la voix du client -->
       <article class="card card--quote">
         <div class="card__body card__body--pad">
           <p class="eyebrow">{copy.piloteEyebrow}</p>
           {/* Même phrase que l'ancien site, redécoupée : l'accroche seule
               en citation, le reste en appui. La carte « voix » de la
-              référence tient en deux lignes — c'est ce qui lui donne son
+              référence tient en deux lignes - c'est ce qui lui donne son
               calme, et ce qui tenait la grille trop haute ici. */}
           <blockquote class="quote">{copy.citation}</blockquote>
-          <!-- TODO: contenu client — remplacer par un témoignage industriel
+          <!-- TODO: contenu client - remplacer par un témoignage industriel
                signé (nom, fonction, société) dès qu'il est recueilli -->
           <p class="quote__meta">
             {copy.piloteMeta}
@@ -173,7 +172,7 @@ const rangeeB = composants.slice(4);
         </div>
       </article>
 
-      <!-- Une ligne complète — les organes défilent sur la photo -->
+      <!-- Une ligne complète - les organes défilent sur la photo -->
       <article class="card card--ligne" data-inview>
         <div class="media">
           <div
@@ -226,7 +225,7 @@ const rangeeB = composants.slice(4);
         </div>
       </article>
 
-      <!-- Depuis 1986 — le chiffre porte la carte -->
+      <!-- Depuis 1986 - le chiffre porte la carte -->
       <article class="card card--depuis" data-inview>
         <div class="media">
           <div
@@ -252,7 +251,7 @@ const rangeeB = composants.slice(4);
         </div>
       </article>
 
-      <!-- Contact — carte claire, basse -->
+      <!-- Contact - carte claire, basse -->
       <article class="card card--contact">
         <div class="card__body card__body--pad card__body--row">
           <div>
@@ -263,7 +262,7 @@ const rangeeB = composants.slice(4);
             <p class="contact__adresse">
               {coord.zone}, {coord.rue}<br />{coord.ville}, {copy.pays}
             </p>
-            <!-- TODO: contenu client — e-mail public à confirmer -->
+            <!-- TODO: contenu client - e-mail public à confirmer -->
           </div>
           <a
             class="contact__fleche"
@@ -297,7 +296,7 @@ const rangeeB = composants.slice(4);
 
   /* Interlignage très serré : les deux lignes doivent faire un bloc,
      pas deux phrases empilées. C'est le trait le plus net du titre de
-     la référence — et ça rend de la hauteur à la section. */
+     la référence - et ça rend de la hauteur à la section. */
   .partner__title {
     font-size: var(--text-h2);
     font-weight: 650;
@@ -461,7 +460,7 @@ const rangeeB = composants.slice(4);
 
   /* Le voile fait deux choses : garantir le contraste du texte, et
      ramener des photos d'atelier un peu chaudes dans la teinte froide
-     de la marque. Le lavis bleu est très faible — il refroidit sans
+     de la marque. Le lavis bleu est très faible - il refroidit sans
      colorer. */
   .media__scrim {
     position: absolute;
@@ -572,9 +571,10 @@ const rangeeB = composants.slice(4);
 
   .ladder__row {
     display: grid;
-    grid-template-columns: auto minmax(var(--space-4), 1fr) auto;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-4);
   }
 
   .ladder__ref {
@@ -625,7 +625,7 @@ const rangeeB = composants.slice(4);
   /* ---- Les organes de la ligne, en défilement ----
      Deux rangées en sens inverse. Chaque piste est doublée : la copie
      est masquée aux lecteurs d'écran, le texte n'existe qu'une fois
-     pour eux. Sans JS, les étiquettes s'arrêtent — elles restent
+     pour eux. Sans JS, les étiquettes s'arrêtent - elles restent
      lisibles, seul le mouvement disparaît. */
 
   .marquees {

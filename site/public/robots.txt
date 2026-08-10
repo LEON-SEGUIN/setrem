@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-# URLs techniques de l'ancien CMS — à désindexer (scrape/URLS.md)
+# URLs techniques de l'ancien CMS - à désindexer (scrape/URLS.md)
 Disallow: /modeles
 Disallow: /user/
 Disallow: /rgpd/

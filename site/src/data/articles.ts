@@ -1,7 +1,7 @@
-// Les 9 articles « L'œil de l'expert » — scrape/pages/loil-de-lexpert*.md.
+// Les 9 articles « L'œil de l'expert » - scrape/pages/loil-de-lexpert*.md.
 // Titres, extraits et descriptions repris du site actuel : rien d'inventé.
 // La version anglaise est la traduction de ces mêmes textes, dans le même
-// ordre — l'index d'un article est le même dans les deux langues, ce dont
+// ordre - l'index d'un article est le même dans les deux langues, ce dont
 // autresArticles() se sert pour proposer la même suite de lecture.
 import type { ImageMetadata } from 'astro';
 import type { Locale } from '../i18n/routes';
@@ -51,7 +51,7 @@ export const articles: Record<Locale, Article[]> = {
       slug: 'procede-de-traitement-de-la-graine-de-soja',
       titre: 'Procédé de traitement de la graine de soja',
       extrait:
-        'La graine de soja contient entre 18 et 20 % de matière grasse et entre 35 et 38 % de protéines — mais aussi de nombreux facteurs antinutritionnels.',
+        'La graine de soja contient entre 18 et 20 % de matière grasse et entre 35 et 38 % de protéines - mais aussi de nombreux facteurs antinutritionnels.',
       description:
         'Extrusion à sec puis pressage mécanique : le procédé complet de traitement de la graine de soja, avec bilans matières et étude économique.',
       image: graineSoja,
@@ -93,7 +93,7 @@ export const articles: Record<Locale, Article[]> = {
       extrait:
         'La famille des préconditionneurs SETREM se décline selon deux catégories, les monorotors et les birotors.',
       description:
-        'Monorotor ou birotor : hydratation, temps de rétention, injection eau, vapeur et slurrys — la gamme des préconditionneurs PBR de 25 à 1 758 litres.',
+        'Monorotor ou birotor : hydratation, temps de rétention, injection eau, vapeur et slurrys - la gamme des préconditionneurs PBR de 25 à 1 758 litres.',
       image: preconditionneur,
       alt: 'Préconditionneur SETREM',
     },
@@ -103,7 +103,7 @@ export const articles: Record<Locale, Article[]> = {
       extrait:
         "Couramment utilisées en cuisine pour leurs caractéristiques organoleptiques, les réactions de Maillard sont très intéressantes pour l'alimentation des ruminants.",
       description:
-        'Protéines by-pass pour les ruminants : comment le réglage de la température et du temps de passage provoque — ou limite — les réactions de Maillard.',
+        'Protéines by-pass pour les ruminants : comment le réglage de la température et du temps de passage provoque - ou limite - les réactions de Maillard.',
       image: maillard,
       alt: 'Illustration du système digestif de la vache',
     },
@@ -113,7 +113,7 @@ export const articles: Record<Locale, Article[]> = {
       extrait:
         "Le soja, de par sa forte teneur en protéine, est très utilisé en alimentation animale. L'extrusion est le traitement technologique le plus adapté quelle que soit l'espèce.",
       description:
-        'Volailles, pondeuses, vaches laitières : rendement énergétique, destruction des facteurs antitrypsiques et protéines by-pass — les atouts mesurés du soja extrudé.',
+        'Volailles, pondeuses, vaches laitières : rendement énergétique, destruction des facteurs antitrypsiques et protéines by-pass - les atouts mesurés du soja extrudé.',
       image: sojaElevage,
       alt: 'Élevage de poulets',
     },
@@ -144,7 +144,7 @@ export const articles: Record<Locale, Article[]> = {
       slug: 'soybean-processing-method',
       titre: 'Soybean processing method',
       extrait:
-        'The soybean contains between 18 and 20% fat and between 35 and 38% protein — but also many antinutritional factors.',
+        'The soybean contains between 18 and 20% fat and between 35 and 38% protein - but also many antinutritional factors.',
       description:
         'Dry extrusion then mechanical pressing: the complete soybean processing method, with mass balances and an economic study.',
       image: graineSoja,
@@ -186,19 +186,19 @@ export const articles: Record<Locale, Article[]> = {
       extrait:
         'The SETREM preconditioner family comes in two categories: single-rotor and twin-rotor.',
       description:
-        'Single- or twin-rotor: hydration, retention time, water, steam and slurry injection — the PBR preconditioner range from 25 to 1,758 litres.',
+        'Single- or twin-rotor: hydration, retention time, water, steam and slurry injection - the PBR preconditioner range from 25 to 1,758 litres.',
       image: preconditionneur,
       alt: 'SETREM preconditioner',
     },
     {
-      // TODO: contenu client — l'illustration porte des légendes françaises
+      // TODO: contenu client - l'illustration porte des légendes françaises
       // incrustées (œsophage, caillette, réseau) : version anglaise à produire.
       slug: 'maillard-reactions',
       titre: 'Maillard reactions',
       extrait:
         'Commonly used in cooking for their organoleptic qualities, Maillard reactions are of great interest in ruminant nutrition.',
       description:
-        'Bypass proteins for ruminants: how adjusting temperature and residence time triggers — or limits — Maillard reactions.',
+        'Bypass proteins for ruminants: how adjusting temperature and residence time triggers - or limits - Maillard reactions.',
       image: maillard,
       alt: "Illustration of a cow's digestive system",
     },
@@ -208,7 +208,7 @@ export const articles: Record<Locale, Article[]> = {
       extrait:
         'Thanks to its high protein content, soybean is widely used in animal feed. Extrusion is the most suitable technological treatment, whatever the species.',
       description:
-        'Poultry, laying hens, dairy cows: energy efficiency, destruction of antitrypsic factors and bypass proteins — the measured benefits of extruded soybean.',
+        'Poultry, laying hens, dairy cows: energy efficiency, destruction of antitrypsic factors and bypass proteins - the measured benefits of extruded soybean.',
       image: sojaElevage,
       alt: 'Chicken farming',
     },

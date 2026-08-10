@@ -1,25 +1,25 @@
 ---
-// Hero « Signature » — quatrième direction, épurée.
+// Hero « Signature » - quatrième direction, épurée.
 // Le sujet, c'est le logo : le symbole S de SETREM, repris trait pour
-// trait du fichier officiel (mêmes tracés, mêmes dégradés chromés —
+// trait du fichier officiel (mêmes tracés, mêmes dégradés chromés -
 // aucune modification, brand/BRAND.md), mis en scène sur le fond acier
 // de la charte. Il se révèle le long de ses propres courbes, se pose
 // sur un reflet, et une passe de lumière traverse le métal.
 // Presque pas de texte : un titre, une phrase, un bouton.
-// SVG + CSS uniquement — aucune image, aucune lib, complet sans JS.
+// SVG + CSS uniquement - aucune image, aucune lib, complet sans JS.
 import { toLocale } from '../i18n/ui';
 
 const locale = toLocale(Astro.currentLocale);
 
 // « Extrusion Cooking » est en anglais dans les deux versions : c'est le
 // terme métier, et la baseline du logo. En français il porte donc un
-// lang="en", et la glose masquée un lang="fr" — en anglais, ni l'un ni
+// lang="en", et la glose masquée un lang="fr" - en anglais, ni l'un ni
 // l'autre, tout est déjà dans la langue du document.
 const copy = {
   fr: {
     aria: 'Introduction',
     glose:
-      "— lignes complètes d'extrusion pour l'alimentation humaine et animale",
+      "- lignes complètes d'extrusion pour l'alimentation humaine et animale",
     baseline:
       "Des lignes complètes pour l'alimentation humaine et animale, de l'essai en ligne pilote à neuf tonnes par heure.",
     cta: 'Découvrir nos solutions',
@@ -27,7 +27,7 @@ const copy = {
   },
   en: {
     aria: 'Introduction',
-    glose: '— complete extrusion lines for human and animal food',
+    glose: '- complete extrusion lines for human and animal food',
     baseline:
       'Complete lines for human and animal food, from pilot-line trials to nine tonnes per hour.',
     cta: 'Discover our solutions',
@@ -38,13 +38,13 @@ const copy = {
 
 <section class="hero" aria-label={copy.aria} data-hero>
   <!-- La vague de soie : nappe WebGL au bas du hero (wave.js), dans
-       les aciers et bleus du logo — décorative, tout au fond, sous la
+       les aciers et bleus du logo - décorative, tout au fond, sous la
        brume et le contenu. Vide sans JS : la page ne perd que la
        beauté, jamais du contenu. -->
   <canvas class="hero__wave" data-wave aria-hidden="true"></canvas>
 
   <!-- Brume argentée qui suit le curseur (souris uniquement, pilotée
-       par scroll.js) — décorative, sous le symbole et le texte -->
+       par scroll.js) - décorative, sous le symbole et le texte -->
   <div class="hero__mist" aria-hidden="true" data-mist></div>
 
   <!-- La brume de couleur du départ : une vague bleu→teal poussée
@@ -94,8 +94,8 @@ const copy = {
         </g>
 
         <!-- La révélation : deux arcs balayent chacun une pale le long de
-             sa courbure, et la barre centrale — celle qui relie les deux
-             pales et fait du S un cercle continu — se dessine à part, en
+             sa courbure, et la barre centrale - celle qui relie les deux
+             pales et fait du S un cercle continu - se dessine à part, en
              un seul trait de gauche à droite. La bande noire la soustrait
              aux arcs pour qu'elle n'apparaisse jamais par morceaux ;
              le rect s-bar la révèle d'un geste. -->
@@ -199,7 +199,7 @@ const copy = {
     gap: var(--space-8);
     padding: clamp(6rem, 14vh, 9rem) var(--gutter) clamp(4rem, 9vh, 6rem);
     /* Le fond de la charte, avec un léger point de lumière derrière
-       le chrome — c'est le fond sur lequel le logo se pose le mieux */
+       le chrome - c'est le fond sur lequel le logo se pose le mieux */
     background:
       radial-gradient(
         62vmin 62vmin at 50% 40%,
@@ -246,7 +246,7 @@ const copy = {
   /* ---- La vague de soie ----
      Peinte par wave.js. En z négatif dans le contexte isolé du hero :
      au-dessus du fond, sous le symbole, le texte et les coins. Le
-     fondu du haut est une ceinture de sécurité — la silhouette est
+     fondu du haut est une ceinture de sécurité - la silhouette est
      déjà découpée dans le shader, le texte ne la touche jamais. */
 
   .hero__wave {
@@ -273,7 +273,7 @@ const copy = {
      Deux petits voiles superposés qui dérivent lentement l'un contre
      l'autre : la lueur reste organique, jamais un cercle net. Teintes
      acier de la charte. Positionné en transform par scroll.js ;
-     invisible sans JS ou au toucher — pure beauté, aucun contenu. */
+     invisible sans JS ou au toucher - pure beauté, aucun contenu. */
 
   .hero__mist {
     position: absolute;
@@ -513,7 +513,7 @@ const copy = {
      Au scroll, le fond du hero ne recule qu'à peine (−3vh, posé par
      scroll.js) ; le contenu, lui, s'en détache et file vers le haut
      pendant que tout s'évanouit. C'est cet écart qui rend le départ
-     visible — un bloc entier qui monte avec son fond ne se voit pas.
+     visible - un bloc entier qui monte avec son fond ne se voit pas.
      Le texte et le bouton partent un cheveu plus vite que le symbole
      et le titre : la scène gagne de la profondeur au lieu de coulisser
      d'une pièce. --hq (0 → 1, légèrement accéléré) vient de scroll.js ;

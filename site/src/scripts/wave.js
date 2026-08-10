@@ -1,8 +1,8 @@
 /* ============================================================
-   SETREM — la vague de soie du hero
+   SETREM - la vague de soie du hero
    Une nappe de tissu chromé qui ondule au bas du hero, dans
    l'esprit des dégradés du logo : acier clair, creux bleutés.
-   WebGL brut, aucune dépendance — un seul quad, tout le travail
+   WebGL brut, aucune dépendance - un seul quad, tout le travail
    est dans le fragment shader (champ de hauteur + éclairage).
    Décoratif de bout en bout : rien sans JS, frame statique en
    prefers-reduced-motion, rendu coupé quand le hero est couvert.
@@ -83,7 +83,7 @@ float silk(vec2 p, float t, out float d, out float w) {
   h += 0.30 * sin(s * 6.3 + w * 2.6);
   h += 0.14 * sin(s * 12.4 - w * 3.4 + p.x * 0.4);
   h += 0.05 * sin(s * 24.0 + w * 5.2);
-  /* L'amplitude meurt en s'éloignant du ruban — beaucoup plus vite
+  /* L'amplitude meurt en s'éloignant du ruban - beaucoup plus vite
      vers le haut : le bord côté texte reste vaporeux, le bas est riche */
   h *= exp(-mix(-d * 1.6, d * 3.4, step(0.0, d)));
   return h;
@@ -102,7 +102,7 @@ void main() {
   float hx = silk(p + vec2(e, 0.0), t, dTmp, wTmp);
   float hy = silk(p + vec2(0.0, e), t, dTmp, wTmp);
 
-  /* Normale par différences finies — le facteur règle le relief */
+  /* Normale par différences finies - le facteur règle le relief */
   vec3 n = normalize(vec3((h0 - hx) / e * 0.055, (h0 - hy) / e * 0.055, 1.0));
 
   /* Deux lumières : clé froide en haut à gauche, reprise à droite */
@@ -119,7 +119,7 @@ void main() {
   vec3 col = mix(uSteel, uHi, dif1 * 0.82 + 0.18);
   col = mix(col, uShadow, (1.0 - dif1) * (1.0 - dif2) * 0.60);
   /* Les tons bleus : voile sur les pentes rasantes, bleu du logo
-     au fond des vallées — jamais sur les crêtes */
+     au fond des vallées - jamais sur les crêtes */
   col = mix(col, uBlueSoft, clamp(fres * 0.75 + (1.0 - dif1) * 0.20, 0.0, 1.0) * 0.50);
   col = mix(col, uBlue, (1.0 - smoothstep(-0.85, 0.15, h0)) * 0.20);
   col += uHi * (spec1 * 0.85 + spec2 * 0.28);
@@ -262,7 +262,7 @@ export function initWave() {
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   };
 
-  /* Reduced motion : une seule frame, posée — pas d'animation */
+  /* Reduced motion : une seule frame, posée - pas d'animation */
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     render(11.3);
     return null;

@@ -13,7 +13,7 @@ const t = ui[toLocale(Astro.currentLocale)].footer;
       <Image src={logoW} alt="SETREM" width={160} height={45} loading="lazy" />
       <!-- Le pied de page reprend l'identité sous un autre angle que la
            déclaration de l'accueil : le métier (constructeur) et l'objet
-           (l'extrudeur monovis), pas la date — elle est ailleurs. -->
+           (l'extrudeur monovis), pas la date - elle est ailleurs. -->
       <p class="footer__tagline">{t.tagline}</p>
     </div>
 
@@ -39,7 +39,7 @@ const t = ui[toLocale(Astro.currentLocale)].footer;
     <div class="footer__col">
       <p class="footer__head">{t.infosHead}</p>
       <ul>
-        <!-- TODO: contenu client — mentions légales (SIRET, TVA, dirigeant)
+        <!-- TODO: contenu client - mentions légales (SIRET, TVA, dirigeant)
              indisponibles : /mentions-legales de l'ancien site est en erreur. -->
         {t.infos.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
       </ul>

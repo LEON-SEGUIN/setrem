@@ -1,5 +1,5 @@
 /* ============================================================
-   SETREM — le rail « L'œil de l'expert »
+   SETREM - le rail « L'œil de l'expert »
    Une piste d'articles qui dérive en continu, se fige sous le
    curseur et se laisse traîner au doigt ou à la souris.
    Progressif : sans ce script le rail reste une liste qui défile
@@ -30,7 +30,7 @@ export function initRail() {
   /* ---- La boucle sans couture ----
      Le duplicata n'existe qu'à l'écran : il est sorti de l'arbre
      d'accessibilité et de l'ordre de tabulation, pour que les neuf
-     articles ne soient annoncés — et indexés — qu'une fois. */
+     articles ne soient annoncés - et indexés - qu'une fois. */
 
   const copier = () => {
     const frag = document.createDocumentFragment();

@@ -1,7 +1,7 @@
 // Les 5 entrées de « Nos solutions ».
 // Ces textes sortent en carte sur /nos-solutions ET en pied des quatre
 // autres pages solutions : chacun est donc lu jusqu'à cinq fois. Ils ne
-// reprennent pas le chapô de la page qu'ils annoncent — sinon le clic ne
+// reprennent pas le chapô de la page qu'ils annoncent - sinon le clic ne
 // donne rien de neuf. Un fait concret par carte, tiré de la page cible.
 import type { ImageMetadata } from 'astro';
 import type { Locale } from '../i18n/routes';

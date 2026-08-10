@@ -1,14 +1,14 @@
 /* ============================================================
-   SETREM — Design tokens
+   SETREM - Design tokens
    Voir brand/BRAND.md · contrastes vérifiés par contrast-check.py
    ============================================================ */
 
 :root {
-  /* ---- Couleurs du logo — ne jamais modifier ---- */
+  /* ---- Couleurs du logo - ne jamais modifier ---- */
   --logo-blue:  #004C91;
   --logo-steel: #78878F;
 
-  /* ---- Bleu (primaire) — blue-600 = bleu du logo ---- */
+  /* ---- Bleu (primaire) - blue-600 = bleu du logo ---- */
   --blue-50:   #E6EFF7;
   --blue-100:  #C2D8EC;
   --blue-200:  #94BADC;
@@ -29,7 +29,7 @@
   --teal-600:  #0A7268;   /* accent principal */
   --teal-700:  #086057;   /* hover */
 
-  /* ---- Acier (neutres) — teinte froide, jamais de gris pur ---- */
+  /* ---- Acier (neutres) - teinte froide, jamais de gris pur ---- */
   --steel-50:   #F7F9FA;
   --steel-100:  #EDF1F3;
   --steel-200:  #DDE3E7;

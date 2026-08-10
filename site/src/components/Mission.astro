@@ -1,6 +1,6 @@
 ---
 // La déclaration, découpée en mots au build pour la révélation
-// mot à mot — sans JS, le texte est simplement rendu tel quel.
+// mot à mot - sans JS, le texte est simplement rendu tel quel.
 import { toLocale } from '../i18n/ui';
 
 const copy = {
@@ -12,7 +12,7 @@ const copy = {
       { texte: "pour l'alimentation humaine et animale." },
     ],
     aside:
-      "Six extrudeurs monovis, du process à sec au semi-humide. La même mécanique sert le petfood, l'aquaculture, le bétail et l'alimentation humaine — et le traitement des matières premières.",
+      "Six extrudeurs monovis, du process à sec au semi-humide. La même mécanique sert le petfood, l'aquaculture, le bétail et l'alimentation humaine - et le traitement des matières premières.",
   },
   en: {
     eyebrow: 'The manufacturer',
@@ -22,7 +22,7 @@ const copy = {
       { texte: 'for human and animal food.' },
     ],
     aside:
-      'Six single-screw extruders, from dry to semi-wet processing. The same mechanics serve pet food, aquaculture, livestock and human food — and raw material processing.',
+      'Six single-screw extruders, from dry to semi-wet processing. The same mechanics serve pet food, aquaculture, livestock and human food - and raw material processing.',
   },
 }[toLocale(Astro.currentLocale)];
 
@@ -51,7 +51,7 @@ const mots = copy.segments.flatMap(({ texte, accent }) =>
       {/* L'appui ne reformule pas la déclaration : il l'ouvre sur la
           gamme et les marchés. « A suivi et anticipé les évolutions du
           marché » (l'ancien site) ne disait rien et revenait sur quatre
-          pages — remplacé partout par du concret. */}
+          pages - remplacé partout par du concret. */}
       <p class="mission__aside reveal">{copy.aside}</p>
     </div>
   </div>

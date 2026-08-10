@@ -2,7 +2,7 @@
 // CTA, métadonnées). Les textes propres à une seule section vivent dans le
 // composant qui les affiche, pas ici.
 //
-// Glossaire — à respecter dans toute la traduction anglaise :
+// Glossaire - à respecter dans toute la traduction anglaise :
 //   cuisson-extrusion .............. extrusion cooking
 //   extrudeur monovis .............. single-screw extruder
 //   ligne complète ................. complete line
@@ -46,7 +46,7 @@ export const ui = {
   fr: {
     nav: {
       aria: 'Navigation principale',
-      accueil: 'SETREM — accueil',
+      accueil: 'SETREM - accueil',
       menu: 'Menu',
       liens: [
         { href: '/nos-solutions', label: 'Nos solutions' },
@@ -81,7 +81,7 @@ export const ui = {
         { href: '/politique-de-cookies', label: 'Politique de cookies' },
         { href: '/conditions-generales', label: 'Conditions générales' },
       ],
-      bas: 'SETREM — Acquigny, France',
+      bas: 'SETREM - Acquigny, France',
     },
     cta: {
       titre: "Parlez-nous de votre projet d'extrusion.",
@@ -99,7 +99,7 @@ export const ui = {
   en: {
     nav: {
       aria: 'Main navigation',
-      accueil: 'SETREM — home',
+      accueil: 'SETREM - home',
       menu: 'Menu',
       liens: [
         { href: '/en/solutions', label: 'Our solutions' },
@@ -134,7 +134,7 @@ export const ui = {
         { href: '/en/cookie-policy', label: 'Cookie policy' },
         { href: '/en/terms-and-conditions', label: 'Terms and conditions' },
       ],
-      bas: 'SETREM — Acquigny, France',
+      bas: 'SETREM - Acquigny, France',
     },
     cta: {
       titre: 'Tell us about your extrusion project.',
@@ -150,7 +150,7 @@ export const ui = {
   },
 } as const;
 
-/** Coordonnées — identiques dans les deux langues, jamais traduites. */
+/** Coordonnées - identiques dans les deux langues, jamais traduites. */
 export const contact = {
   tel: '+33 2 32 25 08 47',
   telHref: 'tel:+33232250847',

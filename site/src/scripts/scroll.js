@@ -1,5 +1,5 @@
 /* ============================================================
-   SETREM — animations pilotées par le scroll
+   SETREM - animations pilotées par le scroll
    Un seul moteur rAF interpole les valeurs (lerp) : la parallaxe
    et l'expansion suivent le scroll avec un temps de retard doux,
    c'est ce qui donne la fluidité de la référence.
@@ -130,8 +130,8 @@ function initHeroMist() {
 /* ---- Moteur : section process + parallaxes, valeurs lissées ---- */
 
 /* ---- Sections épinglées des pages intérieures ----
-   Même langage que le process de l'accueil — l'image s'ouvre de la carte
-   au plein écran pendant que les chapitres se relaient — mais sans vidéo
+   Même langage que le process de l'accueil - l'image s'ouvre de la carte
+   au plein écran pendant que les chapitres se relaient - mais sans vidéo
    ni asservissement de tête de lecture. Le pilote du process n'est pas
    touché : il est réglé et validé, on ne le refactorise pas pour
    mutualiser trois lignes.
@@ -214,7 +214,7 @@ function initPins() {
 
 /* ---- Progression de lecture des articles ----
    Un filet sous la barre de navigation, qui se remplit sur la hauteur du
-   corps de l'article — pas sur celle de la page : ce qui intéresse le
+   corps de l'article - pas sur celle de la page : ce qui intéresse le
    lecteur, c'est où il en est dans le texte, pas dans le pied de page. */
 
 function initReadingProgress() {
@@ -372,8 +372,8 @@ function initMotion() {
     if (idle < 30) {
       // Le hero s'évanouit en fondu sous la feuille, pendant que la brume
       // de couleur (--hp, lue par .hero__dusk) monte devant elle.
-      // Le fond ne recule qu'à peine : c'est le contenu — symbole, titre,
-      // texte — qui part vers le haut, nettement plus vite (--hq, lu par
+      // Le fond ne recule qu'à peine : c'est le contenu - symbole, titre,
+      // texte - qui part vers le haut, nettement plus vite (--hq, lu par
       // les enfants dans Hero.astro). Sans cet écart entre le fond et le
       // contenu, le départ vers le haut ne se voit pas.
       if (hero) {

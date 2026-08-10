@@ -1,7 +1,7 @@
 /* ============================================================
-   SETREM — scroll lissé (Lenis)
+   SETREM - scroll lissé (Lenis)
    Un coup de molette ne saute plus : la page rattrape sa cible en
-   glissant. Lenis n'ajoute pas de conteneur transformé — il déplace
+   glissant. Lenis n'ajoute pas de conteneur transformé - il déplace
    la vraie position de la fenêtre, donc window.scrollY reste la
    source de vérité et position:sticky, IntersectionObserver et les
    ancres natives continuent de fonctionner tels quels.
@@ -14,7 +14,7 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 /**
  * L'instance partagée, ou `null` si l'utilisateur a demandé moins
- * d'animations — dans ce cas on rend la main au scroll du système.
+ * d'animations - dans ce cas on rend la main au scroll du système.
  */
 export const lenis = reduceMotion.matches
   ? null
