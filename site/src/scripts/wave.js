@@ -7,6 +7,11 @@
    Décoratif de bout en bout : rien sans JS, frame statique en
    prefers-reduced-motion, rendu coupé quand le hero est couvert.
    Les couleurs sont lues dans les tokens CSS, jamais en dur.
+
+   Le shader est cher (bruit fractal + éclairage, par pixel). Sur un
+   GPU intégré ancien il ne tient pas les 16 ms et la nappe saccade.
+   D'où le gouverneur plus bas : on mesure la cadence réelle et on
+   dégrade par paliers, plutôt que de deviner le matériel.
    ============================================================ */
 
 const VERT = `
@@ -58,30 +63,33 @@ float fbm(vec2 p) {
   return v;
 }
 
-/* Champ de hauteur du tissu. Ressortent aussi : d, distance signée à
-   la ligne médiane du ruban (découpe de la silhouette), et w, le
-   gauchissement (le bord du ruban respire avec lui). */
-float silk(vec2 p, float t, out float d, out float w) {
-  /* La ligne médiane ondule lentement sur la largeur */
-  float mid = 0.34
-    + 0.090 * sin(p.x * 0.62 + t * 0.24)
-    + 0.045 * sin(p.x * 1.45 - t * 0.16 + 2.1)
-    + 0.070 * (fbm(vec2(p.x * 0.34 + t * 0.03, t * 0.02)) - 0.5) * 2.0;
-  d = p.y - mid;
+/* La ligne médiane du ruban, qui ondule lentement sur la largeur.
+   Elle ne dépend que de x : l'échantillon décalé en y de la normale
+   retombe exactement dessus, on la calcule donc une fois pour deux.
+   Un fbm de moins par pixel, à l'image près identique. */
+float midline(float x, float t) {
+  return 0.34
+    + 0.090 * sin(x * 0.62 + t * 0.24)
+    + 0.045 * sin(x * 1.45 - t * 0.16 + 2.1)
+    + 0.070 * (fbm(vec2(x * 0.34 + t * 0.03, t * 0.02)) - 0.5) * 2.0;
+}
 
+/* Champ de hauteur du tissu, à la distance signée d de la médiane.
+   Ressort aussi w, le gauchissement : le bord du ruban respire avec lui. */
+float silk(float x, float d, float t, out float w) {
   /* Gauchissement : les plis serpentent au lieu de rester parallèles */
-  w = fbm(vec2(p.x * 0.55 - t * 0.09, d * 1.6 + t * 0.05));
+  w = fbm(vec2(x * 0.55 - t * 0.09, d * 1.6 + t * 0.05));
 
   /* Coordonnée de pli : les lignes de niveau de s sont les plis */
-  float s = d * (5.2 + 2.2 * sin(p.x * 0.5 + t * 0.11))
+  float s = d * (5.2 + 2.2 * sin(x * 0.5 + t * 0.11))
     + w * 3.2
-    + 0.7 * sin(p.x * 1.15 + t * 0.19);
+    + 0.7 * sin(x * 1.15 + t * 0.19);
 
   /* Le relief : quatre octaves de plis, du drapé aux fils fins */
   float h = 0.0;
   h += 0.50 * sin(s * 3.1);
   h += 0.30 * sin(s * 6.3 + w * 2.6);
-  h += 0.14 * sin(s * 12.4 - w * 3.4 + p.x * 0.4);
+  h += 0.14 * sin(s * 12.4 - w * 3.4 + x * 0.4);
   h += 0.05 * sin(s * 24.0 + w * 5.2);
   /* L'amplitude meurt en s'éloignant du ruban - beaucoup plus vite
      vers le haut : le bord côté texte reste vaporeux, le bas est riche */
@@ -96,11 +104,17 @@ void main() {
   vec2 p = vec2(vUv.x * aspect, vUv.y);
   float t = uTime;
 
-  float d0, w0, dTmp, wTmp;
+  /* Le pas des différences finies vaut deux pixels : il suit donc la
+     résolution de rendu, et le relief garde la même force à l'écran
+     même quand le gouverneur baisse la définition. */
   float e = 2.0 / uRes.y;
-  float h0 = silk(p, t, d0, w0);
-  float hx = silk(p + vec2(e, 0.0), t, dTmp, wTmp);
-  float hy = silk(p + vec2(0.0, e), t, dTmp, wTmp);
+  float mid = midline(p.x, t);
+  float d0 = p.y - mid;
+
+  float w0, wTmp;
+  float h0 = silk(p.x,     d0,                     t, w0);
+  float hx = silk(p.x + e, p.y - midline(p.x + e, t), t, wTmp);
+  float hy = silk(p.x,     d0 + e,                 t, wTmp);
 
   /* Normale par différences finies - le facteur règle le relief */
   vec3 n = normalize(vec3((h0 - hx) / e * 0.055, (h0 - hy) / e * 0.055, 1.0));
@@ -154,7 +168,12 @@ export function initWave() {
 
   const gl = canvas.getContext('webgl', {
     alpha: true,
-    antialias: true,
+    /* Aucune arête géométrique à l'écran : le quad déborde du cadre et
+       la silhouette du ruban est découpée en smoothstep dans le shader.
+       Le multi-échantillonnage ne lisserait donc rien, mais il coûte un
+       tampon de plus et une résolution d'image à chaque frame - de la
+       bande passante, la denrée rare des GPU intégrés. */
+    antialias: false,
     depth: false,
     stencil: false,
     premultipliedAlpha: true,
@@ -164,6 +183,12 @@ export function initWave() {
     failIfMajorPerformanceCaveat: true,
   });
   if (!gl) return null;
+
+  /* Le bruit repose sur un hash en fract() : il lui faut du vrai fp32.
+     Quand le pilote annonce moins, le bruit se casse en blocs et en
+     bandes - une vague fendue vaut moins que pas de vague du tout. */
+  const precision = gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT);
+  if (!precision || precision.precision < 23) return null;
 
   /* Les couleurs viennent des tokens (brand/tokens.css) */
   const styles = getComputedStyle(document.documentElement);
@@ -224,20 +249,38 @@ export function initWave() {
 
   if (!setup()) return null;
 
-  /* Taille : suivie par ResizeObserver, DPR plafonné (Core Web Vitals) */
+  /* Taille : suivie par ResizeObserver, DPR plafonné (Core Web Vitals).
+     Le facteur d'échelle est celui que le gouverneur fait descendre :
+     le coût du shader est quadratique en résolution, c'est de loin le
+     levier qui rend le plus, et une nappe douce et masquée en haut
+     supporte d'être peinte plus petit puis étirée. */
   const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+  const SCALES = [1, 0.72, 0.52, 0.38];
+  let scale = 0;
   let needsResize = true;
-  new ResizeObserver(() => (needsResize = true)).observe(canvas);
+
+  /* Hauteur du hero mise en cache. La lire à chaque image forcerait un
+     recalcul de mise en page, juste après que la boucle commune a écrit
+     ses styles - la lire ici est gratuit, l'observateur passe après la
+     mise en page. Le canvas est dimensionné en svh : il suit le cadre. */
+  let heroH = 0;
+  new ResizeObserver(() => {
+    needsResize = true;
+    heroH = hero ? hero.offsetHeight : 0;
+  }).observe(canvas);
 
   const resize = () => {
-    const w = Math.round(canvas.clientWidth * DPR);
-    const h = Math.round(canvas.clientHeight * DPR);
+    const s = DPR * SCALES[scale];
+    const w = Math.round(canvas.clientWidth * s);
+    const h = Math.round(canvas.clientHeight * s);
     if (!w || !h) return false;
     if (canvas.width !== w || canvas.height !== h) {
       canvas.width = w;
       canvas.height = h;
       gl.viewport(0, 0, w, h);
     }
+    /* uRes ne bouge qu'ici : inutile de le renvoyer à chaque image */
+    gl.uniform2f(uniforms.uRes, w, h);
     needsResize = false;
     return true;
   };
@@ -256,23 +299,103 @@ export function initWave() {
   });
 
   const render = (t) => {
-    if (needsResize && !resize()) return;
-    gl.uniform2f(uniforms.uRes, canvas.width, canvas.height);
+    if (needsResize && !resize()) return false;
     gl.uniform1f(uniforms.uTime, t);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
+    return true;
   };
 
-  /* Reduced motion : une seule frame, posée - pas d'animation */
+  /* Reduced motion : une seule frame, posée - pas d'animation. C'est la
+     boucle qui la pose, le temps que le canvas ait une taille, et qui la
+     repose si le cadre change (needsResize couvre aussi la perte de
+     contexte, qui vide le canvas). */
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    render(11.3);
-    return null;
+    return () => {
+      if (!lost && needsResize) render(11.3);
+    };
   }
+
+  /* ---- Le gouverneur ----
+     Deviner le matériel ne marche pas : les listes de GPU vieillissent
+     et les navigateurs masquent désormais le nom du renderer. On mesure
+     donc l'écart réel entre deux images peintes, et on dégrade par
+     paliers quand la médiane sort du budget : d'abord la résolution
+     (invisible), puis 30 images par seconde (la nappe dérive lentement,
+     personne ne le verra), et en dernier recours on fige l'image.
+     Une vague immobile reste belle ; une vague qui saccade, non.
+     La fenêtre d'observation est bornée en millisecondes, pas seulement
+     en images : comptée en images seules, plus la machine rame, plus le
+     verdict tarde - exactement l'inverse de ce qu'on veut. */
+  const WARMUP = 1000; // le temps que la page finisse de se charger
+  const SAMPLE = 16; // images observées avant chaque verdict
+  const VERDICT = 700; // ms : au-delà on tranche sur ce qu'on a
+  const MIN = 5; // en dessous, la médiane ne veut plus rien dire
+  const deltas = [];
+  let started = 0;
+  let span = 0; // durée réelle de la fenêtre d'observation
+  let lastDraw = 0;
+  let interval = 0; // 0 = chaque image, 33 = 30 images/s
+  let frozenAt = 0; // instant de l'image gardée, une fois la nappe figée
+
+  const judge = () => {
+    deltas.sort((a, b) => a - b);
+    const median = deltas[deltas.length >> 1];
+    deltas.length = 0;
+    span = 0;
+    /* 23 ms, soit sous les 43 images/s : en deçà la saccade se voit.
+       Le seuil laisse passer les dalles à 50 Hz sans les dégrader. */
+    const budget = interval ? interval * 1.35 : 23;
+    if (median <= budget) return;
+
+    /* Plus on est loin du budget, plus on descend vite : une machine
+       très lente n'a pas à traverser les paliers un par un, sinon elle
+       saccade pendant tout le temps de la descente. */
+    let steps = median > budget * 2.5 ? 2 : 1;
+    while (steps-- > 0) {
+      if (scale < SCALES.length - 1) {
+        scale++;
+        needsResize = true;
+      } else if (!interval) {
+        interval = 33;
+      } else {
+        frozenAt = lastDraw;
+        break;
+      }
+    }
+  };
 
   /* Cadencée par la boucle commune de scroll.js, après Lenis */
   return (time) => {
     if (lost) return;
+    /* Figée : on ne repeint que si le canvas a changé de taille ou a été
+       vidé par une perte de contexte - et toujours la même image. */
+    if (frozenAt) {
+      if (needsResize) render(frozenAt * 0.0006);
+      return;
+    }
     /* Hero recouvert par la feuille suivante : plus rien à peindre */
-    if (hero && window.scrollY > hero.offsetHeight * 0.95) return;
-    render(time * 0.0006);
+    if (heroH && window.scrollY > heroH * 0.95) {
+      lastDraw = 0;
+      return;
+    }
+    /* Image sautée en mode 30 im/s : on ne mesure pas non plus, pour
+       que la mesure reste celle du coût d'une image peinte. */
+    if (interval && lastDraw && time - lastDraw < interval - 4) return;
+
+    const dt = lastDraw ? time - lastDraw : 0;
+    lastDraw = time;
+    if (!render(time * 0.0006)) return;
+    if (!started) started = time;
+
+    /* Les sauts (retour d'onglet, longue pause) ne disent rien du GPU */
+    if (dt > 0 && dt < 250 && time - started > WARMUP) {
+      span += dt;
+      /* On tranche sur 16 images, ou plus tôt si elles traînent : sur
+         une machine à la peine, attendre le compte plein, c'est laisser
+         saccader plusieurs secondes avant de réagir. */
+      if (deltas.push(dt) >= SAMPLE || (deltas.length >= MIN && span > VERDICT)) {
+        judge();
+      }
+    }
   };
 }
