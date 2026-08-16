@@ -73,6 +73,20 @@ img {
   display: block;
 }
 
+/* Vidéos décoratives : aucun player natif.
+   Safari fabrique ses propres contrôles quand il refuse un autoplay
+   (économie d'énergie, réglage « Ne jamais lire »), et les dessine
+   par-dessus l'image. Le vrai remède est de ne poser aucun attribut
+   `autoplay` dans le HTML (voir Process.astro) ; ces règles sont la
+   ceinture. Une règle par pseudo-élément : un sélecteur inconnu dans
+   une liste fait tomber la règle entière. */
+video:not([controls])::-webkit-media-controls { display: none !important; }
+video:not([controls])::-webkit-media-controls-enclosure { display: none !important; }
+video:not([controls])::-webkit-media-controls-panel { display: none !important; }
+video:not([controls])::-webkit-media-controls-panel-container { display: none !important; }
+video:not([controls])::-webkit-media-controls-overlay-play-button { display: none !important; }
+video:not([controls])::-webkit-media-controls-start-playback-button { display: none !important; }
+
 ul, ol {
   margin: 0;
   padding: 0;

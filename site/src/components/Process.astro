@@ -96,29 +96,43 @@ const steps = copy.steps;
   <div class="process__spacer">
     <div class="process__viewport">
       <div class="process__frame" data-process-frame>
+        <!-- Aucun `autoplay` ici, et c'est délibéré : la tête de lecture
+             est pilotée par le scroll, mais surtout Safari force
+             l'affichage de son player - lecture, ± 10 s, barre de temps -
+             sur toute vidéo dont il refuse l'autoplay (mode économie
+             d'énergie, réglage « Ne jamais lire »). Une fois ce player
+             fabriqué, aucun CSS ne le fait disparaître. Sans l'attribut,
+             Safari n'a rien à refuser. Le préchargement passe par
+             scroll.js (preload + load à l'approche de la section). -->
         <video
           class="process__video"
           data-process-video
           muted
-          loop
           playsinline
-          autoplay
           preload="none"
           poster="/video/process-poster.jpg"
+          disablepictureinpicture
+          disableremoteplayback
           aria-hidden="true"
         >
           <source src="/video/process-extrusion.mp4" type="video/mp4" />
         </video>
-        <!-- autoplay force le téléchargement des 8,5 Mo dès le parse, bien
-             avant que scroll.js (différé) ne prenne la main : quand JS est
-             là, on le retire sur-le-champ. Sans JS, la vidéo joue seule. -->
-        <script is:inline>
-          {
-            const v = document.querySelector('[data-process-video]');
-            v?.removeAttribute('autoplay');
-            v?.removeAttribute('loop');
-          }
-        </script>
+        <!-- Sans JS, plus rien ne pilote la lecture : ce doublon joue
+             seul. Le navigateur ne parse le contenu d'un <noscript> que
+             si le JS est coupé - pas un octet en trop pour les autres. -->
+        <noscript>
+          <video
+            class="process__video"
+            muted
+            loop
+            playsinline
+            autoplay
+            poster="/video/process-poster.jpg"
+            aria-hidden="true"
+          >
+            <source src="/video/process-extrusion.mp4" type="video/mp4" />
+          </video>
+        </noscript>
         <div class="process__scrim" aria-hidden="true"></div>
       </div>
 
@@ -198,14 +212,15 @@ const steps = copy.steps;
     /* Vidéo purement décorative (aria-hidden, pilotée par le scroll) :
        sans ça, Safari superpose son player flottant au survol - barre de
        lecture, durée, image dans l'image. Une vidéo non interactive
-       n'en reçoit pas. */
+       n'en reçoit pas. Le reste de la parade est dans global.css et
+       dans l'absence d'attribut `autoplay`. */
     pointer-events: none;
   }
 
-  /* Ceinture et bretelles pour les moteurs WebKit : aucun contrôle
-     natif ne doit se dessiner sur cette vidéo. */
-  .process__video::-webkit-media-controls {
-    display: none !important;
+  /* Sans JS, le doublon <noscript> prend le relais : une seule des deux
+     vidéos doit occuper le cadre. */
+  html:not(.js) [data-process-video] {
+    display: none;
   }
 
   html.js .process__video {

@@ -37,18 +37,18 @@ function initNav() {
 }
 
 /* ---- Vidéo du process : pilotée par le scroll ----
-   La vidéo n'avance plus toute seule : sa tête de lecture suit la
+   La vidéo n'avance pas toute seule : sa tête de lecture suit la
    progression de la section épinglée (voir initMotion). Ici on se
    contente de la mettre sous contrôle et de la précharger en entier
-   dès que la section approche. Sans JS, les attributs autoplay/loop
-   restent dans le HTML : la vidéo tourne normalement. */
+   dès que la section approche - le HTML ne porte volontairement ni
+   `autoplay` ni `preload`, sinon Safari colle son player par-dessus
+   (voir Process.astro). Sans JS, c'est le doublon <noscript> qui joue. */
 
 function initProcessVideo() {
   const video = document.querySelector('[data-process-video]');
   if (!video) return;
 
-  video.removeAttribute('autoplay');
-  video.removeAttribute('loop');
+  video.controls = false;
   video.pause();
 
   if (reduceMotion.matches) return;
