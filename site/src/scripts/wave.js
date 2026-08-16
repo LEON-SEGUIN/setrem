@@ -249,12 +249,22 @@ export function initWave() {
 
   if (!setup()) return null;
 
-  /* Taille : suivie par ResizeObserver, DPR plafonné (Core Web Vitals).
+  /* Taille : suivie par ResizeObserver. Sur écran tactile, le DPR n'est
+     pas plafonné à l'aveugle : sur un téléphone (DPR 3) un plafond à
+     1.5 peindrait la nappe à moitié de sa définition puis l'étirerait -
+     floue d'entrée. Or le cadre y est petit : c'est le nombre de pixels
+     qui coûte, pas le ratio ; on borne donc le tampon au budget d'un
+     hero de bureau (1440 css × 1.5 de DPR). La garde tactile est
+     importante : sans elle, une fenêtre étroite sur un écran de bureau
+     DPR 2 (snap Windows, iPad avec souris mis à part) paierait jusqu'à
+     +78 % de pixels par rapport au plafond d'origine - qui reste, lui,
+     la règle partout où il y a une souris.
      Le facteur d'échelle est celui que le gouverneur fait descendre :
      le coût du shader est quadratique en résolution, c'est de loin le
      levier qui rend le plus, et une nappe douce et masquée en haut
      supporte d'être peinte plus petit puis étirée. */
-  const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+  const PIXELS = 1_300_000; // le tampon d'un hero de bureau, en pixels
+  const COARSE = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
   const SCALES = [1, 0.72, 0.52, 0.38];
   let scale = 0;
   let needsResize = true;
@@ -262,18 +272,29 @@ export function initWave() {
   /* Hauteur du hero mise en cache. La lire à chaque image forcerait un
      recalcul de mise en page, juste après que la boucle commune a écrit
      ses styles - la lire ici est gratuit, l'observateur passe après la
-     mise en page. Le canvas est dimensionné en svh : il suit le cadre. */
+     mise en page. Le canvas est dimensionné en svh : il suit le cadre.
+     Un resize invalide aussi la fenêtre d'observation du gouverneur :
+     rotation ou redimensionnement produisent des frames longues qui ne
+     disent rien du GPU, un verdict rendu dessus serait corrompu. */
   let heroH = 0;
+  let invalidate = null; // posé par le gouverneur, absent en reduced-motion
   new ResizeObserver(() => {
     needsResize = true;
     heroH = hero ? hero.offsetHeight : 0;
+    invalidate?.();
   }).observe(canvas);
 
   const resize = () => {
-    const s = DPR * SCALES[scale];
-    const w = Math.round(canvas.clientWidth * s);
-    const h = Math.round(canvas.clientHeight * s);
-    if (!w || !h) return false;
+    const cw = canvas.clientWidth;
+    const ch = canvas.clientHeight;
+    if (!cw || !ch) return false;
+    const dpr = Math.min(
+      window.devicePixelRatio || 1,
+      COARSE ? Math.max(1.5, Math.sqrt(PIXELS / (cw * ch))) : 1.5
+    );
+    const s = dpr * SCALES[scale];
+    const w = Math.round(cw * s);
+    const h = Math.round(ch * s);
     if (canvas.width !== w || canvas.height !== h) {
       canvas.width = w;
       canvas.height = h;
@@ -323,6 +344,10 @@ export function initWave() {
      (invisible), puis 30 images par seconde (la nappe dérive lentement,
      personne ne le verra), et en dernier recours on fige l'image.
      Une vague immobile reste belle ; une vague qui saccade, non.
+     Chaque palier de résolution est mis à l'essai : s'il ne raccourcit
+     pas les images, c'est que la lenteur ne venait pas du GPU, et on
+     le rend - sans ça, un simple mode économie d'énergie (rAF bridé à
+     30 im/s) faisait descendre la nappe jusqu'au plancher pour rien.
      La fenêtre d'observation est bornée en millisecondes, pas seulement
      en images : comptée en images seules, plus la machine rame, plus le
      verdict tarde - exactement l'inverse de ce qu'on veut. */
@@ -336,6 +361,21 @@ export function initWave() {
   let lastDraw = 0;
   let interval = 0; // 0 = chaque image, 33 = 30 images/s
   let frozenAt = 0; // instant de l'image gardée, une fois la nappe figée
+  let probation = null; // { scale, median } : palier de définition à l'essai
+  let scaleFails = 0; // probations ratées d'affilée - à deux, levier condamné
+  let scaleHelps = true; // faux quand baisser la définition ne rend rien
+  let strikes = 0; // verdicts hors budget consécutifs
+  let proven = false; // vrai dès qu'un verdict est entré dans le budget
+
+  /* Rotation, redimensionnement : les frames de relayout sont longues
+     sans que le GPU y soit pour rien. La fenêtre en cours est jetée,
+     et une probation traversée par un resize n'est pas jugée. */
+  invalidate = () => {
+    deltas.length = 0;
+    span = 0;
+    strikes = 0;
+    probation = null;
+  };
 
   const judge = () => {
     deltas.sort((a, b) => a - b);
@@ -345,22 +385,55 @@ export function initWave() {
     /* 23 ms, soit sous les 43 images/s : en deçà la saccade se voit.
        Le seuil laisse passer les dalles à 50 Hz sans les dégrader. */
     const budget = interval ? interval * 1.35 : 23;
-    if (median <= budget) return;
 
-    /* Plus on est loin du budget, plus on descend vite : une machine
-       très lente n'a pas à traverser les paliers un par un, sinon elle
-       saccade pendant tout le temps de la descente. */
-    let steps = median > budget * 2.5 ? 2 : 1;
-    while (steps-- > 0) {
-      if (scale < SCALES.length - 1) {
-        scale++;
+    /* Le palier pris au verdict précédent était à l'essai : gardé
+       seulement s'il a payé. Moins de pixels doit donner des images
+       plus courtes - exiger 12 % est indulgent. Sinon le goulot n'est
+       pas le remplissage : rAF bridé à 30 im/s (économie d'énergie de
+       Safari et Chrome), fil principal occupé... Baisser la définition
+       n'achèterait alors que de la bouillie de pixels, on rend le
+       palier et on ne touche plus jamais à la définition. */
+    if (probation) {
+      if (median > budget && median > probation.median * 0.88) {
+        scale = probation.scale;
         needsResize = true;
-      } else if (!interval) {
-        interval = 33;
+        /* Un seul échec ne condamne pas le levier : la fenêtre a pu
+           être polluée (chargement, long task). Deux échecs d'affilée,
+           eux, disent vraiment que le remplissage n'est pas le goulot. */
+        scaleHelps = ++scaleFails < 2;
       } else {
-        frozenAt = lastDraw;
-        break;
+        scaleFails = 0;
       }
+      probation = null;
+    }
+
+    if (median <= budget) {
+      proven = true;
+      strikes = 0;
+      return;
+    }
+
+    /* Deux verdicts consécutifs avant de dégrader : un accroc passager
+       - coup de scroll, long task - ne doit pas coûter sa définition à
+       la nappe. Mais cette patience ne vaut que sur une machine qui a
+       déjà prouvé qu'elle tient le budget : au chargement, un GPU trop
+       faible sature la boucle rAF commune, chaque verdict d'attente est
+       une demi-seconde de jank - la première descente part sans délai.
+       Pendant une descente, strikes reste haut : les paliers suivants
+       tombent sans nouveau délai. */
+    if (++strikes < 2 && proven) return;
+
+    if (scaleHelps && scale < SCALES.length - 1) {
+      /* Plus on est loin du budget, plus on descend vite : une machine
+         très lente n'a pas à traverser les paliers un par un, sinon
+         elle saccade pendant tout le temps de la descente. */
+      probation = { scale, median };
+      scale = Math.min(scale + (median > budget * 2.5 ? 2 : 1), SCALES.length - 1);
+      needsResize = true;
+    } else if (!interval) {
+      interval = 33;
+    } else {
+      frozenAt = lastDraw;
     }
   };
 

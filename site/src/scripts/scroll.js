@@ -499,16 +499,34 @@ const motionTick = initMotion();
 const pinTick = initPins();
 const readTick = initReadingProgress();
 const railTick = initRail();
-const waveTick = initWave();
 initReveals();
 initTabs();
+
+/* La vague attend un instant de calme : son init est synchrone (création
+   du contexte WebGL, compilation des shaders - jusqu'à quelques dizaines
+   de ms sur un mobile d'entrée de gamme) et n'a rien à faire dans la
+   fenêtre de chargement, où elle retarderait le premier rendu. Le canvas
+   est de toute façon invisible 1,15 s (fig-in, Hero.astro) : différée en
+   période creuse, l'init est prête bien avant la fin du fondu. Safari
+   n'a requestIdleCallback que depuis peu, d'où le repli setTimeout. */
+let waveTick = null;
+if (document.querySelector('[data-wave]')) {
+  const armWave = () => {
+    waveTick = initWave();
+  };
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(armWave, { timeout: 900 });
+  } else {
+    setTimeout(armWave, 150);
+  }
+}
 
 /* ---- La boucle unique ----
    Lenis écrit la position de la fenêtre, les animations la lisent dans
    la foulée : même frame, aucun décalage d'une image entre le scroll et
    ce qu'il pilote. Un seul rAF pour toute la page. */
 
-if (lenis || motionTick || pinTick || readTick || railTick || waveTick) {
+if (lenis || motionTick || pinTick || readTick || railTick || document.querySelector('[data-wave]')) {
   const frame = (time) => {
     lenis?.raf(time);
     motionTick?.();
