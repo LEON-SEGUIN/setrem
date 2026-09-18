@@ -1,6 +1,7 @@
 ---
 import PageLayout from '../../../layouts/PageLayout.astro';
 import PageHero from '../../../components/PageHero.astro';
+import { contactConfig } from '../../../config/assistant';
 
 const adresseQuery = encodeURIComponent(
   'SETREM, 7 rue Robert Dumont, 27400 Acquigny, France'
@@ -71,15 +72,14 @@ const adresseQuery = encodeURIComponent(
         </figure>
       </div>
 
-      <!-- TODO: brancher le formulaire sur un backend (service de
-           formulaires ou endpoint de l'hébergeur) avant mise en ligne,
-           avec redirection vers /en/contact/thank-you. -->
       <form
         class="formulaire reveal"
         style="--ri: 2"
         method="post"
-        action="/en/contact/thank-you"
+        action={contactConfig.webhook}
       >
+        <input type="hidden" name="locale" value="en" />
+        <input type="hidden" name="page" value={Astro.url.href} />
         <p class="formulaire__intro">
           Describe your project and we will call you back.
         </p>
@@ -121,6 +121,16 @@ const adresseQuery = encodeURIComponent(
           and any business relationship that may follow from it.
         </p>
 
+
+        <!-- Piege a robots. Aucun humain ne le voit ni ne l'atteint au
+             clavier ; un robot qui remplit tout le remplit aussi. Quand il
+             est rempli, n8n redirige vers le merci sans rien envoyer : le
+             prevenir l'aiderait a s'adapter. Pas de reCAPTCHA, ce serait un
+             appel a Google de plus sur un site qui les refuse par ailleurs. -->
+        <div class="formulaire__piege" aria-hidden="true">
+          <label for="site_web">Do not fill this in</label>
+          <input id="site_web" name="site_web" type="text" tabindex="-1" autocomplete="off" />
+        </div>
         <div class="formulaire__pied">
           <p class="formulaire__note">* Required fields</p>
           <button class="btn btn--dark" type="submit">Send the request</button>
@@ -331,5 +341,15 @@ const adresseQuery = encodeURIComponent(
       flex-direction: column;
       align-items: flex-start;
     }
+  }
+
+  /* Le piege a robots : hors de l'ecran plutot que `display: none`, que
+     certains robots savent reperer et ignorer. */
+  .formulaire__piege {
+    position: absolute;
+    inset-inline-start: -9999px;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
   }
 </style>

@@ -23,3 +23,22 @@
 export const assistantConfig = {
   chatWebhook: 'https://ordinia.app.n8n.cloud/webhook/chat-setrem',
 } as const;
+
+/**
+ * Branchement du formulaire de contact.
+ *
+ * Les pages /contact et /en/contact postent ici, en POST natif : sans
+ * JavaScript la page doit rester complete. Un POST de formulaire est une
+ * navigation, il n'est donc pas soumis au CORS, et n8n repond par une
+ * redirection 303 vers /contact/merci ou /en/contact/thank-you selon le
+ * champ cache `locale`.
+ *
+ * Le workflow s'appelle « SETREM - Formulaire de contact du site » et se
+ * regenere avec `N8N Workflow/setrem-assistant/construire-formulaire.py`.
+ *
+ * Le champ cache `site_web` est un piege a robots : aucun humain ne le
+ * voit, un robot le remplit, et n8n redirige alors sans rien envoyer.
+ */
+export const contactConfig = {
+  webhook: 'https://ordinia.app.n8n.cloud/webhook/contact-setrem',
+} as const;
