@@ -89,9 +89,9 @@ L'essentiel :
 | Accent | `#0A7268` — teal |
 | Neutres | Acier, teinte froide. **Jamais de gris pur.** |
 | Sombre | `#141A1D`, en ponctuation — une à deux sections par page, pas un mode |
-| Titrage | Archivo 600–800 |
-| Texte | Inter 400–600 |
-| Polices | **Auto-hébergées en WOFF2.** Jamais Google Fonts. |
+| Titrage | Archivo 600 à 800 |
+| Texte | Archivo 400 à 600 |
+| Polices | **Une seule famille : Archivo.** Auto-hébergée en WOFF2. Jamais Google Fonts. |
 | Logo | **Non modifiable** — ni couleurs, ni proportions, ni dégradé, ni italique |
 
 - **Toujours utiliser les tokens de `brand/tokens.css`**, jamais de valeur en dur.
@@ -126,9 +126,11 @@ JS livré uniquement pour les animations. Le projet vit dans **`site/`**.
   - Le sitemap liste les deux langues à plat : l'appariement pour Google
     passe par les `hreflang` de `Layout.astro`, pas par le sitemap.
 
-- Polices auto-hébergées via `@fontsource-variable/archivo` et
-  `@fontsource-variable/inter` (familles enregistrées : `Archivo Variable`,
-  `Inter Variable` — l'alias vers les tokens est dans `site/src/styles/global.css`).
+- Police auto-hébergée via `@fontsource-variable/archivo` (famille enregistrée :
+  `Archivo Variable`). L'alias vers les tokens est dans
+  `site/src/styles/global.css` : `--font-display` et `--font-text` pointent tous
+  les deux sur Archivo. Les deux tokens restent distincts pour que le rôle reste
+  lisible dans le CSS, même si la famille est la même.
 - `site/src/styles/tokens.css` est une **copie** de `brand/tokens.css` :
   la source de vérité reste `brand/`, resynchroniser à chaque évolution.
 - Les animations scroll (`site/src/scripts/scroll.js`) sont progressives :

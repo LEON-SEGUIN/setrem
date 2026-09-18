@@ -1,10 +1,10 @@
 ---
 import '../styles/global.css';
-// Le LCP est du texte sur toutes les pages : précharger les deux sous-
-// ensembles latins évite que le navigateur ne découvre les polices au
-// bout de la chaîne HTML → CSS → @font-face.
+// Le LCP est du texte sur toutes les pages : précharger le sous-ensemble
+// latin évite que le navigateur ne découvre la police au bout de la chaîne
+// HTML → CSS → @font-face. Une seule famille depuis le 17/09/2026, donc un
+// seul préchargement : voir brand/BRAND.md.
 import archivoLatin from '@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2?url';
-import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import {
   ui,
   toLocale,
@@ -88,7 +88,6 @@ const jsonLd = {
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#004C91" />
     <link rel="preload" as="font" type="font/woff2" href={archivoLatin} crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href={interLatin} crossorigin />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="SETREM" />

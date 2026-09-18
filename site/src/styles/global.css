@@ -6,16 +6,17 @@
 
 @import './tokens.css';
 @import '@fontsource-variable/archivo';
-@import '@fontsource-variable/inter';
 /* Scroll lissé : quelques garde-fous de Lenis (hauteurs, iframes,
    zones à scroll propre). Le moteur, lui, est dans scripts/smooth-scroll.js. */
 @import 'lenis/dist/lenis.css';
 
 /* Fontsource enregistre les familles variables sous « … Variable » :
-   on aligne les tokens sur les familles réellement chargées. */
+   on aligne les tokens sur les familles réellement chargées.
+   Les deux rôles pointent sur Archivo : voir la note de tokens.css.
+   Une seule fonte variable à télécharger, donc une requête de moins. */
 :root {
   --font-display: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
-  --font-text: 'Inter Variable', 'Inter', system-ui, sans-serif;
+  --font-text: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
 }
 
 *,

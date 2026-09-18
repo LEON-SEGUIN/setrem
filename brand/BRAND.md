@@ -78,13 +78,19 @@ portent la même teinte bleutée, c'est ce qui donne l'unité.
 
 ## Typographie
 
-Deux familles, **auto-hébergées en WOFF2**. Jamais Google Fonts : requête tierce
-bloquante et enjeu RGPD.
+**Une seule famille : Archivo**, auto-hébergée en WOFF2. Jamais Google Fonts :
+requête tierce bloquante et enjeu RGPD.
 
 | Rôle | Police | Graisses |
 |---|---|---|
-| Titrage | **Archivo** | 600–800 |
-| Texte et données | **Inter** | 400–600 |
+| Titrage | **Archivo** | 600 à 800 |
+| Texte et données | **Archivo** | 400 à 600 |
+
+Ce qui sépare un titre d'un paragraphe est la graisse et l'approche, pas un
+changement de police. Le site a porté Inter en texte jusqu'au 17/09/2026 : à
+côté d'Archivo, ce second caractère neutre lisait comme un gabarit posé sur la
+marque, et pas comme un système. Une famille de moins, c'est aussi une fonte de
+moins à télécharger.
 
 - Échelle fluide en `clamp()` — pas de media query pour la taille du texte.
 - Largeur de lecture : **68ch** max.

@@ -63,8 +63,12 @@
   --focus-ring:     var(--teal-600);
 
   /* ---- Typographie ---- */
+  /* Une seule famille, deux roles. Archivo porte le titrage ET le texte :
+     ce qui distingue un role de l'autre est la graisse et l'approche, pas
+     un changement de police. Un second caractere neutre a cote d'Archivo
+     lisait comme un gabarit pose sur la marque, pas comme un systeme. */
   --font-display: "Archivo", system-ui, sans-serif;
-  --font-text:    "Inter", system-ui, sans-serif;
+  --font-text:    "Archivo", system-ui, sans-serif;
 
   --text-display: clamp(2.75rem, 1.6rem + 4.6vw, 5.5rem);
   --text-h1:      clamp(2rem,    1.4rem + 2.6vw, 3.5rem);
