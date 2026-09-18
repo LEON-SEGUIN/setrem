@@ -1,0 +1,1106 @@
+---
+// Assistant conversationnel SETREM : bulle flottante + panneau de chat.
+//
+// Le composant est bilingue (il lit Astro.currentLocale) et ne dépend
+// d'aucune librairie. Il est monté par PageLayout et ArticleLayout, donc
+// présent sur toutes les pages du site.
+//
+// BACKEND : un webhook n8n, déclaré dans src/config/assistant.ts.
+//   • chatWebhook  POST {sessionId, message, page, locale}
+//                  -> {reply: "...", chips?: ["..."]}
+// La demande de rappel ne passe pas par une seconde URL : l'agent dispose
+// d'un outil qui envoie l'e-mail lui-même une fois qu'il a recueilli le nom
+// et un moyen de joindre le visiteur.
+// Vider cette URL fait retomber le panneau en mode dégradé :
+// il annonce que l'assistant est indisponible et donne le téléphone et
+// le formulaire de contact. Il ne ment jamais sur ce qu'il a envoyé.
+//
+// La base de connaissances qui alimente l'agent vit dans le dépôt
+// BASE-DE-CONNAISSANCES-SETREM, à côté de celui-ci.
+import { toLocale } from '../i18n/ui';
+import { contact } from '../i18n/ui';
+import { assistantConfig } from '../config/assistant';
+
+const locale = toLocale(Astro.currentLocale);
+
+const copy = {
+  fr: {
+    fabOpen: "Ouvrir l'assistant IA SETREM",
+    fabClose: "Fermer l'assistant IA SETREM",
+    nudgeTitle: 'Assistant IA SETREM',
+    nudgeBody: "Une question sur nos lignes d'extrusion ? Je réponds tout de suite.",
+    nudgeOpen: "Ouvrir l'assistant IA SETREM",
+    nudgeClose: "Masquer cette invitation",
+    title: 'Assistant IA SETREM',
+    status: 'En ligne',
+    close: "Fermer l'assistant",
+    log: 'Conversation avec l’assistant IA SETREM',
+    placeholder: 'Votre question…',
+    inputLabel: 'Votre message',
+    send: 'Envoyer',
+    typing: 'L’assistant écrit',
+    dataLink: 'Traitement de vos données',
+    contactPath: '/contact',
+    legalPath: '/mentions-legales',
+  },
+  en: {
+    fabOpen: 'Open the SETREM AI assistant',
+    fabClose: 'Close the SETREM AI assistant',
+    nudgeTitle: 'SETREM AI assistant',
+    nudgeBody: 'A question about our extrusion lines? I answer right away.',
+    nudgeOpen: 'Open the SETREM AI assistant',
+    nudgeClose: 'Dismiss this message',
+    title: 'SETREM AI assistant',
+    status: 'Online',
+    close: 'Close the assistant',
+    log: 'Conversation with the SETREM AI assistant',
+    placeholder: 'Your question…',
+    inputLabel: 'Your message',
+    send: 'Send',
+    typing: 'The assistant is typing',
+    dataLink: 'How we handle your data',
+    contactPath: '/en/contact',
+    legalPath: '/en/legal-notice',
+  },
+}[locale];
+
+// Tout ce que le script inline doit connaître passe par ce bloc JSON :
+// le composant est statique au build, le script ne peut pas lire les
+// variables Astro autrement.
+const runtime = {
+  locale,
+  chatWebhook: assistantConfig.chatWebhook,
+  tel: contact.tel,
+  telHref: contact.telHref,
+  contactPath: copy.contactPath,
+  copy,
+};
+---
+
+<div id="st-assistant" data-assistant={JSON.stringify(runtime)}>
+  <!-- L'invite : une carte, pas une pastille. Elle nomme l'assistant comme
+       une IA dès le premier contact, avant toute question du visiteur. -->
+  <div id="st-nudge" hidden>
+    <button class="st-nudge-main" type="button" aria-label={copy.nudgeOpen}>
+      <img class="st-nudge-av" src="/favicon.svg" alt="" width="34" height="34" aria-hidden="true" />
+      <span class="st-nudge-txt">
+        <span class="st-nudge-title">{copy.nudgeTitle}</span>
+        <span class="st-nudge-body">{copy.nudgeBody}</span>
+      </span>
+    </button>
+    <button class="st-nudge-x" type="button" aria-label={copy.nudgeClose}>
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+        <path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+      </svg>
+    </button>
+  </div>
+  <button
+    id="st-fab"
+    type="button"
+    aria-expanded="false"
+    aria-controls="st-panel"
+    aria-label={copy.fabOpen}
+  >
+    <svg class="st-ic-chat" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M21 12c0 4.418-4.03 8-9 8-1.02 0-2-.15-2.91-.43L4 21l1.18-3.53C4.04 16.2 3 14.2 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linejoin="round"></path>
+      <circle cx="8.5" cy="12" r="1" fill="currentColor"></circle>
+      <circle cx="12" cy="12" r="1" fill="currentColor"></circle>
+      <circle cx="15.5" cy="12" r="1" fill="currentColor"></circle>
+    </svg>
+    <svg class="st-ic-close" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+    </svg>
+  </button>
+</div>
+
+<div id="st-panel" role="dialog" aria-label={copy.title} aria-modal="false">
+  <div class="st-head">
+    <!-- Le symbole du logo SETREM, tel quel : public/favicon.svg est la
+         déclinaison carrée déjà préparée, on ne recadre ni ne recolore
+         rien. Posé sans cadre : à 34px, un fond et une bordure autour
+         ajoutaient du bruit sans rien apporter. -->
+    <img class="st-avatar" src="/favicon.svg" alt="" width="34" height="34" aria-hidden="true" />
+    <span class="st-head-txt">
+      <span class="st-title">{copy.title}</span>
+      <span class="st-status"><i aria-hidden="true"></i>{copy.status}</span>
+    </span>
+    <button class="st-close" type="button" aria-label={copy.close}>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- data-lenis-prevent : le fil défile pour son propre compte. Sans cet
+       attribut, le scroll lissé du site capterait la molette au-dessus du
+       panneau et ferait défiler la page derrière lui. -->
+  <div class="st-msgs" role="log" aria-live="polite" aria-label={copy.log} data-lenis-prevent></div>
+
+  <form class="st-inputrow">
+    <input
+      type="text"
+      placeholder={copy.placeholder}
+      aria-label={copy.inputLabel}
+      autocomplete="off"
+      maxlength="600"
+    />
+    <button type="submit" class="st-send" aria-label={copy.send}>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path
+          d="M2.5 8h10M8.5 3.5 13 8l-4.5 4.5"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+    </button>
+  </form>
+
+  <p class="st-foot">
+    <a href={copy.legalPath} target="_blank" rel="noopener">{copy.dataLink}</a>
+  </p>
+</div>
+
+<style>
+  /* Sans JavaScript, l'assistant ne peut rien faire : il disparaît plutôt
+     que d'offrir un bouton mort. Le contenu de la page, lui, ne dépend
+     pas de lui. La classe .js est posée par Layout.astro. */
+  :global(html:not(.js)) #st-assistant,
+  :global(html:not(.js)) #st-panel {
+    display: none;
+  }
+
+  /* ── Bulle flottante ─────────────────────────────────────────────── */
+  #st-assistant {
+    position: fixed;
+    inset-block-end: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+    inset-inline-end: 1.5rem;
+    z-index: 900;
+    font-family: var(--font-text);
+  }
+
+  #st-fab {
+    position: relative;
+    inline-size: 56px;
+    block-size: 56px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    background: var(--blue-600);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    box-shadow:
+      0 10px 28px rgb(0 76 145 / 0.3),
+      0 3px 10px rgb(20 26 29 / 0.12);
+    transition:
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.25s ease,
+      box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #st-fab:hover {
+    background: var(--blue-700);
+    transform: translateY(-3px);
+    box-shadow:
+      0 16px 38px rgb(0 76 145 / 0.38),
+      0 5px 14px rgb(20 26 29 / 0.14);
+  }
+  #st-fab:active {
+    transform: scale(0.94);
+  }
+  #st-fab:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+  #st-fab svg {
+    position: absolute;
+    transition:
+      opacity 0.22s ease,
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #st-fab .st-ic-close {
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.6);
+  }
+  #st-assistant.is-open .st-ic-chat {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.6);
+  }
+  #st-assistant.is-open .st-ic-close {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+
+  /* Halo : une seule onde lente, en teal. Assez pour attirer l'œil sans
+     transformer le coin de l'écran en gyrophare. */
+  @keyframes stHalo {
+    0% {
+      transform: scale(1);
+      opacity: 0.4;
+    }
+    70%,
+    100% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+  }
+  #st-fab::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1.5px solid var(--teal-400);
+    animation: stHalo 3.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    pointer-events: none;
+  }
+  #st-assistant.is-open #st-fab::before {
+    animation: none;
+    opacity: 0;
+  }
+
+  /* ── Invite ─────────────────────────────────────────────────────── */
+  /* Une carte ancrée au-dessus de la bulle. Elle se pose en montant et en
+     se dépliant depuis son coin bas droit, d'où sortira le panneau : le
+     mouvement annonce l'objet. */
+  #st-nudge {
+    position: absolute;
+    inset-block-end: calc(100% + 0.875rem);
+    inset-inline-end: 0;
+    inline-size: 310px;
+    max-inline-size: calc(100vw - 2rem);
+    display: flex;
+    align-items: flex-start;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow:
+      0 18px 44px -12px rgb(0 76 145 / 0.22),
+      0 4px 12px rgb(20 26 29 / 0.07);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(14px) scale(0.94);
+    transform-origin: bottom right;
+    pointer-events: none;
+    transition:
+      opacity 0.34s ease,
+      transform 0.62s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #st-nudge.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  /* Filet de marque, le même que celui du panneau, mais il se trace à
+     l'arrivée : de la droite vers la gauche, depuis le coin d'où sortira le
+     panneau. Un reflet blanc sur une carte blanche ne se verrait pas ;
+     cette ligne-là, si. */
+  @keyframes stTrait {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  #st-nudge::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: 2px;
+    background: linear-gradient(90deg, var(--blue-600), var(--teal-600));
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  #st-nudge.is-visible::before {
+    animation: stTrait 0.72s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+  }
+
+  .st-nudge-main {
+    flex: 1;
+    min-inline-size: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.9375rem 0.5rem 0.9375rem 0.9375rem;
+    border: none;
+    background: transparent;
+    text-align: start;
+    cursor: pointer;
+    font-family: var(--font-text);
+  }
+  .st-nudge-main:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: -3px;
+    border-radius: 14px;
+  }
+
+  /* Le symbole SETREM, seul et intact : rien ne se pose par-dessus. La
+     présence est annoncée dans l'en-tête du panneau, par « En ligne ». */
+  .st-nudge-av {
+    flex-shrink: 0;
+    inline-size: 34px;
+    block-size: 34px;
+    display: block;
+  }
+
+  .st-nudge-txt {
+    min-inline-size: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1875rem;
+  }
+  .st-nudge-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.8125rem;
+    letter-spacing: -0.005em;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .st-nudge-body {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    text-wrap: pretty;
+  }
+
+  .st-nudge-x {
+    flex-shrink: 0;
+    inline-size: 30px;
+    block-size: 30px;
+    margin: 0.4375rem 0.4375rem 0 0;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--text-subtle);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition:
+      color 0.18s ease,
+      background-color 0.18s ease;
+  }
+  .st-nudge-x:hover {
+    color: var(--text);
+    background: var(--surface);
+  }
+  .st-nudge-x:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: -2px;
+  }
+
+  /* ── Panneau ─────────────────────────────────────────────────────── */
+  #st-panel {
+    position: fixed;
+    inset-block-end: calc(6.25rem + env(safe-area-inset-bottom, 0px));
+    inset-inline-end: 1.5rem;
+    z-index: 900;
+    inline-size: min(390px, calc(100vw - 2rem));
+    block-size: min(600px, calc(100vh - 9rem));
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: var(--font-text);
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow:
+      0 30px 70px -18px rgb(0 76 145 / 0.26),
+      0 10px 26px rgb(20 26 29 / 0.1);
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+    transform-origin: bottom right;
+    pointer-events: none;
+    transition:
+      opacity 0.28s ease,
+      transform 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #st-panel.is-open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  /* Filet de marque en tête de panneau : bleu du logo vers le teal. */
+  #st-panel::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: 2px;
+    z-index: 1;
+    background: linear-gradient(90deg, var(--blue-600), var(--teal-600));
+  }
+
+  /* ── En-tête ─────────────────────────────────────────────────────── */
+  .st-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.125rem;
+    border-block-end: 1px solid var(--border);
+    background: var(--surface-raised);
+    flex-shrink: 0;
+  }
+  /* Le symbole du logo se suffit : pas de pastille de fond, pas de bordure.
+     À 34px, le cadre ajoutait du bruit autour d'une forme déjà ronde. */
+  .st-avatar {
+    inline-size: 34px;
+    block-size: 34px;
+    flex-shrink: 0;
+    display: block;
+  }
+  .st-head-txt {
+    flex: 1;
+    min-inline-size: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .st-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .st-status {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: var(--text-micro);
+    color: var(--text-subtle);
+    line-height: 1.6;
+  }
+  @keyframes stDot {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+  .st-status i {
+    inline-size: 6px;
+    block-size: 6px;
+    border-radius: 50%;
+    background: var(--teal-600);
+    animation: stDot 2.4s ease-in-out infinite;
+  }
+  .st-close {
+    inline-size: 32px;
+    block-size: 32px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-subtle);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition:
+      color 0.18s ease,
+      transform 0.18s ease;
+  }
+  .st-close:hover {
+    color: var(--text);
+  }
+  .st-close:active {
+    transform: scale(0.9);
+  }
+  .st-close:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* ── Fil de messages ─────────────────────────────────────────────── */
+  .st-msgs {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 1.25rem 1.125rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    background: var(--surface);
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .st-msgs::-webkit-scrollbar {
+    inline-size: 4px;
+  }
+  .st-msgs::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
+  }
+
+  .st-msgs :global(.st-msg) {
+    max-inline-size: 86%;
+    padding: 0.7rem 0.875rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    overflow-wrap: break-word;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: stIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes stIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .st-msgs :global(.st-msg.bot) {
+    align-self: flex-start;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    color: var(--text-body);
+    border-radius: 12px;
+    border-start-start-radius: 4px;
+  }
+  .st-msgs :global(.st-msg.bot strong) {
+    font-weight: 600;
+    color: var(--text);
+  }
+  .st-msgs :global(.st-msg.bot a) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  /* Chiffres techniques en chasse fixe, comme partout ailleurs sur le site. */
+  .st-msgs :global(.st-msg.bot table),
+  .st-msgs :global(.st-msg.bot .num) {
+    font-variant-numeric: tabular-nums;
+  }
+  .st-msgs :global(.st-msg.user) {
+    align-self: flex-end;
+    background: var(--blue-600);
+    color: #fff;
+    border-radius: 12px;
+    border-end-end-radius: 4px;
+  }
+
+  @keyframes stTyp {
+    0%,
+    60%,
+    100% {
+      opacity: 0.25;
+      transform: translateY(0);
+    }
+    30% {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+  }
+  .st-msgs :global(.st-typing) {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 0.875rem 1rem;
+  }
+  .st-msgs :global(.st-typing i) {
+    inline-size: 5px;
+    block-size: 5px;
+    border-radius: 50%;
+    background: var(--text-subtle);
+    animation: stTyp 1.1s ease-in-out infinite;
+  }
+  .st-msgs :global(.st-typing i:nth-child(2)) {
+    animation-delay: 0.15s;
+  }
+  .st-msgs :global(.st-typing i:nth-child(3)) {
+    animation-delay: 0.3s;
+  }
+
+  /* ── Réponses rapides ────────────────────────────────────────────── */
+  .st-msgs :global(.st-chips) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4375rem;
+    padding-block: 0.125rem 0.25rem;
+    align-self: flex-start;
+    max-inline-size: 100%;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: stIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) 0.12s forwards;
+  }
+  .st-msgs :global(.st-chip) {
+    font-family: var(--font-text);
+    font-size: 0.8125rem;
+    color: var(--accent);
+    background: var(--surface-raised);
+    border: 1px solid var(--blue-200);
+    border-radius: 999px;
+    padding: 0.5rem 0.875rem;
+    cursor: pointer;
+    transition:
+      border-color 0.18s ease,
+      background-color 0.18s ease,
+      transform 0.18s ease;
+  }
+  .st-msgs :global(.st-chip:hover) {
+    border-color: var(--blue-600);
+    background: var(--blue-50);
+  }
+  .st-msgs :global(.st-chip:active) {
+    transform: scale(0.96);
+  }
+  .st-msgs :global(.st-chip:focus-visible) {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* ── Saisie ──────────────────────────────────────────────────────── */
+  .st-inputrow {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem 0.875rem;
+    border-block-start: 1px solid var(--border);
+    background: var(--surface-raised);
+    flex-shrink: 0;
+  }
+  .st-inputrow input {
+    flex: 1;
+    min-inline-size: 0;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    padding: 0.625rem 1rem;
+    font-family: var(--font-text);
+    font-size: 0.875rem;
+    color: var(--text);
+    outline: none;
+    transition:
+      border-color 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+  .st-inputrow input::placeholder {
+    color: var(--text-subtle);
+  }
+  .st-inputrow input:focus {
+    border-color: var(--teal-600);
+    box-shadow: 0 0 0 3px rgb(10 114 104 / 0.12);
+  }
+  .st-send {
+    inline-size: 40px;
+    block-size: 40px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    background: var(--blue-600);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    transition:
+      background-color 0.18s ease,
+      transform 0.18s ease,
+      opacity 0.18s ease;
+  }
+  .st-send:hover {
+    background: var(--blue-700);
+  }
+  .st-send:active {
+    transform: scale(0.92);
+  }
+  .st-send:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+  .st-send:disabled {
+    opacity: 0.45;
+    cursor: default;
+    transform: none;
+  }
+
+  .st-foot {
+    text-align: center;
+    font-size: var(--text-micro);
+    padding-inline: 0.875rem;
+    padding-block-end: 0.625rem;
+    background: var(--surface-raised);
+    flex-shrink: 0;
+  }
+  /* --text-subtle est le plus clair admis en texte : à 12px le gris plus
+     clair tombait sous 4,5:1 sur blanc. */
+  .st-foot a {
+    color: var(--text-subtle);
+    text-decoration: none;
+    border-block-end: 1px solid var(--border);
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .st-foot a:hover {
+    color: var(--accent);
+    border-block-end-color: var(--accent);
+  }
+  .st-foot a:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* ── Mobile ──────────────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    #st-assistant {
+      inset-block-end: calc(1rem + env(safe-area-inset-bottom, 0px));
+      inset-inline-end: 1rem;
+    }
+    #st-fab {
+      inline-size: 52px;
+      block-size: 52px;
+    }
+    /* L'invite reste sur téléphone : c'est là qu'on voit le moins la bulle
+       seule. Elle se cale sur la largeur de l'écran moins les gouttières et
+       se serre un peu. */
+    #st-nudge {
+      inline-size: calc(100vw - 2rem);
+      inset-inline-end: -0.5rem;
+    }
+    .st-nudge-body {
+      font-size: 0.78125rem;
+    }
+    /* Cible tactile : 30px était sous le seuil. */
+    .st-nudge-x {
+      inline-size: 38px;
+      block-size: 38px;
+    }
+    /* Feuille quasi plein écran : à 600px de haut dans un écran de 640px,
+       la carte flottante laissait une bande morte et chevauchait sa bulle. */
+    #st-panel {
+      inset-inline: 0.5rem;
+      inset-block-end: calc(0.625rem + env(safe-area-inset-bottom, 0px));
+      inline-size: auto;
+      block-size: min(600px, calc(100dvh - 6rem));
+      border-radius: 16px;
+    }
+    /* 16px : en dessous, iOS zoome sur le champ à la mise au point. */
+    .st-inputrow input {
+      font-size: 1rem;
+    }
+    .st-close,
+    .st-send {
+      inline-size: 44px;
+      block-size: 44px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #st-fab::before,
+    .st-status i,
+    .st-msgs :global(.st-typing i) {
+      animation: none;
+    }
+    .st-msgs :global(.st-msg),
+    .st-msgs :global(.st-chips) {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    #st-panel {
+      transition: opacity 0.01s;
+    }
+    #st-fab,
+    #st-fab svg,
+    #st-nudge {
+      transition: none;
+    }
+    #st-nudge.is-visible::before {
+      animation: none;
+      transform: scaleX(1);
+    }
+  }
+</style>
+
+<script>
+  interface AssistantCopy {
+    fabOpen: string;
+    fabClose: string;
+    nudgeTitle: string;
+    nudgeBody: string;
+    nudgeOpen: string;
+    nudgeClose: string;
+    title: string;
+    status: string;
+    close: string;
+    log: string;
+    placeholder: string;
+    inputLabel: string;
+    send: string;
+    typing: string;
+    dataLink: string;
+    contactPath: string;
+    legalPath: string;
+  }
+
+  interface AssistantRuntime {
+    locale: 'fr' | 'en';
+    chatWebhook: string;
+    tel: string;
+    telHref: string;
+    contactPath: string;
+    copy: AssistantCopy;
+  }
+
+  const root = document.getElementById('st-assistant');
+  const panel = document.getElementById('st-panel');
+  if (root && panel) {
+    const cfg: AssistantRuntime = JSON.parse(root.dataset.assistant ?? '{}');
+    const L = cfg.locale;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Textes que seul le script produit : accueil, puces, messages d'erreur.
+    const T = {
+      fr: {
+        hello:
+          'Bonjour. Je suis l’<strong>assistant IA de SETREM</strong>, constructeur de lignes d’extrusion depuis 1986.<br>Posez votre question, je réponds tout de suite.',
+        chips: ['Vos extrudeurs', 'Quelles capacités ?', 'La ligne pilote', 'Être rappelé'],
+        down:
+          'L’assistant est momentanément indisponible. Vous pouvez nous joindre au <a href="' +
+          '{tel}">{telTxt}</a> ou par le <a href="{contact}">formulaire de contact</a>.',
+        fail:
+          'Je n’arrive pas à joindre le service pour le moment. Réessayez dans un instant, ou appelez-nous au <a href="{tel}">{telTxt}</a>.',
+      },
+      en: {
+        hello:
+          'Hello. I am the <strong>SETREM AI assistant</strong>. SETREM has built extrusion lines since 1986.<br>Ask your question, I will answer right away.',
+        chips: ['Your extruders', 'What capacities?', 'The pilot line', 'Request a call back'],
+        down:
+          'The assistant is temporarily unavailable. You can reach us on <a href="{tel}">{telTxt}</a> or through the <a href="{contact}">contact form</a>.',
+        fail:
+          'I cannot reach the service right now. Please try again shortly, or call us on <a href="{tel}">{telTxt}</a>.',
+      },
+    }[L];
+
+    const fill = (s: string) =>
+      s
+        .replace(/\{tel\}/g, cfg.telHref)
+        .replace(/\{telTxt\}/g, cfg.tel)
+        .replace(/\{contact\}/g, cfg.contactPath);
+
+    const fab = document.getElementById('st-fab') as HTMLButtonElement;
+    const nudge = document.getElementById('st-nudge') as HTMLElement;
+    const nudgeMain = nudge.querySelector('.st-nudge-main') as HTMLButtonElement;
+    const nudgeX = nudge.querySelector('.st-nudge-x') as HTMLButtonElement;
+    const msgs = panel.querySelector('.st-msgs') as HTMLElement;
+    const form = panel.querySelector('.st-inputrow') as HTMLFormElement;
+    const input = form.querySelector('input') as HTMLInputElement;
+    const sendBtn = form.querySelector('.st-send') as HTMLButtonElement;
+    const closeBtn = panel.querySelector('.st-close') as HTMLButtonElement;
+
+    nudge.hidden = false;
+
+    // Un identifiant de session par onglet : il porte la mémoire de la
+    // conversation côté n8n. sessionStorage, pas localStorage : une
+    // conversation ne survit pas à la fermeture de l'onglet.
+    let sessionId = sessionStorage.getItem('st-session');
+    if (!sessionId) {
+      sessionId = crypto.randomUUID
+        ? crypto.randomUUID()
+        : 'st-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+      sessionStorage.setItem('st-session', sessionId);
+    }
+
+    const scrollBottom = () => {
+      msgs.scrollTop = msgs.scrollHeight;
+    };
+
+    function addMsg(who: 'bot' | 'user', content: string) {
+      const el = document.createElement('div');
+      el.className = 'st-msg ' + who;
+      // Le texte du visiteur n'est jamais interprété comme du HTML.
+      if (who === 'user') el.textContent = content;
+      else el.innerHTML = content;
+      msgs.appendChild(el);
+      scrollBottom();
+    }
+
+    function clearChips() {
+      msgs.querySelector('.st-chips')?.remove();
+    }
+
+    function addChips(labels?: string[]) {
+      clearChips();
+      if (!labels?.length) return;
+      const wrap = document.createElement('div');
+      wrap.className = 'st-chips';
+      labels.slice(0, 4).forEach((label) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'st-chip';
+        b.textContent = label;
+        b.addEventListener('click', () => {
+          clearChips();
+          send(label);
+        });
+        wrap.appendChild(b);
+      });
+      msgs.appendChild(wrap);
+      scrollBottom();
+    }
+
+    let typingEl: HTMLElement | null = null;
+    function showTyping() {
+      hideTyping();
+      typingEl = document.createElement('div');
+      typingEl.className = 'st-msg bot st-typing';
+      typingEl.setAttribute('aria-label', cfg.copy.typing);
+      typingEl.innerHTML = '<i></i><i></i><i></i>';
+      msgs.appendChild(typingEl);
+      scrollBottom();
+    }
+    function hideTyping() {
+      typingEl?.remove();
+      typingEl = null;
+    }
+
+    // Le HTML reçu de l'agent n'est pas injecté tel quel : on échappe
+    // tout, puis on restitue les seuls sauts de ligne et le gras.
+    function safe(raw: string) {
+      const esc = raw.replace(
+        /[&<>"']/g,
+        (c) =>
+          ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string
+      );
+      const html = esc.replace(/\n/g, '<br>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      // Espace fine insécable avant ? ! ; : en français, sinon le signe
+      // se retrouve seul en début de ligne dans une colonne étroite.
+      return L === 'fr' ? html.replace(/ +([?!;:])/g, '\u202f$1') : html;
+    }
+
+    let busy = false;
+    function send(text: string) {
+      if (busy) return;
+      addMsg('user', text);
+      clearChips();
+
+      if (!cfg.chatWebhook) {
+        // Pas de backend branché : le dire, et donner les vrais canaux.
+        setTimeout(() => addMsg('bot', fill(T.down)), reduced ? 40 : 400);
+        return;
+      }
+
+      busy = true;
+      sendBtn.disabled = true;
+      showTyping();
+
+      fetch(cfg.chatWebhook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId,
+          message: text,
+          page: location.pathname,
+          locale: L,
+        }),
+      })
+        .then((r) => {
+          if (!r.ok) throw new Error(String(r.status));
+          return r.json();
+        })
+        .then((j) => {
+          hideTyping();
+          addMsg('bot', safe(j.reply ?? ''));
+          addChips(j.chips);
+        })
+        .catch(() => {
+          hideTyping();
+          addMsg('bot', fill(T.fail));
+        })
+        .finally(() => {
+          busy = false;
+          sendBtn.disabled = false;
+          input.focus({ preventScroll: true });
+        });
+    }
+
+    let greeted = false;
+    function greet() {
+      if (greeted) return;
+      greeted = true;
+      showTyping();
+      setTimeout(
+        () => {
+          hideTyping();
+          addMsg('bot', T.hello);
+          addChips(T.chips);
+        },
+        reduced ? 60 : 620
+      );
+    }
+
+    // ── Ouverture et fermeture ──
+    let isOpen = false;
+    function open() {
+      if (isOpen) return;
+      isOpen = true;
+      root!.classList.add('is-open');
+      panel!.classList.add('is-open');
+      fab.setAttribute('aria-expanded', 'true');
+      fab.setAttribute('aria-label', cfg.copy.fabClose);
+      hideNudge(true);
+      greet();
+      setTimeout(() => input.focus({ preventScroll: true }), 340);
+    }
+    function close() {
+      if (!isOpen) return;
+      isOpen = false;
+      root!.classList.remove('is-open');
+      panel!.classList.remove('is-open');
+      fab.setAttribute('aria-expanded', 'false');
+      fab.setAttribute('aria-label', cfg.copy.fabOpen);
+      fab.focus({ preventScroll: true });
+    }
+
+    fab.addEventListener('click', () => (isOpen ? close() : open()));
+    closeBtn.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen) close();
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      send(text);
+    });
+
+    // ── Invite, une seule fois par session ──
+    function hideNudge(remember?: boolean) {
+      nudge.classList.remove('is-visible');
+      if (remember) sessionStorage.setItem('st-nudged', '1');
+    }
+    // Elle se pose une fois par session, peu après le chargement, et se
+    // retire d'elle-même. Le visiteur qui la ferme ne la revoit pas.
+    if (!sessionStorage.getItem('st-nudged')) {
+      setTimeout(
+        () => {
+          if (!isOpen) nudge.classList.add('is-visible');
+          setTimeout(() => hideNudge(true), 18000);
+        },
+        reduced ? 800 : 2200
+      );
+    }
+    nudgeMain.addEventListener('click', () => open());
+    nudgeX.addEventListener('click', () => hideNudge(true));
+
+    // API publique : un CTA de page peut ouvrir l'assistant, et lui
+    // passer une amorce. Sert aux boutons « Être rappelé ».
+    (window as unknown as { SetremAssistant: unknown }).SetremAssistant = {
+      open: (prefill?: string) => {
+        open();
+        if (prefill) setTimeout(() => send(prefill), greeted ? 0 : reduced ? 200 : 1400);
+      },
+      close,
+    };
+
+    // Lien profond : #assistant dans l'URL ouvre le panneau.
+    if (location.hash === '#assistant') setTimeout(open, 500);
+  }
+</script>

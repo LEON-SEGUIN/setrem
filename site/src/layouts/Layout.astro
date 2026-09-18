@@ -11,6 +11,7 @@ import {
   localeAlternates,
   getAlternatePath,
 } from '../i18n/ui';
+import Assistant from '../components/Assistant.astro';
 
 interface Props {
   title: string;
@@ -116,5 +117,8 @@ const jsonLd = {
   </head>
   <body>
     <slot />
+    <!-- L'assistant est monté ici, et non dans PageLayout : l'accueil
+         utilise Layout directement. Une seule place, toutes les pages. -->
+    <Assistant />
   </body>
 </html>
