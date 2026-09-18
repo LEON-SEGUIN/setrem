@@ -1036,6 +1036,11 @@ const runtime = {
 
     // ── Ouverture et fermeture ──
     let isOpen = false;
+    // Ce qui maintient l'invite a l'ecran : un minuteur et un guetteur de
+    // defilement. Declares ici, avec le reste de l'etat, parce que
+    // `open()` appelle `hideNudge()` et doit pouvoir les couper.
+    let minuteurInvite = 0;
+    let guetteurInvite: (() => void) | null = null;
     function open() {
       if (isOpen) return;
       isOpen = true;
@@ -1072,17 +1077,42 @@ const runtime = {
     });
 
     // ── Invite, une seule fois par session ──
+    // Point de sortie unique : le minuteur, le défilement, la croix et
+    // l'ouverture du panneau passent tous par ici. Rien ne traîne.
     function hideNudge(remember?: boolean) {
       nudge.classList.remove('is-visible');
+      clearTimeout(minuteurInvite);
+      if (guetteurInvite) {
+        window.removeEventListener('scroll', guetteurInvite);
+        guetteurInvite = null;
+      }
       if (remember) sessionStorage.setItem('st-nudged', '1');
     }
-    // Elle se pose une fois par session, peu après le chargement, et se
-    // retire d'elle-même. Le visiteur qui la ferme ne la revoit pas.
+    // Elle se pose une fois par session, peu après le chargement, et s'en
+    // va au premier des deux : un vrai défilement, ou 10 secondes.
+    //
+    // Défiler, c'est avoir choisi de lire la page : l'invitation a fait
+    // son travail, vue ou ignorée, et rester par-dessus le texte est
+    // précisément ce qui rend les widgets de chat pénibles. Le visiteur
+    // ne perd rien au passage, la bulle reste au même endroit.
+    //
+    // 10 s et non 18 : le texte se lit en quatre secondes. Celui qui
+    // arrive et ne bouge pas a largement le temps de le voir en entier.
     if (!sessionStorage.getItem('st-nudged')) {
       setTimeout(
         () => {
-          if (!isOpen) nudge.classList.add('is-visible');
-          setTimeout(() => hideNudge(true), 18000);
+          if (isOpen) return;
+          nudge.classList.add('is-visible');
+
+          const depart = window.scrollY;
+          // 120 px, et pas le moindre pixel : une position restaurée par
+          // le navigateur ou un frisson de trackpad n'est pas une
+          // intention de lire.
+          guetteurInvite = () => {
+            if (Math.abs(window.scrollY - depart) > 120) hideNudge(true);
+          };
+          window.addEventListener('scroll', guetteurInvite, { passive: true });
+          minuteurInvite = window.setTimeout(() => hideNudge(true), 10000);
         },
         reduced ? 800 : 2200
       );
