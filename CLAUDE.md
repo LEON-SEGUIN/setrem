@@ -131,6 +131,24 @@ JS livré uniquement pour les animations. Le projet vit dans **`site/`**.
   `site/src/styles/global.css` : `--font-display` et `--font-text` pointent tous
   les deux sur Archivo. Les deux tokens restent distincts pour que le rôle reste
   lisible dans le CSS, même si la famille est la même.
+- **Vidéo du process** (`site/public/video/process-extrusion.mp4`, 3,54 Mo).
+  Pilotée au scroll : `initProcessVideo()` la précharge quand la section
+  approche, `initMotion()` asservit sa tête de lecture au défilement.
+  Réencodée le 18/09/2026 : elle portait une image clé toutes les 4 images
+  (63 % du fichier) et pesait 8,19 Mo. Recette, réglages écartés et mesures
+  de qualité dans `video/sauvegardes/LISEZ-MOI.md` (hors dépôt, local).
+
+      ffmpeg -i source.mp4 -c:v libx264 -preset slow -crf 24 \
+        -g 24 -keyint_min 24 -sc_threshold 0 \
+        -pix_fmt yuv420p -profile:v high \
+        -color_primaries bt709 -color_trc bt709 -colorspace bt709 \
+        -fps_mode passthrough -an -movflags +faststart sortie.mp4
+
+  `-fps_mode passthrough` n'est pas optionnel : le fichier a une cadence
+  variable (plans figés de 0,25 à 0,40 s) qu'un réencodage naïf écrase.
+  Ne jamais appeler `video.load()` après `video.preload = 'auto'` : les
+  deux déclenchent chacun une requête, et le fichier part deux fois.
+
 - `site/src/styles/tokens.css` est une **copie** de `brand/tokens.css` :
   la source de vérité reste `brand/`, resynchroniser à chaque évolution.
 - Les animations scroll (`site/src/scripts/scroll.js`) sont progressives :

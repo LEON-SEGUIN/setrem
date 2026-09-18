@@ -40,9 +40,10 @@ function initNav() {
    La vidéo n'avance pas toute seule : sa tête de lecture suit la
    progression de la section épinglée (voir initMotion). Ici on se
    contente de la mettre sous contrôle et de la précharger en entier
-   dès que la section approche - le HTML ne porte volontairement ni
-   `autoplay` ni `preload`, sinon Safari colle son player par-dessus
-   (voir Process.astro). Sans JS, c'est le doublon <noscript> qui joue. */
+   quand la section approche (voir la marge de l'observateur, plus bas).
+   Le HTML ne porte volontairement ni `autoplay` ni `preload`, sinon
+   Safari colle son player par-dessus (voir Process.astro).
+   Sans JS, c'est le doublon <noscript> qui joue. */
 
 function initProcessVideo() {
   const video = document.querySelector('[data-process-video]');
@@ -53,19 +54,35 @@ function initProcessVideo() {
 
   if (reduceMotion.matches) return;
 
+  // Économie de données demandée par le visiteur : on ne lui impose pas
+  // les 3,5 Mo. Il garde le poster, comme en mouvement réduit.
+  // `navigator.connection` n'existe pas sur Safari ni Firefox : la
+  // condition y vaut `undefined`, donc rien ne change pour eux.
+  if (navigator.connection?.saveData) return;
+
   const observer = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
         if (entry.isIntersecting) {
-          // Un GOP court a été encodé exprès : le buffer complet permet
-          // des seeks précis et fluides dans les deux sens.
+          /* `preload = 'auto'` suffit à lancer le téléchargement, et il
+             demande au navigateur de mettre tout le fichier en mémoire :
+             c'est ce qu'il faut pour que la tête de lecture suive le
+             scroll dans les deux sens.
+             Surtout, ne pas y ajouter `video.load()` : les deux gestes
+             déclenchent chacun une requête, et le fichier partait deux
+             fois (7,08 Mo mesurés pour un fichier de 3,54 Mo). */
           video.preload = 'auto';
-          video.load();
           observer.disconnect();
         }
       }
     },
-    { rootMargin: '100% 0px 100% 0px' }
+    /* 50 % et pas 100 % : à 100 %, la section entrait dans la marge dès
+       scrollY = 0 sur un écran courant (1440x900) comme sur téléphone, et
+       le fichier partait chez qui repartait du hero sans jamais
+       descendre. À 50 % le départ se fait à 250 px (bureau) et 125 px
+       (téléphone), et il reste plus de 760 px de course avant la section
+       pour se mettre en tampon. Ne pas descendre plus bas sans mesurer. */
+    { rootMargin: '50% 0px 50% 0px' }
   );
   observer.observe(video);
 }
