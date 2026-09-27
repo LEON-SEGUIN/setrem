@@ -131,21 +131,37 @@ JS livré uniquement pour les animations. Le projet vit dans **`site/`**.
   `site/src/styles/global.css` : `--font-display` et `--font-text` pointent tous
   les deux sur Archivo. Les deux tokens restent distincts pour que le rôle reste
   lisible dans le CSS, même si la famille est la même.
-- **Vidéo du process** (`site/public/video/process-extrusion.mp4`, 3,54 Mo).
+- **Vidéo du process** (`site/public/video/process-extrusion.mp4`, 20,4 Mo,
+  1920 × 1080, 30 i/s, 20 s). Depuis le 27/09/2026, c'est une animation 3D
+  de la vraie ligne pilote T5DEC, produite par D&S d'après les plans SETREM
+  (vue éclatée, studio noir). Scripts Blender, images sources et notice dans
+  `video/extrudeur-3d/` (hors dépôt, local). L'ancien film tiers (BUSS) est
+  gardé dans `video/sauvegardes/`.
   Pilotée au scroll : `initProcessVideo()` la précharge quand la section
   approche, `initMotion()` asservit sa tête de lecture au défilement.
-  Réencodée le 18/09/2026 : elle portait une image clé toutes les 4 images
-  (63 % du fichier) et pesait 8,19 Mo. Recette, réglages écartés et mesures
-  de qualité dans `video/sauvegardes/LISEZ-MOI.md` (hors dépôt, local).
+  La section est noire (`#000`, le fond du film) et la vidéo y occupe tout
+  l'écran dès l'arrivée : l'ouverture en carte (clip-path piloté par `--p`)
+  a été retirée le 27/09/2026 à la demande de Léon. Les 20 premiers % du
+  scroll (`INTRO` dans `scroll.js`) montrent la ligne montée ; le film est
+  calé sur ce découpage, ne pas le changer sans refaire le film.
+  Encodée en CRF 20 avec **une image clé toutes les 4 images** ; commande
+  complète dans `video/extrudeur-3d/assembler.sh` :
 
-      ffmpeg -i source.mp4 -c:v libx264 -preset slow -crf 24 \
-        -g 24 -keyint_min 24 -sc_threshold 0 \
-        -pix_fmt yuv420p -profile:v high \
+      ffmpeg -framerate 30 -i f_%04d.png \
+        -vf "scale=out_color_matrix=bt709:out_range=tv,format=yuv420p" \
+        -c:v libx264 -preset veryslow -crf 20 -g 4 -keyint_min 4 -sc_threshold 0 \
+        -profile:v high -x264-params aq-mode=3 \
         -color_primaries bt709 -color_trc bt709 -colorspace bt709 \
-        -fps_mode passthrough -an -movflags +faststart sortie.mp4
+        -an -movflags +faststart sortie.mp4
 
-  `-fps_mode passthrough` n'est pas optionnel : le fichier a une cadence
-  variable (plans figés de 0,25 à 0,40 s) qu'un réencodage naïf écrase.
+  Le GOP de 24 du 18/09/2026 suffisait à l'ancien film (662p), plus au
+  1080p : mesuré dans Chrome sur un scroll continu de 3 s, il n'affiche que
+  84 images sur 180 (l'image se fige pendant le défilement) ; un GOP de 4
+  les affiche presque toutes. CRF 20 et aq-mode 3 plutôt que CRF 24 : les
+  dégradés sombres du sol ne tournent plus en pavés (SSIM 0,9949 contre
+  les images sources, 0,9933 en CRF 24) ; en dessous de 20, le gain ne se
+  voit plus et le poids grimpe. La conversion couleur BT.709 explicite
+  garde les bleus justes.
   Ne jamais appeler `video.load()` après `video.preload = 'auto'` : les
   deux déclenchent chacun une requête, et le fichier part deux fois.
 
@@ -270,11 +286,9 @@ propres, et surtout les **9 articles techniques** de « L'œil de l'expert »
 - [ ] **Déclinaisons du logo** : version aplatie pour favicon, monochrome et fond
       sombre — le dégradé chromé ne survit pas à ces usages
 - [ ] Accès : hébergeur, DNS, Google Search Console, Analytics
-- [ ] **Droits de l'animation 3D du process** : la vidéo intégrée en maquette
-      (`site/public/video/process-extrusion.mp4`, déposée le 6 août 2026) est
-      un footage tiers montrant une machine d'un autre constructeur —
-      obtenir une licence ou faire produire l'équivalent SETREM avant
-      toute mise en ligne
+- [x] **Droits de l'animation 3D du process** : réglé le 27/09/2026. Le film
+      tiers (BUSS) est remplacé par une animation de la ligne pilote SETREM,
+      produite par D&S d'après les plans du client (`video/extrudeur-3d/`)
 - [ ] **Arbitrer** : le tableau des capacités et la plaquette PDF donnent des
       puissances différentes pour les Y160 et Y200 (cf. `scrape/SYNTHESE.md`)
 

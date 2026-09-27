@@ -169,9 +169,11 @@ const steps = copy.steps;
 </section>
 
 <style>
+  /* Noir pur : c'est le fond de l'animation 3D (studio noir). La section
+     et le film ne forment qu'une seule surface, sans bord visible. */
   .process {
     position: relative;
-    background: var(--surface-dark);
+    background: #000;
   }
 
   /* Sans JS : flux normal, tout le contenu est lisible.
@@ -189,20 +191,13 @@ const steps = copy.steps;
 
   .process__frame {
     position: relative;
-    background: var(--steel-950);
+    background: #000;
   }
 
+  /* La vidéo occupe tout l'écran dès l'arrivée dans la section */
   html.js .process__frame {
     position: absolute;
     inset: 0;
-    /* Piloté par --p (0 → 1) : de carte centrée à plein écran */
-    clip-path: inset(
-      calc((1 - var(--p, 0)) * 18%)
-      calc((1 - var(--p, 0)) * 22%)
-      calc((1 - var(--p, 0)) * 14%)
-      calc((1 - var(--p, 0)) * 22%)
-      round calc((1 - var(--p, 0)) * var(--radius-lg))
-    );
   }
 
   .process__video {
@@ -239,16 +234,17 @@ const steps = copy.steps;
     transition: transform 0.7s var(--ease-out);
   }
 
+  /* Voile de lecture sous les chapitres : noir, comme le fond du film.
+     Un voile teinté acier éclaircirait le bas de l'image en bande grise. */
   .process__scrim {
     position: absolute;
     inset: 0;
     background: linear-gradient(
       to top,
-      rgba(20, 26, 29, 0.85) 0%,
-      rgba(20, 26, 29, 0.38) 45%,
-      rgba(20, 26, 29, 0.16) 100%
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.35) 45%,
+      rgba(0, 0, 0, 0) 100%
     );
-    opacity: var(--p, 1);
   }
 
   .process__steps {
@@ -425,10 +421,10 @@ const steps = copy.steps;
   }
 
   /* ---- Mouvement réduit : la section redevient une liste illustrée ----
-     initMotion() s'arrête net dans ce mode (--p posé à 1, puis plus
-     rien) : sans ce repli, le spacer garde ses 460vh de course - un
-     gouffre noir de quatre écrans - et seul le premier chapitre est
-     visible. Même parti que .pin.is-static dans PinnedSteps. */
+     initMotion() s'arrête net dans ce mode : sans ce repli, le spacer
+     garde ses 460vh de course - un gouffre noir de quatre écrans - et
+     seul le premier chapitre est visible. Même parti que .pin.is-static
+     dans PinnedSteps. */
   @media (prefers-reduced-motion: reduce) {
     html.js .process__spacer {
       height: auto;
@@ -443,7 +439,6 @@ const steps = copy.steps;
     html.js .process__frame {
       position: relative;
       inset: auto;
-      clip-path: none;
       aspect-ratio: 16 / 9;
       overflow: hidden;
     }

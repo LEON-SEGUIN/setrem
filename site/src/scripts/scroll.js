@@ -277,14 +277,12 @@ function initMotion() {
   const index = process?.querySelector('[data-process-index]');
   const indexItems = index ? [...index.children] : [];
 
-  if (reduceMotion.matches) {
-    // Pas d'animation : l'image du process est plein écran d'emblée
-    frame?.style.setProperty('--p', '1');
-    return;
-  }
+  // Pas d'animation : la section redevient une liste illustrée (CSS)
+  if (reduceMotion.matches) return;
 
-  // Part du scroll consacrée à l'expansion de l'image (le reste : chapitres)
-  const EXPAND = 0.2;
+  // Part du scroll où le film montre encore la ligne entière, montée ;
+  // le chapitre 01 commence ensuite. Le film 3D est calé sur ce découpage.
+  const INTRO = 0.2;
   // Quand Lenis est là, la position de la fenêtre est déjà lissée : ce
   // second lissage doit se faire discret, sinon les deux s'additionnent
   // et le hero décroche visiblement de la molette.
@@ -293,7 +291,7 @@ function initMotion() {
   const LERP_VIDEO = lenis ? 0.36 : 0.18;
 
   // Valeurs courantes (lissées) et cibles
-  const cur = { y: 0, p: 0, vy: 0, vt: 0, hp: 0, pp: 0 };
+  const cur = { y: 0, vy: 0, vt: 0, hp: 0, pp: 0 };
   let activeStep = 0;
   let idle = 0;
 
@@ -327,7 +325,7 @@ function initMotion() {
 
   const tick = () => {
     const y = window.scrollY;
-    const target = { y, p: cur.p, vy: cur.vy, vt: cur.vt, hp: cur.hp, pp: cur.pp };
+    const target = { y, vy: cur.vy, vt: cur.vt, hp: cur.hp, pp: cur.pp };
 
     // -- Hero : progression du recouvrement, 0 (en haut) → 1 (couvert)
     if (hero) {
@@ -344,7 +342,6 @@ function initMotion() {
       const rect = process.getBoundingClientRect();
       const total = process.offsetHeight - window.innerHeight;
       const progress = Math.min(Math.max(-rect.top / Math.max(total, 1), 0), 1);
-      target.p = Math.min(progress / EXPAND, 1);
       // La vidéo glisse doucement vers le haut sur la course des chapitres
       target.vy = (progress - 0.5) * -4; // en %
 
@@ -355,7 +352,7 @@ function initMotion() {
       }
 
       const stepProgress = Math.min(
-        Math.max((progress - EXPAND) / (1 - EXPAND), 0),
+        Math.max((progress - INTRO) / (1 - INTRO), 0),
         0.999
       );
       setStep(Math.floor(stepProgress * steps.length));
@@ -370,7 +367,6 @@ function initMotion() {
 
     // Interpolation douce vers les cibles
     cur.y += (target.y - cur.y) * LERP;
-    cur.p += (target.p - cur.p) * LERP;
     cur.hp += (target.hp - cur.hp) * LERP;
     cur.pp += (target.pp - cur.pp) * LERP;
     cur.vy += (target.vy - cur.vy) * LERP;
@@ -379,7 +375,6 @@ function initMotion() {
     // Coupe le travail quand tout est posé (économie batterie)
     const delta =
       Math.abs(target.y - cur.y) +
-      Math.abs(target.p - cur.p) +
       Math.abs(target.hp - cur.hp) * 100 +
       Math.abs(target.pp - cur.pp) * 100 +
       Math.abs(target.vy - cur.vy) +
@@ -415,7 +410,6 @@ function initMotion() {
       }
 
       if (frame) {
-        frame.style.setProperty('--p', cur.p.toFixed(4));
         frame.style.setProperty('--vy', `${cur.vy.toFixed(2)}%`);
       }
 
