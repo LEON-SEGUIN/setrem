@@ -16,4 +16,4 @@ site/.astro/
 # Le projet vidéo (Remotion) vit à côté, il n'appartient pas au dépôt du
 # site : ses dépendances pèsent à elles seules plus d'un demi-gigaoctet.
 # Les sauvegardes de la vidéo du process y sont aussi, avec leur note.
-video/
+/video/

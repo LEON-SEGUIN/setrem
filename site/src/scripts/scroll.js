@@ -55,10 +55,33 @@ function initProcessVideo() {
   if (reduceMotion.matches) return;
 
   // Économie de données demandée par le visiteur : on ne lui impose pas
-  // les 3,5 Mo. Il garde le poster, comme en mouvement réduit.
+  // la vidéo (9 à 20 Mo). Il garde le poster, comme en mouvement réduit.
   // `navigator.connection` n'existe pas sur Safari ni Firefox : la
   // condition y vaut `undefined`, donc rien ne change pour eux.
   if (navigator.connection?.saveData) return;
+
+  /* iPhone et iPad : Safari ignore `preload`, et une vidéo qui n'a jamais
+     joué n'affiche pas les images qu'on lui demande : l'animation restait
+     figée sur le poster. Une lecture muette, aussitôt interrompue, la
+     débloque ; Safari l'autorise sans geste pour une vidéo `muted` et
+     `playsinline`. En mode économie d'énergie il la refuse : on retente
+     alors au premier toucher, qui compte comme un geste. Réservé aux
+     écrans tactiles : sur ordinateur, `preload` suffit, et une lecture
+     refusée pourrait y faire surgir le player de Safari. */
+  const tactile = window.matchMedia('(pointer: coarse)').matches;
+  let debloquee = false;
+  const debloquer = () => {
+    if (debloquee) return;
+    const lecture = video.play();
+    if (!lecture) return;
+    lecture
+      .then(() => {
+        video.pause();
+        debloquee = true;
+        document.removeEventListener('touchend', debloquer);
+      })
+      .catch(() => {});
+  };
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -72,6 +95,10 @@ function initProcessVideo() {
              déclenchent chacun une requête, et le fichier partait deux
              fois (7,08 Mo mesurés pour un fichier de 3,54 Mo). */
           video.preload = 'auto';
+          if (tactile) {
+            debloquer();
+            document.addEventListener('touchend', debloquer, { passive: true });
+          }
           observer.disconnect();
         }
       }

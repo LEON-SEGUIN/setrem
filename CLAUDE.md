@@ -162,6 +162,15 @@ JS livré uniquement pour les animations. Le projet vit dans **`site/`**.
   les images sources, 0,9933 en CRF 24) ; en dessous de 20, le gain ne se
   voit plus et le poids grimpe. La conversion couleur BT.709 explicite
   garde les bleus justes.
+  **Téléphones** : `process-extrusion-mobile.mp4` (9,2 Mo), un recadrage
+  vertical 720 x 1080 du même film, la partie qu'un écran en portrait
+  montre vraiment ; servi par `<source media="(max-aspect-ratio: 2/3)">`.
+  Sur iPhone, Safari ignore `preload` et n'affiche aucune image d'une
+  vidéo qui n'a jamais joué : `initProcessVideo()` la débloque sur écran
+  tactile par une lecture muette aussitôt interrompue (et retente au
+  premier toucher en mode économie d'énergie). Les URL portent `?v=2` :
+  les fichiers ont changé le 27/09/2026 et Vercel les sert avec un cache
+  d'un jour. Changer ce numéro à chaque nouvelle version du film.
   Ne jamais appeler `video.load()` après `video.preload = 'auto'` : les
   deux déclenchent chacun une requête, et le fichier part deux fois.
 
