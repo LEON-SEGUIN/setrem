@@ -1,5 +1,10 @@
-// Les 9 articles « L'œil de l'expert » - scrape/pages/loil-de-lexpert*.md.
+// Les articles « L'œil de l'expert » - scrape/pages/loil-de-lexpert*.md.
 // Titres, extraits et descriptions repris du site actuel : rien d'inventé.
+// Tri du 4 octobre 2026, demandé par Arnaud Delique : de 9 à 7 articles.
+// « Traitement des matières premières : soja » est fondu dans l'article
+// sur la graine de soja, et « Nos préconditionneurs PBR » est devenu la
+// page /nos-solutions/preconditionneurs. Les anciennes adresses
+// redirigent (astro.config.mjs).
 // La version anglaise est la traduction de ces mêmes textes, dans le même
 // ordre - l'index d'un article est le même dans les deux langues, ce dont
 // autresArticles() se sert pour proposer la même suite de lecture.
@@ -8,11 +13,9 @@ import type { Locale } from '../i18n/routes';
 
 import insectes from '../assets/img/article-insectes.webp';
 import farines from '../assets/img/article-farines-infantiles.webp';
-import graineSoja from '../assets/img/article-graine-soja.webp';
 import soja from '../assets/img/article-soja.webp';
 import cereales from '../assets/img/article-cereales.webp';
 import elevage from '../assets/img/article-elevage.webp';
-import preconditionneur from '../assets/img/preconditionneur.webp';
 import maillard from '../assets/img/article-maillard.webp';
 import sojaElevage from '../assets/img/article-soja-elevage.webp';
 
@@ -49,23 +52,13 @@ export const articles: Record<Locale, Article[]> = {
     },
     {
       slug: 'procede-de-traitement-de-la-graine-de-soja',
-      titre: 'Procédé de traitement de la graine de soja',
+      titre: 'Traitement de la graine de soja par extrusion',
       extrait:
         'La graine de soja contient entre 18 et 20 % de matière grasse et entre 35 et 38 % de protéines - mais aussi de nombreux facteurs antinutritionnels.',
       description:
-        'Extrusion à sec puis pressage mécanique : le procédé complet de traitement de la graine de soja, avec bilans matières et étude économique.',
-      image: graineSoja,
-      alt: 'Graines de soja en gros plan',
-    },
-    {
-      slug: 'traitement-des-matieres-premieres-soja',
-      titre: 'Traitement des matières premières : soja',
-      extrait:
-        'Sans traitement thermique préalable, la valeur nutritive et la digestibilité des protéines du soja cru sont relativement faibles.',
-      description:
-        "Comment l'extrusion réduit les facteurs antinutritionnels du soja cru sans endommager les protéines, pour un aliment plus énergétique et plus stable.",
+        "Facteurs antinutritionnels, extrusion à sec, pressage : le traitement complet de la graine de soja, avec tableaux de digestibilité, bilans matières et étude économique.",
       image: soja,
-      alt: 'Graines de soja',
+      alt: 'Graines de soja dans un sac de jute',
     },
     {
       slug: 'traitement-des-matieres-premieres-cereales',
@@ -86,16 +79,6 @@ export const articles: Record<Locale, Article[]> = {
         "Traitement HT-ST des graines oléagineuses, aliments ruminants haute production, petfood, aliments crevettes : les applications de l'extrusion en élevage.",
       image: elevage,
       alt: "Animaux d'élevage",
-    },
-    {
-      slug: 'nos-preconditionneurs-pbr',
-      titre: 'Nos préconditionneurs PBR',
-      extrait:
-        'La famille des préconditionneurs SETREM se décline selon deux catégories, les monorotors et les birotors.',
-      description:
-        'Monorotor ou birotor : hydratation, temps de rétention, injection eau, vapeur et slurrys - la gamme des préconditionneurs PBR de 25 à 1 758 litres.',
-      image: preconditionneur,
-      alt: 'Préconditionneur SETREM',
     },
     {
       slug: 'reactions-de-maillard',
@@ -142,23 +125,13 @@ export const articles: Record<Locale, Article[]> = {
     },
     {
       slug: 'soybean-processing-method',
-      titre: 'Soybean processing method',
+      titre: 'Processing soybeans by extrusion',
       extrait:
         'The soybean contains between 18 and 20% fat and between 35 and 38% protein - but also many antinutritional factors.',
       description:
-        'Dry extrusion then mechanical pressing: the complete soybean processing method, with mass balances and an economic study.',
-      image: graineSoja,
-      alt: 'Close-up of soybeans',
-    },
-    {
-      slug: 'raw-material-processing-soybean',
-      titre: 'Raw material processing: soybean',
-      extrait:
-        'Without prior heat treatment, the nutritional value and protein digestibility of raw soybean are relatively low.',
-      description:
-        'How extrusion reduces the antinutritional factors of raw soybean without damaging the proteins, for a more energetic and more stable feed.',
+        'Antinutritional factors, dry extrusion, pressing: the complete processing of soybeans, with digestibility tables, mass balances and an economic study.',
       image: soja,
-      alt: 'Soybeans',
+      alt: 'Soybeans in a jute sack',
     },
     {
       slug: 'raw-material-processing-cereals',
@@ -179,16 +152,6 @@ export const articles: Record<Locale, Article[]> = {
         'HT-ST treatment of oilseeds, high-production ruminant feed, pet food, shrimp feed: the applications of extrusion in livestock farming.',
       image: elevage,
       alt: 'Farm animals',
-    },
-    {
-      slug: 'our-pbr-preconditioners',
-      titre: 'Our PBR preconditioners',
-      extrait:
-        'The SETREM preconditioner family comes in two categories: single-rotor and twin-rotor.',
-      description:
-        'Single- or twin-rotor: hydration, retention time, water, steam and slurry injection - the PBR preconditioner range from 25 to 1,758 litres.',
-      image: preconditionneur,
-      alt: 'SETREM preconditioner',
     },
     {
       // TODO: contenu client - l'illustration porte des légendes françaises

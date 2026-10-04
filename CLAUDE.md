@@ -6,9 +6,18 @@ Refonte complète du site du client SETREM. Le site actuel est daté : l'objecti
 est une refonte moderne, pas un rafraîchissement visuel.
 
 Statut : le site complet est intégré en maquette, **en français et en anglais**
-(34 pages par langue : accueil animé, solutions, applications, ligne pilote,
-qui sommes-nous, 9 articles experts, actualités, contact, ressources, pages
-légales, 404 — plus les redirections 301 de `scrape/URLS.md`). Reste :
+(33 pages par langue : accueil animé, solutions, applications, ligne pilote,
+qui sommes-nous, 7 articles experts, actualités, contact, ressources, pages
+légales, 404 — plus les redirections 301 de `scrape/URLS.md`).
+
+Retours d'Arnaud Delique traités le 4 octobre 2026 : accroche applications
+« Plusieurs marchés, une seule vis. » ; articles triés (le soja « matières
+premières » fondu dans « graine de soja », l'article PBR devenu la page
+`/nos-solutions/preconditionneurs`, Maillard / céréales / extrudeur
+refondus, sans contenu ajouté) ; visuels extrudeur, préconditionneur et
+ligne pilote tirés du modèle 3D (`video/extrudeur-3d/rendus/images-cles/`,
+fichiers `site/src/assets/img/3d-*.webp`). Les tableaux et le graphique
+de Maillard, jadis des images, sont en HTML/SVG. Reste :
 contenus client manquants (TODO dans le code), backend du formulaire de
 contact, hébergement et mise en ligne.
 
@@ -277,9 +286,8 @@ propres, et surtout les **9 articles techniques** de « L'œil de l'expert »
       la traduction est fidèle au français mais n'a pas été relue. Les trois
       pages légales anglaises sont une traduction de confort — seul le texte
       français fait foi, le droit applicable étant français
-- [ ] **Visuels à refaire en anglais** : cinq images portent du texte français
-      incrusté (`fig-maillard-temperature`, `fig-ligne-farines`,
-      `fig-comparatif-soja`, `article-maillard`, et surtout
+- [ ] **Visuels à refaire en anglais** : trois images portent du texte
+      français incrusté (`fig-ligne-farines`, `article-maillard`, et surtout
       `ecran-automatisme` — l'IHM qui illustre la page automatisme, où un
       prospect anglophone voit un logiciel qu'il ne peut pas lire). Cette
       dernière affiche aussi le nom d'un client en en-tête : à valider ou à
@@ -298,6 +306,9 @@ propres, et surtout les **9 articles techniques** de « L'œil de l'expert »
 - [x] **Droits de l'animation 3D du process** : réglé le 27/09/2026. Le film
       tiers (BUSS) est remplacé par une animation de la ligne pilote SETREM,
       produite par D&S d'après les plans du client (`video/extrudeur-3d/`)
+- [ ] **À valider** : la ligne pilote est présentée avec un préconditionneur
+      PBR160 (d'après les plans I056) ; puissance, débits d'essai et séchage
+      restent à fournir (TODO dans `la-ligne-pilote.astro`)
 - [ ] **Arbitrer** : le tableau des capacités et la plaquette PDF donnent des
       puissances différentes pour les Y160 et Y200 (cf. `scrape/SYNTHESE.md`)
 
@@ -305,7 +316,14 @@ propres, et surtout les **9 articles techniques** de « L'œil de l'expert »
 
 - [ ] Références clients, cas d'usage, témoignages — **aucun sur le site actuel**
 - [ ] Chiffres d'entreprise : effectif, pays, lignes installées, certifications
-- [ ] Shooting photo des machines en atelier et en installation client
+- [ ] Shooting photo des machines en atelier et en installation client.
+      Photos jugées vieillottes par le client (04/10/2026), encore en place
+      faute de remplaçant : `extrudeur-monovis` (bande atelier de
+      /qui-sommes-nous), `extrudeur-petfood` (/applications/animaux-domestiques),
+      `ligne-extrusion-aquaculture` (rendu beige, /applications/aquaculture),
+      `secheur` (/nos-solutions/secheurs), `article-maillard` (vignette).
+      Le sécheur n'a pas de modèle 3D : avec ses plans, on peut le
+      modéliser comme l'extrudeur
 - [ ] Contenus : fournis, à reprendre, ou à produire
 - [ ] Un e-mail de contact public (le site n'expose qu'un formulaire)
 

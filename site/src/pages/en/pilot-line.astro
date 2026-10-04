@@ -1,9 +1,48 @@
 ---
+import { Image } from 'astro:assets';
 import PageLayout from '../../layouts/PageLayout.astro';
 import PageHero from '../../components/PageHero.astro';
 import ShowcaseBand from '../../components/ShowcaseBand.astro';
 import CTABand from '../../components/CTABand.astro';
 import piloteImg from '../../assets/img/ligne-pilote.webp';
+import pilote3dImg from '../../assets/img/3d-ligne-pilote-large.webp';
+import precoImg from '../../assets/img/3d-preconditionneur.webp';
+import visImg from '../../assets/img/3d-vis-extrudeur.webp';
+import cutterImg from '../../assets/img/3d-cutter.webp';
+
+// The line, in the order the material goes through it. Images: the 3D
+// model of the pilot line, built from the SETREM drawings
+// (video/extrudeur-3d/). Texts: the client's, from the PBR article and
+// the anatomy on the extruders page - nothing added.
+const organes = [
+  {
+    titre: 'Preconditioning',
+    texte:
+      'A PBR160 twin-rotor preconditioner hydrates and mixes the formula before extrusion: water, steam and, if needed, slurries or oil.',
+    image: precoImg,
+    alt: 'The PBR160 preconditioner of the pilot line, cover lifted and rotors out',
+    href: '/en/solutions/preconditioners',
+    lien: 'Preconditioners',
+  },
+  {
+    titre: 'Extrusion',
+    texte:
+      'The barrel is made up of different models of screws, locks and chambers in high-strength steel, double-jacketed so they can be heated or cooled.',
+    image: visImg,
+    alt: 'The pilot line extruder, clamps open: the screw slides out of the barrel',
+    href: '/en/solutions/extruders',
+    lien: 'Extruders',
+  },
+  {
+    titre: 'Cutting',
+    texte:
+      'The cutter, hinged and integral with the machine, carries interchangeable knives. Its easy opening makes the die very accessible.',
+    image: cutterImg,
+    alt: 'The pilot line cutter opened on its knife, the die turned towards us',
+    href: '/en/solutions/extruders#anatomie',
+    lien: 'Anatomy of an extruder',
+  },
+];
 ---
 
 <PageLayout
@@ -15,6 +54,20 @@ import piloteImg from '../../assets/img/ligne-pilote.webp';
     kicker="Research & development"
     titre="Test your product before investing."
     lede="The pilot line is our research and development tool. This unit is available to food industry manufacturers to validate the feasibility of new products."
+  />
+
+  <!-- Reworked on 4 October 2026 - see the French page. -->
+  <ShowcaseBand
+    id="machine-titre"
+    eyebrow="The SETREM pilot line"
+    titre="A real SETREM machine, at trial scale."
+    accent="at trial scale."
+    texte="Hopper, feeder, preconditioner, extruder and cutter: the same anatomy as the extruders in the range."
+    image={pilote3dImg}
+    alt="The SETREM pilot line assembled: hopper, feeder, preconditioner, extruder and cutter - 3D model built from the drawings"
+    vitesse={0.06}
+    position="68% 50%"
+    positionMobile="76% 50%"
   />
 
   <section class="band sheet" aria-labelledby="usages-titre">
@@ -56,8 +109,51 @@ import piloteImg from '../../assets/img/ligne-pilote.webp';
     </div>
   </section>
 
-  <!-- La machine elle-même, en plein format : c'est l'objet de la page,
-       elle ne pouvait pas rester une vignette légendée. -->
+  <section class="band band--raised" aria-labelledby="organes-titre">
+    <div class="container">
+      <div class="band__head">
+        <p class="eyebrow">Component by component</p>
+        <h2 class="band__title reveal" id="organes-titre">
+          What the material goes through.
+        </h2>
+      </div>
+      <ol class="organes">
+        {
+          organes.map((o, i) => (
+            <li class="organes__card reveal" style={`--ri: ${i}`}>
+              <div class="organes__media">
+                <Image
+                  src={o.image}
+                  alt={o.alt}
+                  widths={[500, 800, 1100]}
+                  width={1100}
+                  quality={72}
+                  sizes="(max-width: 900px) 100vw, 33vw"
+                  loading="lazy"
+                />
+              </div>
+              <div class="organes__body">
+                <p class="organes__num" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </p>
+                <h3>{o.titre}</h3>
+                <p>{o.texte}</p>
+                <a class="organes__lien" href={o.href}>
+                  {o.lien} <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="organes__note">
+        Visuals: 3D model of the pilot line, built from the SETREM
+        drawings.
+      </p>
+    </div>
+  </section>
+
+  <!-- The real machine, in the workshop: the proof after the render. -->
   <ShowcaseBand
     id="atelier-essais"
     eyebrow="The trial workshop"
@@ -66,10 +162,10 @@ import piloteImg from '../../assets/img/ligne-pilote.webp';
     image={piloteImg}
     alt="The SETREM pilot line in the trial workshop"
   />
-  <!-- TODO: contenu client - décrire la composition de la ligne pilote
-       (modèle d'extrudeur, préconditionneur, séchage, débits d'essai).
-       Rien de tout cela n'est documenté sur le site actuel : ne pas le
-       déduire de la photo. -->
+  <!-- TODO: contenu client - modèle et puissance de l'extrudeur pilote,
+       débits d'essai, séchage disponible. La composition (PBR160,
+       extrudeur, cutter) vient des plans de la ligne ; le reste n'est
+       documenté nulle part : ne pas le déduire des images. -->
 
   <section class="band band--raised" aria-label="From pilot to production">
     <div class="container">
@@ -148,6 +244,78 @@ import piloteImg from '../../assets/img/ligne-pilote.webp';
     color: var(--text-muted);
   }
 
+  .organes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .organes__card {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Black studio of the 3D render: the frame takes the image background
+     colour, so cropping never leaves a light edge. */
+  .organes__media {
+    aspect-ratio: 4 / 3;
+    background: #000;
+  }
+
+  .organes__media :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .organes__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: var(--space-6);
+  }
+
+  .organes__num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--blue-300);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: var(--space-2);
+  }
+
+  .organes__body h3 {
+    font-size: var(--text-h3);
+    font-weight: 650;
+    margin-bottom: var(--space-3);
+  }
+
+  .organes__body p:not(.organes__num) {
+    color: var(--text-body);
+    font-size: var(--text-small);
+  }
+
+  .organes__lien {
+    margin-top: auto;
+    padding-top: var(--space-4);
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+
+  .organes__lien:hover {
+    color: var(--highlight);
+  }
+
+  .organes__note {
+    margin-top: var(--space-6);
+    font-size: var(--text-small);
+    color: var(--text-muted);
+  }
+
   .suite {
     display: grid;
     grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
@@ -185,6 +353,7 @@ import piloteImg from '../../assets/img/ligne-pilote.webp';
 
   @media (max-width: 900px) {
     .usages,
+    .organes,
     .suite {
       grid-template-columns: 1fr;
     }

@@ -1,4 +1,10 @@
 ---
+// Article soja de référence. Il réunit depuis le 4 octobre 2026 les deux
+// articles du site actuel qui disaient la même chose en partie
+// (« Procédé de traitement de la graine de soja » et « Traitement des
+// matières premières : soja ») - tri demandé par Arnaud Delique.
+// L'ancienne adresse redirige ici (astro.config.mjs). Rien d'ajouté :
+// chaque phrase et chaque chiffre vient de l'un des deux textes.
 import { Image } from 'astro:assets';
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
 import figProcede from '../../assets/img/fig-procede-soja.webp';
@@ -6,40 +12,177 @@ import figProcede from '../../assets/img/fig-procede-soja.webp';
 
 <ArticleLayout slug="procede-de-traitement-de-la-graine-de-soja">
   <p>
-    La graine contient notamment des protéases (inhibiteurs trypsiques)
-    empêchant la digestion des graines, des hémato-agglutinines (lectines)
-    qui empêchent l'absorption des principes nutritifs, ainsi que des
-    facteurs allergènes pouvant affecter en particulier les veaux de lait.
+    Sans traitement thermique préalable, la valeur nutritive et la
+    digestibilité des protéines du soja cru sont relativement faibles. La
+    graine contient en effet des matières biologiquement actives à l'action
+    antinutritionnelle :
   </p>
+  <ul>
+    <li>
+      des protéases (inhibiteurs trypsiques), qui empêchent la digestion des
+      graines,
+    </li>
+    <li>
+      des hémato-agglutinines (lectines), qui empêchent l'absorption des
+      principes nutritifs,
+    </li>
+    <li>
+      des facteurs allergènes, qui peuvent affecter en particulier les veaux
+      de lait,
+    </li>
+    <li>
+      des saponines et des facteurs induisant le goitre et le rachitisme.
+    </li>
+  </ul>
+
+  <h2>Pourquoi extruder le soja</h2>
   <p>
-    Dans le but de profiter au maximum des composantes nutritionnelles du
-    soja, l'extrusion est le meilleur traitement. Elle permet d'améliorer la
-    digestibilité des protéines de 11&nbsp;%, de la lysine de 14&nbsp;%, de
-    la méthionine de 11&nbsp;% et de la cystine de 5&nbsp;% par rapport à la
-    graine crue, mais également de diminuer la teneur en acides aminés bruts
-    et donc l'indigéré protéique.
+    Pour profiter au maximum des composantes nutritionnelles du soja,
+    l'extrusion est le meilleur traitement. Son objectif est triple :
+  </p>
+  <ul>
+    <li>réduire la teneur en facteurs antinutritionnels,</li>
+    <li>ne pas endommager les protéines,</li>
+    <li>
+      provoquer la rupture des cellules contenant l'huile, pour améliorer la
+      valeur énergétique.
+    </li>
+  </ul>
+  <p>
+    Par rapport à la graine crue, l'extrusion améliore la digestibilité des
+    protéines de 11&nbsp;%, de la lysine de 14&nbsp;%, de la méthionine de
+    11&nbsp;% et de la cystine de 5&nbsp;%. Elle diminue aussi la teneur en
+    acides aminés bruts, et donc l'indigéré protéique.
   </p>
 
-  <h2>Étude technique</h2>
+  <h2>Ce qui se passe dans l'extrudeur</h2>
   <p>
-    Afin d'obtenir un produit avec un apport énergétique raisonnable
-    facilitant l'équilibrage de la ration, il est intéressant d'opérer un
-    déshuilage partiel des graines extrudées. Par ce biais, la teneur en
-    matière grasse passe de 20&nbsp;% à environ 5,4&nbsp;% dans les
-    tourteaux, tout en récupérant un produit à forte valeur ajoutée :
-    l'huile de soja. Dans l'alimentation animale, l'élément principalement
-    recherché est le taux de protéines : baisser le taux de matière grasse
-    permet donc d'augmenter le taux protéique des tourteaux tout en
-    récupérant un coproduit.
+    Les graines broyées sont comprimées dans un fourreau par une vis sans
+    fin tournant à grande vitesse, puis poussées au travers d'une filière.
+    C'est une extrusion à sec : la chaleur vient de l'énergie mécanique
+    créée par les forces de frottement et de cisaillement dans la machine.
+    Les graines sont portées à environ 150&nbsp;°C - 160&nbsp;°C en sortie
+    de filière - pendant un temps très court, de quelques dizaines de
+    secondes.
+  </p>
+  <p>
+    Dans le fourreau, l'eau libre de la graine dépasse largement sa
+    température de vaporisation, mais reste liquide sous la pression de
+    plusieurs dizaines de bars. À la sortie de la filière, le retour brutal
+    à la pression atmosphérique entraîne :
+  </p>
+  <ul>
+    <li>
+      une évaporation instantanée de cette eau - environ 6&nbsp;% du poids
+      initial des graines -, qui porte les graines extrudées à une humidité
+      de 6&nbsp;%,
+    </li>
+    <li>
+      l'éclatement des cellules qui contiennent l'huile, ce qui facilite
+      ensuite le travail de la presse,
+    </li>
+    <li>
+      une descente brutale en température, vers 100&nbsp;°C, qui arrête
+      pratiquement toute réaction de brunissement.
+    </li>
+  </ul>
+  <p>
+    Cette méthode s'apparente donc aux traitements HT-ST (High
+    Temperature-Short Time), un peu analogues au traitement UHT qui permet
+    la production des laits de longue conservation.
+  </p>
+
+  <h2>Un produit plus énergétique et plus stable</h2>
+  <h3>La teneur énergétique est plus élevée</h3>
+  <ul>
+    <li>parce que la teneur en eau du produit est faible,</li>
+    <li>
+      parce que l'extrusion détruit pratiquement toutes les structures
+      cellulaires de la graine, ce qui permet une meilleure digestion de
+      l'énergie qu'elle contient.
+    </li>
+  </ul>
+  <h3>Le produit se conserve des mois</h3>
+  <p>
+    L'extrusion détruit les lipases et la lipoxydase de la graine crue - ces
+    enzymes favorisent l'hydrolyse et l'oxydation des graisses. Avec sa
+    faible teneur en eau libre, le produit stocké convenablement pendant des
+    mois ne rancit pas, ne s'oxyde pas et ne moisit pas, sans ajout de
+    conservateurs.
+  </p>
+
+  <h3>Digestibilité des rations à base de graines de soja</h3>
+  <div class="table-scroll">
+    <table class="table-data">
+      <caption class="visually-hidden">
+        Effet du procédé de traitement sur la digestibilité des rations à
+        base de graines de soja, en pourcentage
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Digestibilité (%)</th>
+          <th scope="col">Toastage + broyage fin</th>
+          <th scope="col">Toastage + broyage grossier</th>
+          <th scope="col">Extrusion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Huile (ajustée)</th><td>63,0</td><td>63,9</td><td>85,7</td></tr>
+        <tr><th scope="row">Azote</th><td>80,1</td><td>78,9</td><td>86,8</td></tr>
+        <tr><th scope="row">Énergie</th><td>82,0</td><td>81,8</td><td>89,7</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><small>Source : Wiseman, 1984.</small></p>
+
+  <h3>Énergie métabolisable chez le poulet de chair</h3>
+  <div class="table-scroll">
+    <table class="table-data">
+      <caption class="visually-hidden">
+        Influence du procédé de traitement sur l'énergie métabolisable
+        apparente des graines de soja entières chez le poulet de chair
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Procédé</th>
+          <th scope="col">EMA (MJ/kg de matière sèche)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Extrusion à sec</th><td>17,9</td></tr>
+        <tr><th scope="row">Extrusion humide</th><td>17,4</td></tr>
+        <tr><th scope="row">Micronisation</th><td>17,5</td></tr>
+        <tr><th scope="row">Tourteaux de soja + huile</th><td>17,5</td></tr>
+        <tr><th scope="row">Toastage</th><td>15,8</td></tr>
+        <tr><th scope="row">Jet-sploding</th><td>15,5</td></tr>
+        <tr><th scope="row">Graines crues</th><td>13,5</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <small>
+      EMA = énergie métabolisable apparente. Source : Adams et Jensen, 1985.
+    </small>
+  </p>
+
+  <h2 id="extraction-huile">Extrusion puis pressage : récupérer l'huile</h2>
+  <p>
+    Pour obtenir un produit à l'apport énergétique raisonnable, qui facilite
+    l'équilibrage de la ration, il est intéressant de déshuiler en partie
+    les graines extrudées. La teneur en matière grasse passe de 20&nbsp;% à
+    environ 5,4&nbsp;% dans les tourteaux, et l'on récupère un produit à
+    forte valeur ajoutée : l'huile de soja. En alimentation animale, c'est
+    surtout le taux de protéines qui compte : baisser le taux de matière
+    grasse augmente le taux protéique des tourteaux, tout en récupérant un
+    coproduit.
   </p>
   <p>
     Le procédé classique comporte deux phases, comme le montre le schéma
-    ci-dessous. Afin de baisser encore le taux de matière grasse des
-    tourteaux, une solution à l'étude consiste à ajouter au fourreau de
-    l'extrudeur une chambre spéciale permettant de récupérer de l'huile.
-    Ainsi, le taux de matière grasse à la sortie de l'extrudeur est
-    inférieur de 1 à 2&nbsp;%, facilitant le travail de la presse qui peut
-    alors produire des tourteaux à taux de matière grasse inférieur.
+    ci-dessous. Pour baisser encore le taux de matière grasse des tourteaux,
+    une solution à l'étude consiste à ajouter au fourreau de l'extrudeur une
+    chambre spéciale qui récupère de l'huile. Le taux de matière grasse à la
+    sortie de l'extrudeur est alors inférieur de 1 à 2&nbsp;%, ce qui
+    facilite le travail de la presse.
   </p>
   <figure>
     <Image
@@ -53,45 +196,15 @@ import figProcede from '../../assets/img/fig-procede-soja.webp';
     />
     <figcaption>Le procédé classique, en deux phases.</figcaption>
   </figure>
-
-  <h2>Extrusion à sec</h2>
   <p>
-    L'extrusion à sec permet de cuire les graines à forte température -
-    environ 150&nbsp;°C - durant un temps très court, de quelques dizaines
-    de secondes. La chaleur est apportée par l'énergie mécanique créée par
-    les forces de cisaillement et de frottement dans l'extrudeur. Dans le
-    fourreau, l'eau naturellement présente dans les graines reste liquide en
-    raison de la forte pression (plusieurs dizaines de bars) ; à la sortie
-    de la filière, les graines retrouvent la pression atmosphérique, ce qui
-    entraîne :
-  </p>
-  <ul>
-    <li>
-      une évaporation instantanée de l'eau, portant les graines extrudées à
-      une humidité de 6&nbsp;%,
-    </li>
-    <li>
-      la destruction des parois des cellules qui contiennent l'huile,
-      facilitant le travail de la presse,
-    </li>
-    <li>
-      une descente brutale en température, entraînant un arrêt de toutes les
-      réactions de brunissement.
-    </li>
-  </ul>
-
-  <h2>Pressage mécanique</h2>
-  <p>
-    L'extrusion permet un meilleur déshuilage des graines qu'avec une
-    méthode d'aplatissage-cuisson-pression : à la sortie de l'extrudeur, les
+    L'extrusion permet un meilleur déshuilage qu'une méthode
+    d'aplatissage-cuisson-pression : à la sortie de l'extrudeur, les
     cellules contenant les matières grasses ont été détruites et l'huile est
-    libre. L'extrudeur travaille comme un préparateur pour la presse, ce qui
-    lui permet d'avoir un meilleur rendement, de travailler à un débit
-    supérieur et d'avoir un taux d'usure inférieur. Les expériences montrent
-    que les tourteaux contiennent en moyenne 1,3&nbsp;% d'huile en moins. De
-    plus, le traitement par extrusion puis pressage engendre des rendements
-    plus importants, à la fois d'huile et de tourteaux, tout en ayant moins
-    de freinte.
+    libre. L'extrudeur travaille comme un préparateur pour la presse, qui a
+    alors un meilleur rendement, un débit supérieur et une usure plus
+    faible. Les expériences montrent que les tourteaux contiennent en
+    moyenne 1,3&nbsp;% d'huile en moins, avec des rendements plus importants
+    en huile comme en tourteaux, et moins de freinte.
   </p>
 
   <h3>Bilan matières</h3>
@@ -129,14 +242,8 @@ import figProcede from '../../assets/img/fig-procede-soja.webp';
     <small>EP = extrusion-pression · ACP = aplatissage-cuisson-pression.</small>
   </p>
   <p>
-    Comme le souligne le tableau ci-dessous, l'extrusion-pression produit
-    des tourteaux contenant près de 45&nbsp;% de protéines, et une division
-    par 4 des facteurs antitrypsiques. De surcroît, le produit traité est
-    très stable, acceptant une conservation de plusieurs mois grâce à la
-    destruction des lipases et de la lipoxydase, ainsi qu'à une faible
-    teneur en eau libre - ce qui évite l'ajout de conservateurs, le produit
-    n'étant touché ni par le rancissement, ni par l'oxydation, ni par la
-    moisissure.
+    L'extrusion-pression produit des tourteaux à près de 45&nbsp;% de
+    protéines, et divise par 4 les facteurs antitrypsiques :
   </p>
 
   <h3>Composition des produits du soja</h3>
@@ -179,10 +286,9 @@ import figProcede from '../../assets/img/fig-procede-soja.webp';
 
   <h2>Étude économique</h2>
   <p>
-    D'un point de vue économique, il est important de connaître le coût de
-    ce traitement par tonne de soja. Dans l'hypothèse d'une usine produisant
-    20&nbsp;000&nbsp;tonnes par an - soit en moyenne 3&nbsp;tonnes par heure
-    -, les coûts sont synthétisés dans le tableau ci-dessous :
+    Combien coûte ce traitement par tonne de soja ? Dans l'hypothèse d'une
+    usine produisant 20&nbsp;000&nbsp;tonnes par an - soit en moyenne
+    3&nbsp;tonnes par heure -, les coûts sont les suivants :
   </p>
   <div class="table-scroll">
     <table class="table-data">
@@ -213,5 +319,11 @@ import figProcede from '../../assets/img/fig-procede-soja.webp';
   <p>
     Le coût hors matière première d'une tonne de soja extrudée puis pressée
     revient à moins de 35&nbsp;€.
+  </p>
+  <p>
+    Les résultats chez l'animal - volailles, pondeuses, vaches laitières -
+    sont détaillés dans l'article
+    <a href="/loil-de-lexpert/atouts-du-soja-extrude-pour-les-animaux-delevage">
+      Atouts du soja extrudé pour les animaux d'élevage</a>.
   </p>
 </ArticleLayout>

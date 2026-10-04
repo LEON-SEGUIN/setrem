@@ -1,0 +1,174 @@
+---
+// Created on 4 October 2026 from the article « Our PBR preconditioners »
+// (see the French page). The old address redirects here.
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import SplitSection from '../../../components/SplitSection.astro';
+import ShowcaseBand from '../../../components/ShowcaseBand.astro';
+import LinkCards from '../../../components/LinkCards.astro';
+import CTABand from '../../../components/CTABand.astro';
+import { autresSolutions } from '../../../data/solutions';
+import preconditionneurImg from '../../../assets/img/preconditionneur.webp';
+import pbr3dImg from '../../../assets/img/3d-preconditionneur.webp';
+
+const autres = autresSolutions('preconditioners', 'en').map((s) => ({
+  href: `/en/solutions/${s.slug}`,
+  titre: s.titre,
+  texte: s.texte,
+  image: s.image,
+  alt: s.alt,
+}));
+
+// Actual volumes of the PBR range - scrape (PBR article)
+const gammePbr = [
+  ['PBR160', '25'],
+  ['PBR220', '79'],
+  ['PBR350', '297'],
+  ['PBR420', '510'],
+  ['PBR500', '925'],
+  ['PBR620', '1,758'],
+];
+
+// What the preconditioner brings, as listed on the extruders page
+const apports = [
+  'Increased extruder throughput',
+  'Steady operation',
+  'Reduced wear',
+  'Even hydration',
+  'Greater palatability and starch gelatinisation',
+];
+---
+
+<PageLayout
+  title="PBR preconditioners - single- and twin-rotor | SETREM"
+  description="SETREM single- or twin-rotor preconditioners, from 25 to 1,758 litres: hydration, water, steam and slurry injection, up to 3 minutes of retention before the extruder."
+  path="/en/solutions/preconditioners"
+>
+  <PageHero
+    kicker="Our solutions"
+    titre="Preconditioners"
+    lede="Upstream of the extruder, the preconditioner hydrates and mixes the formula. The SETREM preconditioner family comes in two categories: single-rotor and twin-rotor."
+  />
+
+  <section class="band sheet" aria-label="Single-rotor and twin-rotor">
+    <div class="container">
+      <SplitSection
+        kicker="Two categories"
+        titre="Single- or twin-rotor, depending on the product."
+        image={preconditionneurImg}
+        alt="SETREM twin-rotor preconditioner, cover open on its two shafts"
+      >
+        <h3>Single-rotor</h3>
+        <p>
+          Well known to manufacturers, it allows hydration of around 5 to
+          7% water, injected in the form of water and/or steam. The
+          temperature can reach 90&nbsp;°C. The retention time generally
+          does not exceed 30&nbsp;seconds - it can be increased with a
+          larger volume. Depending on the application, the single-rotor is
+          sometimes sufficient.
+        </p>
+        <h3>Twin-rotor</h3>
+        <p>
+          When mixing and pre-cooking functions are needed, it is preferable
+          to work with a twin-rotor. It is not unusual to obtain retention
+          times of 3&nbsp;minutes, with moisture levels of around 25 to 27%.
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <ShowcaseBand
+    id="arbres-titre"
+    eyebrow="The twin-rotor, opened up"
+    titre="Two shafts, two functions."
+    accent="two functions."
+    texte="The quality of the mixing owes much to the configuration of the paddles: one shaft mixes with small paddles, the other holds the product back with paddles of a larger surface area. The injectors form a spray that helps mixing with water; other injections are provided for - slurries, oil - to guarantee the evenness of the mix before extrusion."
+    image={pbr3dImg}
+    alt="PBR160 preconditioner of the SETREM pilot line, cover lifted and rotors out - 3D model built from the drawings"
+  />
+
+  <section class="band" aria-labelledby="gamme-titre">
+    <div class="container">
+      <div class="gamme">
+        <div>
+          <p class="eyebrow">The PBR range</p>
+          <h2 class="band__title reveal" id="gamme-titre">
+            From 25 to 1,758 litres.
+          </h2>
+          <p class="gamme__texte reveal">
+            Six models. The smallest, the PBR160, equips the
+            <a href="/en/pilot-line">pilot line</a> in Acquigny.
+          </p>
+          <div class="prose">
+            <h3>What the preconditioner brings</h3>
+            <ul>
+              {apports.map((a) => <li>{a}</li>)}
+            </ul>
+            <p>
+              With the addition of water and steam, it makes starch
+              gelatinisation easier and considerably increases the output of
+              the extruder -
+              <a href="/en/expert-insights/raw-material-processing-cereals">
+                see cereal processing</a>.
+            </p>
+          </div>
+        </div>
+        <div class="table-scroll reveal" style="--ri: 1">
+          <table class="table-data">
+            <caption class="visually-hidden">
+              Volumes of the PBR preconditioners in litres
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Volume (litres)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                gammePbr.map(([type, volume]) => (
+                  <tr>
+                    <th scope="row" class="model-ref">{type}</th>
+                    <td>{volume}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">The rest of the line</h2>
+      </div>
+      <LinkCards items={autres} cols={4} cta="View the equipment" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>
+
+<style>
+  .gamme {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  .gamme__texte {
+    margin-top: var(--space-4);
+    color: var(--text-body);
+    max-width: 52ch;
+  }
+
+  @media (max-width: 900px) {
+    .gamme {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

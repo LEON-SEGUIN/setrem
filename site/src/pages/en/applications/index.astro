@@ -5,7 +5,7 @@ import LinkCards from '../../../components/LinkCards.astro';
 import ShowcaseBand from '../../../components/ShowcaseBand.astro';
 import CTABand from '../../../components/CTABand.astro';
 import { marches } from '../../../data/marches';
-import sojaImg from '../../../assets/img/article-graine-soja.webp';
+import sojaImg from '../../../assets/img/article-soja.webp';
 
 const items = marches.en.map((m) => ({
   href: `/en/applications/${m.slug}`,
@@ -18,17 +18,17 @@ const items = marches.en.map((m) => ({
 
 <PageLayout
   title="Applications - pet food, aquaculture, human food, livestock | SETREM"
-  description="Four markets, one and the same screw: pet food, aquaculture, human food, livestock. Complete lines, dryer included, from 40 kg/h to 9 t/h."
+  description="Many markets, one screw: pet food, aquaculture, human food, livestock, raw materials. Complete lines, dryer included, from 40 kg/h to 9 t/h."
   path="/en/applications"
 >
   <PageHero
     kicker="Applications"
-    titre="Four markets, one and the same screw."
+    titre="Many markets, one screw."
     lede="Machines made to measure for your products, with complete extrusion solutions including the dryer. Capacities ranging from 40 kg/h to 9 t/h."
   />
 
   <section class="band sheet" aria-labelledby="marches-titre">
-    <h2 class="visually-hidden" id="marches-titre">The four markets served</h2>
+    <h2 class="visually-hidden" id="marches-titre">The markets served</h2>
     <div class="container">
       <LinkCards items={items} cols={4} cta="View the market" />
     </div>
@@ -45,13 +45,13 @@ const items = marches.en.map((m) => ({
     compact
   >
     <p class="mp-liens reveal" style="--ri: 2">
-      <a href="/en/expert-insights/raw-material-processing-soybean">
+      <a href="/en/expert-insights/soybean-processing-method">
         Soybean processing →
       </a>
       <a href="/en/expert-insights/raw-material-processing-cereals">
         Cereal processing →
       </a>
-      <a href="/en/expert-insights/soybean-processing-method">
+      <a href="/en/expert-insights/soybean-processing-method#oil-extraction">
         Preparation for oil extraction →
       </a>
     </p>

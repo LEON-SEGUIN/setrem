@@ -1,0 +1,179 @@
+---
+// Page créée le 4 octobre 2026 à partir de l'article « Nos
+// préconditionneurs PBR » (tri des articles demandé par Arnaud Delique) :
+// c'était une fiche produit rangée parmi les articles, et le
+// préconditionneur n'avait pas de page dans « Nos solutions ».
+// Textes : l'article PBR, l'anatomie de la page extrudeurs et l'article
+// céréales - rien d'ajouté. L'ancienne adresse redirige ici.
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SplitSection from '../../components/SplitSection.astro';
+import ShowcaseBand from '../../components/ShowcaseBand.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import CTABand from '../../components/CTABand.astro';
+import { autresSolutions } from '../../data/solutions';
+import preconditionneurImg from '../../assets/img/preconditionneur.webp';
+import pbr3dImg from '../../assets/img/3d-preconditionneur.webp';
+
+const autres = autresSolutions('preconditionneurs', 'fr').map((s) => ({
+  href: `/nos-solutions/${s.slug}`,
+  titre: s.titre,
+  texte: s.texte,
+  image: s.image,
+  alt: s.alt,
+}));
+
+// Volumes réels de la gamme PBR - scrape (article PBR)
+const gammePbr = [
+  ['PBR160', '25'],
+  ['PBR220', '79'],
+  ['PBR350', '297'],
+  ['PBR420', '510'],
+  ['PBR500', '925'],
+  ['PBR620', '1 758'],
+];
+
+// Les apports du préconditionneur, tels que la page extrudeurs les liste
+const apports = [
+  'Augmentation du débit de l’extrudeur',
+  'Régularité du fonctionnement',
+  'Usure réduite',
+  'Hydratation homogène',
+  'Appétence et gélatinisation des amidons accrues',
+];
+---
+
+<PageLayout
+  title="Préconditionneurs PBR - monorotor et birotor | SETREM"
+  description="Préconditionneurs SETREM monorotor ou birotor, de 25 à 1 758 litres : hydratation, injection d'eau, de vapeur et de slurrys, jusqu'à 3 minutes de rétention avant l'extrudeur."
+  path="/nos-solutions/preconditionneurs"
+>
+  <PageHero
+    kicker="Nos solutions"
+    titre="Préconditionneurs"
+    lede="En amont de l'extrudeur, le préconditionneur hydrate et mélange la formule. La famille des préconditionneurs SETREM se décline en deux catégories : les monorotors et les birotors."
+  />
+
+  <section class="band sheet" aria-label="Monorotor et birotor">
+    <div class="container">
+      <SplitSection
+        kicker="Deux catégories"
+        titre="Monorotor ou birotor, selon le produit."
+        image={preconditionneurImg}
+        alt="Préconditionneur birotor SETREM, capot ouvert sur ses deux arbres"
+      >
+        <h3>Le monorotor</h3>
+        <p>
+          Bien connu des industriels, il permet une hydratation d'environ 5
+          à 7&nbsp;% d'eau, injectée sous forme d'eau et/ou de vapeur. La
+          température peut atteindre 90&nbsp;°C. Le temps de rétention
+          n'excède pas 30&nbsp;secondes en général - il est possible de
+          l'augmenter avec un volume plus important. Selon les
+          applications, le monorotor est parfois suffisant.
+        </p>
+        <h3>Le birotor</h3>
+        <p>
+          Quand les fonctions de mélange et de pré-cuisson sont nécessaires,
+          il est préférable de travailler avec un birotor. Il n'est pas rare
+          d'obtenir des temps de rétention de 3&nbsp;minutes, avec des
+          humidités de l'ordre de 25 à 27&nbsp;%.
+        </p>
+      </SplitSection>
+    </div>
+  </section>
+
+  <ShowcaseBand
+    id="arbres-titre"
+    eyebrow="Le birotor, ouvert"
+    titre="Deux arbres, deux fonctions."
+    accent="deux fonctions."
+    texte="La qualité du mélange tient à la configuration des pales : l'un des arbres mélange avec de petites pales, l'autre retient le produit avec des pales de plus grande surface. Les injecteurs forment un spray qui facilite le mélange avec l'eau ; d'autres injections sont prévues - slurrys, huile - pour garantir l'homogénéité du mélange avant extrusion."
+    image={pbr3dImg}
+    alt="Préconditionneur PBR160 de la ligne pilote SETREM, capot levé et rotors sortis - modélisation 3D d'après les plans"
+  />
+
+  <section class="band" aria-labelledby="gamme-titre">
+    <div class="container">
+      <div class="gamme">
+        <div>
+          <p class="eyebrow">La gamme PBR</p>
+          <h2 class="band__title reveal" id="gamme-titre">
+            De 25 à 1&nbsp;758 litres.
+          </h2>
+          <p class="gamme__texte reveal">
+            Six modèles. Le plus petit, le PBR160, équipe la
+            <a href="/la-ligne-pilote">ligne pilote</a> d'Acquigny.
+          </p>
+          <div class="prose">
+            <h3>Ce que le préconditionneur apporte</h3>
+            <ul>
+              {apports.map((a) => <li>{a}</li>)}
+            </ul>
+            <p>
+              Avec addition d'eau et de vapeur, il facilite la gélatinisation
+              de l'amidon et augmente considérablement le rendement de
+              l'extrudeur -
+              <a href="/loil-de-lexpert/traitement-des-matieres-premieres-cereales">
+                voir le traitement des céréales</a>.
+            </p>
+          </div>
+        </div>
+        <div class="table-scroll reveal" style="--ri: 1">
+          <table class="table-data">
+            <caption class="visually-hidden">
+              Volumes des préconditionneurs PBR en litres
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Volume (litres)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                gammePbr.map(([type, volume]) => (
+                  <tr>
+                    <th scope="row" class="model-ref">{type}</th>
+                    <td>{volume}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--raised band--tight" aria-labelledby="autres-titre">
+    <div class="container">
+      <div class="band__head">
+        <h2 class="band__title reveal" id="autres-titre">Le reste de la ligne</h2>
+      </div>
+      <LinkCards items={autres} cols={4} cta="Voir l'équipement" />
+    </div>
+  </section>
+
+  <CTABand />
+</PageLayout>
+
+<style>
+  .gamme {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  .gamme__texte {
+    margin-top: var(--space-4);
+    color: var(--text-body);
+    max-width: 52ch;
+  }
+
+  @media (max-width: 900px) {
+    .gamme {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

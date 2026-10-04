@@ -1,46 +1,64 @@
 ---
-import { Image } from 'astro:assets';
+// Refondu le 4 octobre 2026 (tri demandé par Arnaud Delique) : même
+// texte, remis en trois temps - ce que c'est, ce qui la déclenche, quand
+// la provoquer ou l'éviter. Le graphique est redessiné en SVG
+// (MaillardChart), et l'article renvoie aux deux autres textes du site
+// qui parlent des protéines by-pass. Rien d'ajouté.
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
-import figMaillard from '../../assets/img/fig-maillard-temperature.webp';
+import MaillardChart from '../../components/MaillardChart.astro';
 ---
 
 <ArticleLayout slug="reactions-de-maillard">
+  <h2>Ce qu'est une réaction de Maillard</h2>
   <p>
-    Les protéines et les sucres réagissent ensemble pour former des complexes
-    indigestibles dans le rumen : les protéines by-pass. Ces corps de
-    Maillard sont dissous grâce au pH acide de la caillette ; les acides
+    Les protéines et les sucres réagissent ensemble pour former des
+    complexes indigestibles dans le rumen : les protéines by-pass. Ces corps
+    de Maillard sont dissous grâce au pH acide de la caillette ; les acides
     aminés qu'ils contiennent redeviennent donc pleinement disponibles pour
     être absorbés dans l'intestin.
   </p>
+
+  <h2>Ce qui la déclenche</h2>
+  <p>Les réactions de Maillard se produisent :</p>
+  <ul>
+    <li>en présence d'acides aminés et de sucres,</li>
+    <li>à des températures entre 0 et 150&nbsp;°C,</li>
+    <li>à un pH entre 6 et 10,</li>
+    <li>à une humidité d'environ 15&nbsp;%.</li>
+  </ul>
   <p>
-    Les réactions de Maillard se produisent en présence d'acides aminés et de
-    sucres à des températures entre 0 et 150&nbsp;°C, un pH entre 6 et 10 et
-    à une humidité d'environ 15&nbsp;%. Comme le montre le graphique
-    ci-dessous, la température influe fortement sur la vitesse de réaction.
+    La température influe fortement sur la vitesse de réaction : presque
+    rien ne se passe jusqu'à 60&nbsp;°C, puis tout s'accélère.
   </p>
-  <figure>
-    <Image
-      src={figMaillard}
-      alt="Graphique : influence de la température sur la vitesse de la réaction de Maillard"
-      widths={[600, 900]}
-      width={900}
-      quality={70}
-      sizes="(max-width: 900px) 100vw, 700px"
-      loading="lazy"
-    />
-    <figcaption>
-      Influence de la température sur la réaction de Maillard.
-    </figcaption>
-  </figure>
+
+  <MaillardChart />
+
+  <h2>La provoquer ou l'éviter, selon l'espèce</h2>
   <p>
     Lors d'une cuisson-extrusion, il est donc possible de régler les
     paramètres - température et temps de passage du mélange - afin de
-    provoquer ou non des réactions de Maillard. Il est intéressant de
-    faciliter ces réactions pour la production d'aliments ruminants, mais il
-    sera important de les limiter au maximum pour la production d'aliments
-    volailles par exemple : les corps de Maillard réduisent la disponibilité
-    protéique pour les espèces monogastriques.
+    provoquer ou non des réactions de Maillard.
   </p>
+  <h3>Pour les ruminants : les faciliter</h3>
+  <p>
+    Il est intéressant de faciliter ces réactions pour la production
+    d'aliments ruminants : les protéines by-pass traversent le rumen sans
+    être dégradées, puis sont digérées dans l'intestin. Sur la graine de
+    soja, la cuisson-extrusion augmente de 100 à 300&nbsp;% la quantité de
+    protéines by-pass - détail dans l'article
+    <a href="/loil-de-lexpert/atouts-du-soja-extrude-pour-les-animaux-delevage">
+      Atouts du soja extrudé pour les animaux d'élevage</a>.
+  </p>
+  <h3>Pour les monogastriques : les limiter</h3>
+  <p>
+    Il sera important de les limiter au maximum pour la production
+    d'aliments volailles, par exemple : les corps de Maillard réduisent la
+    disponibilité protéique pour les espèces monogastriques. C'est le temps
+    très court de l'extrusion qui le permet - voir le
+    <a href="/loil-de-lexpert/traitement-des-matieres-premieres-cereales">
+      traitement des céréales</a>.
+  </p>
+
   <p>
     Une bonne maîtrise de la cuisson-extrusion permet donc de faire varier
     les caractéristiques du produit en fonction de l'anatomie de l'espèce

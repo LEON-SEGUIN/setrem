@@ -1,0 +1,205 @@
+---
+// Influence de la température sur la réaction de Maillard : le graphique
+// de l'article, redessiné en SVG le 4 octobre 2026. L'ancien était une
+// image Excel au texte français incrusté - illisible pour un anglophone,
+// invisible pour Google. Les valeurs sont relevées sur ce graphique
+// d'origine (fig-maillard-temperature.webp) : à ±1 point près.
+// Une seule série : pas de légende, le titre la nomme. Survol natif par
+// <title> sur chaque point ; les valeurs exactes sont dans le tableau.
+import { toLocale } from '../i18n/ui';
+
+const locale = toLocale(Astro.currentLocale);
+const copy = {
+  fr: {
+    titre: 'Influence de la température sur la réaction de Maillard',
+    axeX: 'Température (°C)',
+    axeY: 'Acides aminés détruits en 10 min (%)',
+    resume:
+      "Courbe : quasi nulle jusqu'à 60 °C, environ 5 % à 80 °C, 25 % à 100 °C et 100 % à 150 °C.",
+    tableau: 'Voir les valeurs',
+    colX: 'Température (°C)',
+    colY: 'Acides aminés détruits en 10 min (%)',
+    fmt: (n: number) => n.toLocaleString('fr-FR'),
+  },
+  en: {
+    titre: 'Influence of temperature on the Maillard reaction',
+    axeX: 'Temperature (°C)',
+    axeY: 'Amino acids destroyed in 10 min (%)',
+    resume:
+      'Curve: close to zero up to 60 °C, about 5% at 80 °C, 25% at 100 °C and 100% at 150 °C.',
+    tableau: 'Show the values',
+    colX: 'Temperature (°C)',
+    colY: 'Amino acids destroyed in 10 min (%)',
+    fmt: (n: number) => n.toLocaleString('en-GB'),
+  },
+}[locale];
+
+const points: [number, number][] = [
+  [4, 0],
+  [25, 0],
+  [40, 0],
+  [60, 1],
+  [80, 5],
+  [100, 25],
+  [150, 100],
+];
+
+// Repère : 640 × 360, marges pour les graduations et les titres d'axes
+const W = 640;
+const H = 360;
+const m = { l: 64, r: 20, t: 16, b: 56 };
+const pw = W - m.l - m.r;
+const ph = H - m.t - m.b;
+const x = (t: number) => m.l + (t / 160) * pw;
+const y = (v: number) => m.t + ((100 - v) / 100) * ph;
+const ticksX = [0, 20, 40, 60, 80, 100, 120, 140, 160];
+const ticksY = [0, 20, 40, 60, 80, 100];
+const ligne = points.map(([t, v]) => `${x(t).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+const titreId = `maillard-titre-${locale}`;
+const descId = `maillard-desc-${locale}`;
+---
+
+<figure class="chart">
+  <p class="chart__titre" id={titreId}>{copy.titre}</p>
+  <svg
+    viewBox={`0 0 ${W} ${H}`}
+    role="img"
+    aria-labelledby={titreId}
+    aria-describedby={descId}
+    class="chart__svg"
+  >
+    <desc id={descId}>{copy.resume}</desc>
+    <g class="chart__grille" aria-hidden="true">
+      {ticksY.map((v) => <line x1={m.l} x2={W - m.r} y1={y(v)} y2={y(v)} />)}
+    </g>
+    <g class="chart__axe" aria-hidden="true">
+      {ticksY.map((v) => (
+        <text x={m.l - 10} y={y(v)} dy="0.35em" text-anchor="end">{v}</text>
+      ))}
+      {ticksX.map((t) => (
+        <text x={x(t)} y={H - m.b + 22} text-anchor="middle">{t}</text>
+      ))}
+      <text x={m.l + pw / 2} y={H - 8} text-anchor="middle" class="chart__axe-titre">
+        {copy.axeX}
+      </text>
+      <text
+        transform={`translate(16 ${m.t + ph / 2}) rotate(-90)`}
+        text-anchor="middle"
+        class="chart__axe-titre"
+      >
+        {copy.axeY}
+      </text>
+    </g>
+    <polyline class="chart__ligne" points={ligne} />
+    {
+      points.map(([t, v]) => (
+        <g class="chart__point">
+          <title>{`${copy.fmt(t)} °C : ${copy.fmt(v)} %`}</title>
+          <circle cx={x(t)} cy={y(v)} r="12" class="chart__cible" />
+          <circle cx={x(t)} cy={y(v)} r="5" class="chart__marque" />
+        </g>
+      ))
+    }
+  </svg>
+  <details class="chart__details">
+    <summary>{copy.tableau}</summary>
+    <div class="table-scroll">
+      <table class="table-data">
+        <thead>
+          <tr>
+            <th scope="col">{copy.colX}</th>
+            <th scope="col">{copy.colY}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {points.map(([t, v]) => (
+            <tr>
+              <th scope="row">{copy.fmt(t)}</th>
+              <td>{copy.fmt(v)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </details>
+</figure>
+
+<style>
+  .chart {
+    margin-block: var(--space-8);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .chart__titre {
+    font-family: var(--font-display);
+    font-weight: 650;
+    margin-bottom: var(--space-4);
+  }
+
+  .chart__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-family: var(--font-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .chart__grille line {
+    stroke: var(--steel-200);
+    stroke-width: 1;
+  }
+
+  .chart__axe text {
+    fill: var(--text-muted);
+    font-size: 13px;
+  }
+
+  .chart__axe .chart__axe-titre {
+    fill: var(--text-body);
+    font-weight: 600;
+  }
+
+  .chart__ligne {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  /* Cible de survol plus large que le point, invisible */
+  .chart__cible {
+    fill: transparent;
+  }
+
+  .chart__marque {
+    fill: var(--accent);
+    stroke: var(--surface-raised);
+    stroke-width: 2;
+    transition: r var(--duration-base) var(--ease-out);
+  }
+
+  .chart__point:hover .chart__marque {
+    r: 7;
+  }
+
+  .chart__details {
+    margin-top: var(--space-4);
+    font-size: var(--text-small);
+  }
+
+  .chart__details summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chart__marque {
+      transition: none;
+    }
+  }
+</style>

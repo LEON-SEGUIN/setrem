@@ -1,9 +1,48 @@
 ---
+import { Image } from 'astro:assets';
 import PageLayout from '../layouts/PageLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import ShowcaseBand from '../components/ShowcaseBand.astro';
 import CTABand from '../components/CTABand.astro';
 import piloteImg from '../assets/img/ligne-pilote.webp';
+import pilote3dImg from '../assets/img/3d-ligne-pilote-large.webp';
+import precoImg from '../assets/img/3d-preconditionneur.webp';
+import visImg from '../assets/img/3d-vis-extrudeur.webp';
+import cutterImg from '../assets/img/3d-cutter.webp';
+
+// La ligne, dans l'ordre où la matière la traverse. Images : le modèle 3D
+// de la ligne pilote, construit d'après les plans SETREM (dossier
+// video/extrudeur-3d/). Textes : ceux du client, repris de l'article PBR
+// et de l'anatomie de la page extrudeurs - rien d'ajouté.
+const organes = [
+  {
+    titre: 'Préconditionnement',
+    texte:
+      "Un préconditionneur birotor PBR160 hydrate et mélange la formule avant l'extrusion : eau, vapeur, et au besoin slurrys ou huile.",
+    image: precoImg,
+    alt: 'Le préconditionneur PBR160 de la ligne pilote, capot levé et rotors sortis',
+    href: '/nos-solutions/preconditionneurs',
+    lien: 'Les préconditionneurs',
+  },
+  {
+    titre: 'Extrusion',
+    texte:
+      "Le fourreau se compose de différents modèles de vis, d'écluses et de chambres en acier à haute résistance, à double enveloppe pour être réchauffées ou refroidies.",
+    image: visImg,
+    alt: "L'extrudeur de la ligne pilote, colliers ouverts : la vis sort du fourreau",
+    href: '/nos-solutions/extrudeurs',
+    lien: 'Les extrudeurs',
+  },
+  {
+    titre: 'Coupe',
+    texte:
+      'Le cutter, articulé et solidaire de la machine, porte des couteaux interchangeables. Son ouverture facile rend la filière très accessible.',
+    image: cutterImg,
+    alt: 'Le cutter de la ligne pilote ouvert sur son couteau, la filière tournée vers nous',
+    href: '/nos-solutions/extrudeurs#anatomie',
+    lien: "L'anatomie d'un extrudeur",
+  },
+];
 ---
 
 <PageLayout
@@ -15,6 +54,23 @@ import piloteImg from '../assets/img/ligne-pilote.webp';
     kicker="Recherche & développement"
     titre="Testez votre produit avant d'investir."
     lede="La ligne pilote est notre outil de recherche et de développement. Cette unité est à la disposition des industriels de l'agro-alimentaire afin de valider la faisabilité de nouveaux produits."
+  />
+
+  <!-- Refonte du 4 octobre 2026 (demande d'Arnaud Delique : « revoir la
+       ligne pilote ») : la machine ouvre la page, en 3D, puis se lit
+       organe par organe. La photo d'atelier reste plus bas : c'est la
+       preuve que la ligne existe, le rendu ne la remplace pas. -->
+  <ShowcaseBand
+    id="machine-titre"
+    eyebrow="La ligne pilote SETREM"
+    titre="Une vraie machine SETREM, à l'échelle de l'essai."
+    accent="à l'échelle de l'essai."
+    texte="Trémie, doseur, préconditionneur, extrudeur et cutter : la même anatomie que les extrudeurs de la gamme."
+    image={pilote3dImg}
+    alt="La ligne pilote SETREM montée : trémie, doseur, préconditionneur, extrudeur et cutter - modélisation 3D d'après les plans"
+    vitesse={0.06}
+    position="68% 50%"
+    positionMobile="76% 50%"
   />
 
   <section class="band sheet" aria-labelledby="usages-titre">
@@ -58,8 +114,51 @@ import piloteImg from '../assets/img/ligne-pilote.webp';
     </div>
   </section>
 
-  <!-- La machine elle-même, en plein format : c'est l'objet de la page,
-       elle ne pouvait pas rester une vignette légendée. -->
+  <section class="band band--raised" aria-labelledby="organes-titre">
+    <div class="container">
+      <div class="band__head">
+        <p class="eyebrow">Organe par organe</p>
+        <h2 class="band__title reveal" id="organes-titre">
+          Ce que la matière traverse.
+        </h2>
+      </div>
+      <ol class="organes">
+        {
+          organes.map((o, i) => (
+            <li class="organes__card reveal" style={`--ri: ${i}`}>
+              <div class="organes__media">
+                <Image
+                  src={o.image}
+                  alt={o.alt}
+                  widths={[500, 800, 1100]}
+                  width={1100}
+                  quality={72}
+                  sizes="(max-width: 900px) 100vw, 33vw"
+                  loading="lazy"
+                />
+              </div>
+              <div class="organes__body">
+                <p class="organes__num" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </p>
+                <h3>{o.titre}</h3>
+                <p>{o.texte}</p>
+                <a class="organes__lien" href={o.href}>
+                  {o.lien} <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="organes__note">
+        Visuels : modélisation 3D de la ligne pilote, d'après les plans
+        SETREM.
+      </p>
+    </div>
+  </section>
+
+  <!-- La vraie machine, en atelier : la preuve après le rendu. -->
   <ShowcaseBand
     id="atelier-essais"
     eyebrow="L'atelier d'essais"
@@ -68,10 +167,10 @@ import piloteImg from '../assets/img/ligne-pilote.webp';
     image={piloteImg}
     alt="La ligne pilote SETREM en atelier d'essais"
   />
-  <!-- TODO: contenu client - décrire la composition de la ligne pilote
-       (modèle d'extrudeur, préconditionneur, séchage, débits d'essai).
-       Rien de tout cela n'est documenté sur le site actuel : ne pas le
-       déduire de la photo. -->
+  <!-- TODO: contenu client - modèle et puissance de l'extrudeur pilote,
+       débits d'essai, séchage disponible. La composition (PBR160,
+       extrudeur, cutter) vient des plans de la ligne ; le reste n'est
+       documenté nulle part : ne pas le déduire des images. -->
 
   <section class="band band--raised" aria-label="Du pilote à la production">
     <div class="container">
@@ -150,6 +249,78 @@ import piloteImg from '../assets/img/ligne-pilote.webp';
     color: var(--text-muted);
   }
 
+  .organes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .organes__card {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Le studio noir du rendu 3D : le cadre prend la couleur du fond de
+     l'image, pour que le recadrage ne laisse jamais de bord clair. */
+  .organes__media {
+    aspect-ratio: 4 / 3;
+    background: #000;
+  }
+
+  .organes__media :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .organes__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: var(--space-6);
+  }
+
+  .organes__num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--blue-300);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: var(--space-2);
+  }
+
+  .organes__body h3 {
+    font-size: var(--text-h3);
+    font-weight: 650;
+    margin-bottom: var(--space-3);
+  }
+
+  .organes__body p:not(.organes__num) {
+    color: var(--text-body);
+    font-size: var(--text-small);
+  }
+
+  .organes__lien {
+    margin-top: auto;
+    padding-top: var(--space-4);
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+
+  .organes__lien:hover {
+    color: var(--highlight);
+  }
+
+  .organes__note {
+    margin-top: var(--space-6);
+    font-size: var(--text-small);
+    color: var(--text-muted);
+  }
+
   .suite {
     display: grid;
     grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
@@ -187,6 +358,7 @@ import piloteImg from '../assets/img/ligne-pilote.webp';
 
   @media (max-width: 900px) {
     .usages,
+    .organes,
     .suite {
       grid-template-columns: 1fr;
     }

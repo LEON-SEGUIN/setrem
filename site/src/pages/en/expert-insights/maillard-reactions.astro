@@ -1,10 +1,12 @@
 ---
-import { Image } from 'astro:assets';
+// Reworked on 4 October 2026 - see the French page. The chart is now
+// drawn in SVG (MaillardChart), with English labels.
 import ArticleLayout from '../../../layouts/ArticleLayout.astro';
-import figMaillard from '../../../assets/img/fig-maillard-temperature.webp';
+import MaillardChart from '../../../components/MaillardChart.astro';
 ---
 
 <ArticleLayout slug="maillard-reactions">
+  <h2>What a Maillard reaction is</h2>
   <p>
     Proteins and sugars react together to form complexes that are
     indigestible in the rumen: bypass proteins. These Maillard compounds are
@@ -12,38 +14,48 @@ import figMaillard from '../../../assets/img/fig-maillard-temperature.webp';
     contain therefore become fully available again for absorption in the
     intestine.
   </p>
+
+  <h2>What triggers it</h2>
+  <p>Maillard reactions occur:</p>
+  <ul>
+    <li>in the presence of amino acids and sugars,</li>
+    <li>at temperatures between 0 and 150&nbsp;°C,</li>
+    <li>at a pH between 6 and 10,</li>
+    <li>at a moisture level of around 15%.</li>
+  </ul>
   <p>
-    Maillard reactions occur in the presence of amino acids and sugars at
-    temperatures between 0 and 150&nbsp;°C, a pH between 6 and 10 and a
-    moisture level of around 15%. As the graph below shows, temperature
-    has a strong influence on the speed of the reaction.
+    Temperature has a strong influence on the speed of the reaction: almost
+    nothing happens up to 60&nbsp;°C, then everything speeds up.
   </p>
-  <!-- TODO: contenu client - cette figure porte du texte français
-       incrusté dans l'image : faire produire une version anglaise.
-       L'alt et la légende sont traduits, pas le visuel. -->
-  <figure>
-    <Image
-      src={figMaillard}
-      alt="Graph: influence of temperature on the speed of the Maillard reaction"
-      widths={[600, 900]}
-      width={900}
-      quality={70}
-      sizes="(max-width: 900px) 100vw, 700px"
-      loading="lazy"
-    />
-    <figcaption>
-      Influence of temperature on the Maillard reaction.
-    </figcaption>
-  </figure>
+
+  <MaillardChart />
+
+  <h2>Triggering or avoiding it, depending on the species</h2>
   <p>
     During extrusion cooking, it is therefore possible to adjust the
     parameters - temperature and residence time of the mix - in order to
-    trigger Maillard reactions or not. It is worth encouraging these
-    reactions for the production of ruminant feed, but it will be important
-    to limit them as far as possible for the production of poultry feed, for
-    example: Maillard compounds reduce protein availability for monogastric
-    species.
+    trigger Maillard reactions or not.
   </p>
+  <h3>For ruminants: encourage them</h3>
+  <p>
+    It is worth encouraging these reactions for the production of ruminant
+    feed: bypass proteins pass through the rumen without being degraded,
+    then are digested in the intestine. On soybean, extrusion cooking
+    increases the amount of bypass proteins by 100 to 300% - details in the
+    article
+    <a href="/en/expert-insights/benefits-of-extruded-soybean-for-livestock">
+      The benefits of extruded soybean for livestock</a>.
+  </p>
+  <h3>For monogastrics: limit them</h3>
+  <p>
+    It will be important to limit them as far as possible for the production
+    of poultry feed, for example: Maillard compounds reduce protein
+    availability for monogastric species. The very short time of extrusion
+    is what makes this possible - see
+    <a href="/en/expert-insights/raw-material-processing-cereals">
+      raw material processing: cereals</a>.
+  </p>
+
   <p>
     Good control of extrusion cooking therefore makes it possible to vary the
     characteristics of the product according to the anatomy of the target

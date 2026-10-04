@@ -48,6 +48,15 @@ export default defineConfig({
       '/actualites/eurotier-2026-hanovre',
     '/les-ressources': '/ressources',
     '/les-ressources/pdfs': '/ressources',
+    // Tri des articles du 4 octobre 2026 (demande d'Arnaud Delique)
+    '/loil-de-lexpert/traitement-des-matieres-premieres-soja':
+      '/loil-de-lexpert/procede-de-traitement-de-la-graine-de-soja',
+    '/loil-de-lexpert/nos-preconditionneurs-pbr':
+      '/nos-solutions/preconditionneurs',
+    '/en/expert-insights/raw-material-processing-soybean':
+      '/en/expert-insights/soybean-processing-method',
+    '/en/expert-insights/our-pbr-preconditioners':
+      '/en/solutions/preconditioners',
   },
   build: {
     inlineStylesheets: 'auto',

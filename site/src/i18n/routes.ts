@@ -10,6 +10,7 @@ export const routePairs: readonly (readonly [fr: string, en: string])[] = [
 
   ['/nos-solutions', '/en/solutions'],
   ['/nos-solutions/extrudeurs', '/en/solutions/extruders'],
+  ['/nos-solutions/preconditionneurs', '/en/solutions/preconditioners'],
   ['/nos-solutions/secheurs', '/en/solutions/dryers'],
   ['/nos-solutions/enrobeurs', '/en/solutions/coaters'],
   ['/nos-solutions/automatisme', '/en/solutions/automation'],
@@ -41,20 +42,12 @@ export const routePairs: readonly (readonly [fr: string, en: string])[] = [
     '/en/expert-insights/soybean-processing-method',
   ],
   [
-    '/loil-de-lexpert/traitement-des-matieres-premieres-soja',
-    '/en/expert-insights/raw-material-processing-soybean',
-  ],
-  [
     '/loil-de-lexpert/traitement-des-matieres-premieres-cereales',
     '/en/expert-insights/raw-material-processing-cereals',
   ],
   [
     '/loil-de-lexpert/lextrudeur-un-outil-incomparable-pour-la-production-animale',
     '/en/expert-insights/the-extruder-an-unmatched-tool-for-livestock-production',
-  ],
-  [
-    '/loil-de-lexpert/nos-preconditionneurs-pbr',
-    '/en/expert-insights/our-pbr-preconditioners',
   ],
   [
     '/loil-de-lexpert/reactions-de-maillard',

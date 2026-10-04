@@ -24,6 +24,13 @@ interface Props {
   vitesse?: number;
   /** Hauteur réduite, pour une simple respiration entre deux bandes */
   compact?: boolean;
+  /**
+   * Cadrage de l'image (object-position), pour une image plus large que
+   * la bande : on choisit la partie montrée. `positionMobile` vaut pour
+   * les écrans étroits, où la bande devient verticale.
+   */
+  position?: string;
+  positionMobile?: string;
 }
 
 const {
@@ -36,14 +43,22 @@ const {
   id,
   vitesse = 0.12,
   compact = false,
+  position,
+  positionMobile,
 } = Astro.props;
+const cadrage = [
+  position && `--pos: ${position}`,
+  positionMobile && `--pos-m: ${positionMobile}`,
+]
+  .filter(Boolean)
+  .join('; ');
 ---
 
 <section
   class:list={['show', { 'show--compact': compact }]}
   aria-labelledby={id}
 >
-  <div class="show__media" data-parallax={vitesse}>
+  <div class="show__media" data-parallax={vitesse} style={cadrage || undefined}>
     <Image
       src={image}
       alt={alt}
@@ -94,7 +109,14 @@ const {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: var(--pos, 50% 50%);
     display: block;
+  }
+
+  @media (max-width: 700px) {
+    .show__media :global(img) {
+      object-position: var(--pos-m, var(--pos, 50% 50%));
+    }
   }
 
   /* Le voile fait deux choses : garantir le contraste du texte, et

@@ -67,6 +67,11 @@ C'est autant de capital SEO préservé.
 
 ### Les 9 articles « L'œil de l'expert » — à conserver tels quels
 
+> Tri du 4 octobre 2026, à la demande d'Arnaud Delique : 7 articles
+> restent. `traitement-des-matieres-premieres-soja` est fondu dans
+> `procede-de-traitement-de-la-graine-de-soja` ; `nos-preconditionneurs-pbr`
+> devient la page `/nos-solutions/preconditionneurs`. 301 ci-dessous.
+
 | URL | Mots |
 |---|---|
 | `/loil-de-lexpert/fabrication-de-farines-infantiles-par-cuisson-extrusion` | 1 179 |
@@ -96,6 +101,8 @@ C'est autant de capital SEO préservé.
 | `/les-ressources/pdfs` | `/ressources` | Page vide (2 mots) |
 | `/contact/merci` | `/contact/merci` | À conserver, mais en `noindex` |
 | `/news` | `/actualites` | Cohérence linguistique du site FR |
+| `/loil-de-lexpert/traitement-des-matieres-premieres-soja` | `/loil-de-lexpert/procede-de-traitement-de-la-graine-de-soja` | Article fusionné (tri du 04/10/2026) |
+| `/loil-de-lexpert/nos-preconditionneurs-pbr` | `/nos-solutions/preconditionneurs` | Devenu une page produit (tri du 04/10/2026) |
 | `/news/nouveau-site-internet` | `/actualites` | Obsolète après refonte |
 | `/news/2026-a-new-year-taking-shape` | `/actualites/<slug-fr>` | ⚠️ Titre à traduire |
 | `/news/eurotier-10-au-13-november-2026-a-hanovre` | `/actualites/eurotier-2026-hanovre` | ⚠️ « November » → « novembre » |

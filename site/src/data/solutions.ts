@@ -1,4 +1,5 @@
-// Les 5 entrées de « Nos solutions ».
+// Les 6 entrées de « Nos solutions » (préconditionneurs ajoutés le
+// 4 octobre 2026 : c'était l'article PBR de « L'œil de l'expert »).
 // Ces textes sortent en carte sur /nos-solutions ET en pied des quatre
 // autres pages solutions : chacun est donc lu jusqu'à cinq fois. Ils ne
 // reprennent pas le chapô de la page qu'ils annoncent - sinon le clic ne
@@ -6,7 +7,8 @@
 import type { ImageMetadata } from 'astro';
 import type { Locale } from '../i18n/routes';
 
-import extrudeurs from '../assets/img/extrudeurs-solutions.webp';
+import extrudeurs from '../assets/img/3d-vis-extrudeur.webp';
+import preconditionneur from '../assets/img/preconditionneur.webp';
 import secheur from '../assets/img/secheur.webp';
 import enrobage from '../assets/img/enrobage.webp';
 import automatisme from '../assets/img/ecran-automatisme.webp';
@@ -27,7 +29,15 @@ export const solutions: Record<Locale, Solution[]> = {
       texte:
         'Six modèles monovis, de 22 à 250 kW, adaptés au process à sec comme au semi-humide.',
       image: extrudeurs,
-      alt: 'Extrudeurs monovis SETREM en atelier',
+      alt: "Extrudeur SETREM en vue éclatée, la vis sortie du fourreau - modélisation 3D d'après les plans",
+    },
+    {
+      slug: 'preconditionneurs',
+      titre: 'Préconditionneurs',
+      texte:
+        "Monorotor ou birotor, de 25 à 1 758 litres : jusqu'à 3 minutes de rétention avant l'extrudeur.",
+      image: preconditionneur,
+      alt: 'Préconditionneur birotor SETREM, capot ouvert sur ses deux arbres',
     },
     {
       slug: 'secheurs',
@@ -68,7 +78,15 @@ export const solutions: Record<Locale, Solution[]> = {
       texte:
         'Six single-screw models, from 22 to 250 kW, suited to dry as well as semi-wet processing.',
       image: extrudeurs,
-      alt: 'SETREM single-screw extruders in the workshop',
+      alt: 'SETREM extruder in exploded view, the screw out of the barrel - 3D model built from the drawings',
+    },
+    {
+      slug: 'preconditioners',
+      titre: 'Preconditioners',
+      texte:
+        'Single- or twin-rotor, from 25 to 1,758 litres: up to 3 minutes of retention before the extruder.',
+      image: preconditionneur,
+      alt: 'SETREM twin-rotor preconditioner, cover open on its two shafts',
     },
     {
       slug: 'dryers',
@@ -103,5 +121,8 @@ export const solutions: Record<Locale, Solution[]> = {
   ],
 };
 
+// « Le reste de la ligne », au pied des pages équipement : les machines
+// seulement (celles qui ont une image). Le tableau des capacités garde
+// son lien sur /nos-solutions et sur la page extrudeurs.
 export const autresSolutions = (slug: string, locale: Locale) =>
-  solutions[locale].filter((s) => s.slug !== slug);
+  solutions[locale].filter((s) => s.slug !== slug && s.image);

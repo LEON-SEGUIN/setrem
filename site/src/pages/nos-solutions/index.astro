@@ -6,7 +6,7 @@ import LinkCards from '../../components/LinkCards.astro';
 import ShowcaseBand from '../../components/ShowcaseBand.astro';
 import CTABand from '../../components/CTABand.astro';
 import { solutions } from '../../data/solutions';
-import ligneComplete from '../../assets/img/ligne-complete.webp';
+import ligneComplete from '../../assets/img/3d-ligne-pilote.webp';
 import atelierImg from '../../assets/img/atelier-extrudeurs.webp';
 
 const items = solutions.fr.map((s) => ({
@@ -20,7 +20,7 @@ const items = solutions.fr.map((s) => ({
 
 <PageLayout
   title="Nos solutions d'extrusion - extrudeurs, sécheurs, enrobeurs, automatisme | SETREM"
-  description="Extrudeurs monovis, sécheurs, enrobeurs, automatisme : SETREM construit chaque équipement d'une ligne, du préconditionneur au logiciel de conduite."
+  description="Extrudeurs monovis, préconditionneurs, sécheurs, enrobeurs, automatisme : SETREM construit chaque équipement d'une ligne, du préconditionneur au logiciel de conduite."
   path="/nos-solutions"
 >
   <PageHero
@@ -37,7 +37,7 @@ const items = solutions.fr.map((s) => ({
       <figure class="ligne reveal">
         <Image
           src={ligneComplete}
-          alt="Ligne complète d'extrusion SETREM : préconditionneur, extrudeur et transport pneumatique"
+          alt="Ligne pilote SETREM : trémie, doseur, préconditionneur, extrudeur et cutter - modélisation 3D d'après les plans"
           widths={[700, 1100, 1600]}
           width={1600}
           quality={70}
@@ -73,22 +73,20 @@ const items = solutions.fr.map((s) => ({
 <style>
   /* Le visuel est un détourage sur fond blanc : il lui faut une carte
      blanche, sinon le rectangle se découpe sur le fond acier. */
+  /* Le rendu 3D de la ligne pilote (4 octobre 2026) remplace l'ancien
+     rendu beige : studio noir, donc la carte se fond dans l'image,
+     bord à bord, au lieu de l'encadrer d'un fond clair. */
   .ligne {
     margin: 0 0 var(--space-12);
-    padding: var(--space-8) var(--space-6);
-    background: var(--surface-raised);
+    overflow: hidden;
+    background: #000;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
   }
 
-  /* Le visuel est presque carré : le brider en largeur le rend
-     démesuré en hauteur. C'est la hauteur qui commande. */
   .ligne :global(img) {
     display: block;
-    width: auto;
-    max-width: 100%;
+    width: 100%;
     height: auto;
-    max-height: 24rem;
-    margin-inline: auto;
   }
 </style>

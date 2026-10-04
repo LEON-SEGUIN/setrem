@@ -23,6 +23,26 @@
       "source": "/les-ressources/pdfs",
       "destination": "/ressources",
       "statusCode": 301
+    },
+    {
+      "source": "/loil-de-lexpert/traitement-des-matieres-premieres-soja",
+      "destination": "/loil-de-lexpert/procede-de-traitement-de-la-graine-de-soja",
+      "statusCode": 301
+    },
+    {
+      "source": "/loil-de-lexpert/nos-preconditionneurs-pbr",
+      "destination": "/nos-solutions/preconditionneurs",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/expert-insights/raw-material-processing-soybean",
+      "destination": "/en/expert-insights/soybean-processing-method",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/expert-insights/our-pbr-preconditioners",
+      "destination": "/en/solutions/preconditioners",
+      "statusCode": 301
     }
   ],
   "headers": [

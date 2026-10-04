@@ -5,7 +5,7 @@ import LinkCards from '../../components/LinkCards.astro';
 import ShowcaseBand from '../../components/ShowcaseBand.astro';
 import CTABand from '../../components/CTABand.astro';
 import { marches } from '../../data/marches';
-import sojaImg from '../../assets/img/article-graine-soja.webp';
+import sojaImg from '../../assets/img/article-soja.webp';
 
 const items = marches.fr.map((m) => ({
   href: `/applications/${m.slug}`,
@@ -18,17 +18,17 @@ const items = marches.fr.map((m) => ({
 
 <PageLayout
   title="Applications - petfood, aquaculture, alimentation humaine, bétail | SETREM"
-  description="Quatre marchés, une même vis : animaux domestiques, aquaculture, alimentation humaine, bétail. Lignes complètes, sécheur compris, de 40 kg/h à 9 t/h."
+  description="Plusieurs marchés, une seule vis : animaux domestiques, aquaculture, alimentation humaine, bétail, matières premières. Lignes complètes, sécheur compris, de 40 kg/h à 9 t/h."
   path="/applications"
 >
   <PageHero
     kicker="Applications"
-    titre="Quatre marchés, une même vis."
+    titre="Plusieurs marchés, une seule vis."
     lede="Des machines sur mesure pour vos produits, avec des solutions d'extrusion complètes incluant le sécheur. Des capacités allant de 40 kg/h à 9 t/h."
   />
 
   <section class="band sheet" aria-labelledby="marches-titre">
-    <h2 class="visually-hidden" id="marches-titre">Les quatre marchés servis</h2>
+    <h2 class="visually-hidden" id="marches-titre">Les marchés servis</h2>
     <div class="container">
       <LinkCards items={items} cols={4} cta="Voir le marché" />
     </div>
@@ -45,13 +45,13 @@ const items = marches.fr.map((m) => ({
     compact
   >
     <p class="mp-liens reveal" style="--ri: 2">
-      <a href="/loil-de-lexpert/traitement-des-matieres-premieres-soja">
+      <a href="/loil-de-lexpert/procede-de-traitement-de-la-graine-de-soja">
         Traitement du soja →
       </a>
       <a href="/loil-de-lexpert/traitement-des-matieres-premieres-cereales">
         Traitement des céréales →
       </a>
-      <a href="/loil-de-lexpert/procede-de-traitement-de-la-graine-de-soja">
+      <a href="/loil-de-lexpert/procede-de-traitement-de-la-graine-de-soja#extraction-huile">
         Préparation à l'extraction d'huile →
       </a>
     </p>
