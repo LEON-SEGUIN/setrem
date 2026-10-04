@@ -1,7 +1,6 @@
 ---
-import { Image } from 'astro:assets';
+// Updated on 4 October 2026 - see the French page.
 import ArticleLayout from '../../../layouts/ArticleLayout.astro';
-import elevageImg from '../../../assets/img/article-insectes-elevage.webp';
 ---
 
 <ArticleLayout slug="insect-meal-future-of-animal-nutrition">
@@ -31,17 +30,6 @@ import elevageImg from '../../../assets/img/article-insectes-elevage.webp';
     proteins used in particular in fish and pet food.
   </p>
 
-  <figure>
-    <Image
-      src={elevageImg}
-      alt="Insect farming for meal production"
-      widths={[600, 900]}
-      width={900}
-      quality={70}
-      sizes="(max-width: 900px) 100vw, 700px"
-      loading="lazy"
-    />
-  </figure>
 
   <h2>A development challenge</h2>
   <p>
@@ -60,19 +48,26 @@ import elevageImg from '../../../assets/img/article-insectes-elevage.webp';
     the raw material supply and the sizing and processing of the finished
     products will determine the viability of the production.
   </p>
-  <p>The sector also faces regulatory obstacles:</p>
+  <h2>What the regulations allow</h2>
+  <p>
+    For a long time the sector came up against the ban on using proteins of
+    animal origin in feed for farm animals. This barrier was lifted in two
+    stages:
+  </p>
   <ul>
     <li>
-      a ban on the use of proteins of animal origin in feed for farm animals,
+      since 1&nbsp;July 2017, insect meal has been authorised in feed for
+      farmed fish,
     </li>
     <li>
-      restrictions on the substrates permitted as insect feed: no manure or
-      slurry, no catering waste or expired food.
+      since 7&nbsp;September 2021, it has also been authorised in poultry and
+      pig feed
+      (<a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32021R1372" rel="noopener">Regulation (EU) 2021/1372</a>).
     </li>
   </ul>
   <p>
-    Nevertheless, since 1&nbsp;July 2017, insect meal has been authorised in
-    feed for farmed fish.
+    The substrates permitted as insect feed remain restricted: no manure or
+    slurry, no catering waste or expired food.
   </p>
 
   <h2>Trials carried out</h2>
@@ -114,7 +109,7 @@ import elevageImg from '../../../assets/img/article-insectes-elevage.webp';
     digestible, they allow farming that preserves natural resources. For these
     meals to become an essential component of animal feed rather than a niche
     market, price is the decisive factor: they must be able to compete with
-    fishmeal in fish feed and with meat meal in pet food, the only outlets
-    where they are currently authorised.
+    fishmeal in fish feed and with meat meal in pet food - and, since 2021,
+    with the other protein sources in poultry and pig feed.
   </p>
 </ArticleLayout>

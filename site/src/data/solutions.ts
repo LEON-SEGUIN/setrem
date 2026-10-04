@@ -7,7 +7,7 @@
 import type { ImageMetadata } from 'astro';
 import type { Locale } from '../i18n/routes';
 
-import extrudeurs from '../assets/img/3d-vis-extrudeur.webp';
+import extrudeurs from '../assets/img/3d-extrudeur-2x1.webp';
 import preconditionneur from '../assets/img/preconditionneur.webp';
 import secheur from '../assets/img/secheur.webp';
 import enrobage from '../assets/img/enrobage.webp';

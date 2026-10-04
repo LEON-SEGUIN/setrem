@@ -1,7 +1,8 @@
 ---
-import { Image } from 'astro:assets';
+// Mis à jour le 4 octobre 2026 : la réglementation a changé depuis la
+// rédaction (règlement (UE) 2021/1372, lien dans le texte). La photo d'une
+// sauterelle sauvage, sans rapport avec l'élevage d'insectes, est retirée.
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
-import elevageImg from '../../assets/img/article-insectes-elevage.webp';
 ---
 
 <ArticleLayout slug="les-farines-dinsectes-avenir-de-la-nutrition-animale">
@@ -33,17 +34,6 @@ import elevageImg from '../../assets/img/article-insectes-elevage.webp';
     l'alimentation des poissons et des animaux domestiques.
   </p>
 
-  <figure>
-    <Image
-      src={elevageImg}
-      alt="Élevage d'insectes pour la production de farines"
-      widths={[600, 900]}
-      width={900}
-      quality={70}
-      sizes="(max-width: 900px) 100vw, 700px"
-      loading="lazy"
-    />
-  </figure>
 
   <h2>Enjeu de développement</h2>
   <p>
@@ -67,22 +57,27 @@ import elevageImg from '../../assets/img/article-insectes-elevage.webp';
     la transformation des produits finis détermineront la viabilité de la
     production.
   </p>
-  <p>De plus, la filière est confrontée à des blocages réglementaires :</p>
+  <h2>Ce que permet la réglementation</h2>
+  <p>
+    La filière a longtemps buté sur l'interdiction d'utiliser les protéines
+    d'origine animale dans les aliments pour animaux d'élevage. Ce verrou
+    s'est levé en deux temps :
+  </p>
   <ul>
     <li>
-      interdiction d'utiliser les protéines d'origine animale dans les
-      aliments pour animaux d'élevage,
+      depuis le 1<sup>er</sup>&nbsp;juillet 2017, les farines d'insectes sont
+      autorisées dans l'alimentation des poissons d'élevage,
     </li>
     <li>
-      limitation des substrats autorisés comme aliments pour insectes : pas
-      de fumier ni de lisier, pas de déchets de restauration ni d'aliments
-      périmés.
+      depuis le 7&nbsp;septembre 2021, elles le sont aussi dans celle des
+      volailles et des porcs
+      (<a href="https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32021R1372" rel="noopener">règlement (UE) 2021/1372</a>).
     </li>
   </ul>
   <p>
-    Néanmoins, depuis le 1<sup>er</sup>&nbsp;juillet 2017, il est autorisé
-    d'utiliser des farines d'insectes dans l'alimentation des poissons
-    d'élevage.
+    Les substrats autorisés pour nourrir les insectes restent limités : pas
+    de fumier ni de lisier, pas de déchets de restauration ni d'aliments
+    périmés.
   </p>
 
   <h2>Tests réalisés</h2>
@@ -127,6 +122,7 @@ import elevageImg from '../../assets/img/article-insectes-elevage.webp';
     incontournable de l'alimentation animale et non plus un marché de niche,
     le facteur prix est déterminant : elles doivent pouvoir concurrencer les
     farines de poissons dans les aliments poissons et les farines de viandes
-    dans le petfood, seuls débouchés où elles sont aujourd'hui autorisées.
+    dans le petfood - et, depuis 2021, les autres sources de protéines dans
+    les aliments volailles et porcs.
   </p>
 </ArticleLayout>

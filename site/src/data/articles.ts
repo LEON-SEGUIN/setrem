@@ -14,9 +14,10 @@ import type { Locale } from '../i18n/routes';
 import insectes from '../assets/img/article-insectes.webp';
 import farines from '../assets/img/article-farines-infantiles.webp';
 import soja from '../assets/img/article-soja.webp';
-import cereales from '../assets/img/article-cereales.webp';
-import elevage from '../assets/img/article-elevage.webp';
-import maillard from '../assets/img/article-maillard.webp';
+// Photos libres de droits (04/10/2026) : sources dans assets/img/SOURCES.md
+import cereales from '../assets/img/article-cereales-epi.webp';
+import elevage from '../assets/img/3d-extrudeur-2x1.webp';
+import maillard from '../assets/img/article-vaches-auge.webp';
 import sojaElevage from '../assets/img/article-soja-elevage.webp';
 
 export interface Article {
@@ -36,7 +37,7 @@ export const articles: Record<Locale, Article[]> = {
       extrait:
         "D'après la FAO nous serons 9 milliards d'êtres humains sur terre d'ici 2050.",
       description:
-        "Riches en protéines et hautement digestibles, les farines d'insectes sont une alternative aux farines animales. Enjeux, freins réglementaires, essais en extrusion.",
+        "Riches en protéines et hautement digestibles, les farines d'insectes sont une alternative aux farines animales. Enjeux, réglementation à jour (2021), essais en extrusion.",
       image: insectes,
       alt: 'Insectes destinés à la production de farines',
     },
@@ -68,7 +69,7 @@ export const articles: Record<Locale, Article[]> = {
       description:
         "Gélatinisation de l'amidon, insolubilisation des protéines, destruction des facteurs antinutritionnels : le traitement des céréales par cuisson-extrusion.",
       image: cereales,
-      alt: 'Épis de céréales',
+      alt: "Épi d'orge mûr",
     },
     {
       slug: 'lextrudeur-un-outil-incomparable-pour-la-production-animale',
@@ -78,7 +79,7 @@ export const articles: Record<Locale, Article[]> = {
       description:
         "Traitement HT-ST des graines oléagineuses, aliments ruminants haute production, petfood, aliments crevettes : les applications de l'extrusion en élevage.",
       image: elevage,
-      alt: "Animaux d'élevage",
+      alt: "Extrudeur SETREM, la vis sortie du fourreau - modélisation 3D d'après les plans",
     },
     {
       slug: 'reactions-de-maillard',
@@ -88,7 +89,7 @@ export const articles: Record<Locale, Article[]> = {
       description:
         'Protéines by-pass pour les ruminants : comment le réglage de la température et du temps de passage provoque - ou limite - les réactions de Maillard.',
       image: maillard,
-      alt: 'Illustration du système digestif de la vache',
+      alt: "Génisses à l'auge dans une stabulation laitière",
     },
     {
       slug: 'atouts-du-soja-extrude-pour-les-animaux-delevage',
@@ -109,7 +110,7 @@ export const articles: Record<Locale, Article[]> = {
       extrait:
         'According to the FAO, there will be 9 billion human beings on earth by 2050.',
       description:
-        'Rich in protein and highly digestible, insect meals are an alternative to animal meals. Stakes, regulatory hurdles, extrusion trials.',
+        'Rich in protein and highly digestible, insect meals are an alternative to animal meals. Stakes, current regulations (2021), extrusion trials.',
       image: insectes,
       alt: 'Insects intended for meal production',
     },
@@ -141,7 +142,7 @@ export const articles: Record<Locale, Article[]> = {
       description:
         'Starch gelatinisation, protein insolubilisation, destruction of antinutritional factors: the processing of cereals by extrusion cooking.',
       image: cereales,
-      alt: 'Ears of cereal',
+      alt: 'A ripe ear of barley',
     },
     {
       slug: 'the-extruder-an-unmatched-tool-for-livestock-production',
@@ -151,11 +152,9 @@ export const articles: Record<Locale, Article[]> = {
       description:
         'HT-ST treatment of oilseeds, high-production ruminant feed, pet food, shrimp feed: the applications of extrusion in livestock farming.',
       image: elevage,
-      alt: 'Farm animals',
+      alt: 'SETREM extruder, the screw out of the barrel - 3D model built from the drawings',
     },
     {
-      // TODO: contenu client - l'illustration porte des légendes françaises
-      // incrustées (œsophage, caillette, réseau) : version anglaise à produire.
       slug: 'maillard-reactions',
       titre: 'Maillard reactions',
       extrait:
@@ -163,7 +162,7 @@ export const articles: Record<Locale, Article[]> = {
       description:
         'Bypass proteins for ruminants: how adjusting temperature and residence time triggers - or limits - Maillard reactions.',
       image: maillard,
-      alt: "Illustration of a cow's digestive system",
+      alt: 'Heifers at the feed fence in a dairy barn',
     },
     {
       slug: 'benefits-of-extruded-soybean-for-livestock',

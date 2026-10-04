@@ -17,7 +17,14 @@ premières » fondu dans « graine de soja », l'article PBR devenu la page
 refondus, sans contenu ajouté) ; visuels extrudeur, préconditionneur et
 ligne pilote tirés du modèle 3D (`video/extrudeur-3d/rendus/images-cles/`,
 fichiers `site/src/assets/img/3d-*.webp`). Les tableaux et le graphique
-de Maillard, jadis des images, sont en HTML/SVG. Reste :
+de Maillard, jadis des images, sont en HTML/SVG.
+Chaque image 3D est une prise cadrée pour son emplacement (format du
+cadre, pièce dont parle le texte), rendue par
+`video/extrudeur-3d/photos_site.py` : pour un nouvel emplacement, ajouter
+une prise plutôt que recadrer une image existante. Deux photos libres de
+droits remplacent des photos hors sujet (céréales, Maillard) : sources et
+licences dans `site/src/assets/img/SOURCES.md`. L'article insectes est mis
+à jour sur la réglementation (règlement (UE) 2021/1372). Reste :
 contenus client manquants (TODO dans le code), backend du formulaire de
 contact, hébergement et mise en ligne.
 
@@ -286,8 +293,8 @@ propres, et surtout les **9 articles techniques** de « L'œil de l'expert »
       la traduction est fidèle au français mais n'a pas été relue. Les trois
       pages légales anglaises sont une traduction de confort — seul le texte
       français fait foi, le droit applicable étant français
-- [ ] **Visuels à refaire en anglais** : trois images portent du texte
-      français incrusté (`fig-ligne-farines`, `article-maillard`, et surtout
+- [ ] **Visuels à refaire en anglais** : deux images portent du texte
+      français incrusté (`fig-ligne-farines`, et surtout
       `ecran-automatisme` — l'IHM qui illustre la page automatisme, où un
       prospect anglophone voit un logiciel qu'il ne peut pas lire). Cette
       dernière affiche aussi le nom d'un client en en-tête : à valider ou à
@@ -306,6 +313,8 @@ propres, et surtout les **9 articles techniques** de « L'œil de l'expert »
 - [x] **Droits de l'animation 3D du process** : réglé le 27/09/2026. Le film
       tiers (BUSS) est remplacé par une animation de la ligne pilote SETREM,
       produite par D&S d'après les plans du client (`video/extrudeur-3d/`)
+- [ ] **À valider** : la mise à jour réglementaire de l'article insectes
+      (04/10/2026), seul ajout de texte qui ne vient pas du client
 - [ ] **À valider** : la ligne pilote est présentée avec un préconditionneur
       PBR160 (d'après les plans I056) ; puissance, débits d'essai et séchage
       restent à fournir (TODO dans `la-ligne-pilote.astro`)
@@ -321,7 +330,7 @@ propres, et surtout les **9 articles techniques** de « L'œil de l'expert »
       faute de remplaçant : `extrudeur-monovis` (bande atelier de
       /qui-sommes-nous), `extrudeur-petfood` (/applications/animaux-domestiques),
       `ligne-extrusion-aquaculture` (rendu beige, /applications/aquaculture),
-      `secheur` (/nos-solutions/secheurs), `article-maillard` (vignette).
+      `secheur` (/nos-solutions/secheurs).
       Le sécheur n'a pas de modèle 3D : avec ses plans, on peut le
       modéliser comme l'extrudeur
 - [ ] Contenus : fournis, à reprendre, ou à produire

@@ -9,7 +9,7 @@ import LinkCards from '../../../components/LinkCards.astro';
 import CTABand from '../../../components/CTABand.astro';
 import { autresSolutions } from '../../../data/solutions';
 import preconditionneurImg from '../../../assets/img/preconditionneur.webp';
-import pbr3dImg from '../../../assets/img/3d-preconditionneur.webp';
+import pbr3dImg from '../../../assets/img/3d-preconditionneur-bande.webp';
 
 const autres = autresSolutions('preconditioners', 'en').map((s) => ({
   href: `/en/solutions/${s.slug}`,
@@ -85,6 +85,8 @@ const apports = [
     texte="The quality of the mixing owes much to the configuration of the paddles: one shaft mixes with small paddles, the other holds the product back with paddles of a larger surface area. The injectors form a spray that helps mixing with water; other injections are provided for - slurries, oil - to guarantee the evenness of the mix before extrusion."
     image={pbr3dImg}
     alt="PBR160 preconditioner of the SETREM pilot line, cover lifted and rotors out - 3D model built from the drawings"
+    position="100% 50%"
+    positionMobile="72% 50%"
   />
 
   <section class="band" aria-labelledby="gamme-titre">

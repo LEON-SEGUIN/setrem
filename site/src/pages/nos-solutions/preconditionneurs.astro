@@ -13,7 +13,7 @@ import LinkCards from '../../components/LinkCards.astro';
 import CTABand from '../../components/CTABand.astro';
 import { autresSolutions } from '../../data/solutions';
 import preconditionneurImg from '../../assets/img/preconditionneur.webp';
-import pbr3dImg from '../../assets/img/3d-preconditionneur.webp';
+import pbr3dImg from '../../assets/img/3d-preconditionneur-bande.webp';
 
 const autres = autresSolutions('preconditionneurs', 'fr').map((s) => ({
   href: `/nos-solutions/${s.slug}`,
@@ -90,6 +90,8 @@ const apports = [
     texte="La qualité du mélange tient à la configuration des pales : l'un des arbres mélange avec de petites pales, l'autre retient le produit avec des pales de plus grande surface. Les injecteurs forment un spray qui facilite le mélange avec l'eau ; d'autres injections sont prévues - slurrys, huile - pour garantir l'homogénéité du mélange avant extrusion."
     image={pbr3dImg}
     alt="Préconditionneur PBR160 de la ligne pilote SETREM, capot levé et rotors sortis - modélisation 3D d'après les plans"
+    position="100% 50%"
+    positionMobile="72% 50%"
   />
 
   <section class="band" aria-labelledby="gamme-titre">
