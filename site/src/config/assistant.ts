@@ -37,7 +37,9 @@ export const assistantConfig = {
  * regenere avec `N8N Workflow/setrem-assistant/construire-formulaire.py`.
  *
  * Le champ cache `site_web` est un piege a robots : aucun humain ne le
- * voit, un robot le remplit, et n8n redirige alors sans rien envoyer.
+ * voit, un robot le remplit. n8n envoie alors la demande quand meme, avec
+ * [SPAM probable] dans l'objet : un gestionnaire de mots de passe peut le
+ * remplir a la place d'un vrai prospect, et le jeter ferait perdre un client.
  */
 export const contactConfig = {
   webhook: 'https://ordinia.app.n8n.cloud/webhook/contact-setrem',

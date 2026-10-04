@@ -125,8 +125,10 @@ const adresseQuery = encodeURIComponent(
 
         <!-- Piege a robots. Aucun humain ne le voit ni ne l'atteint au
              clavier ; un robot qui remplit tout le remplit aussi. Quand il
-             est rempli, n8n redirige vers le merci sans rien envoyer : le
-             prevenir l'aiderait a s'adapter. Pas de reCAPTCHA, ce serait un
+             est rempli, n8n envoie quand meme la demande, marquee [SPAM
+             probable] : un gestionnaire de mots de passe peut le remplir a
+             la place d'un vrai prospect. Le visiteur voit le merci dans tous
+             les cas, prevenir un robot l'aiderait a s'adapter. Pas de reCAPTCHA, ce serait un
              appel a Google de plus sur un site qui les refuse par ailleurs. -->
         <div class="formulaire__piege" aria-hidden="true">
           <label for="site_web">Ne rien saisir ici</label>
