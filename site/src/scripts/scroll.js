@@ -477,11 +477,74 @@ function initReveals() {
     { rootMargin: '0px 0px -10% 0px' }
   );
 
-  // [data-inview] : éléments sans animation d'entrée dont les boucles
-  // (dérive photo, marquee) ne démarrent qu'une fois à l'écran.
   document
-    .querySelectorAll('.reveal, [data-inview], [data-bars], [data-words], [data-rail]')
+    .querySelectorAll('.reveal, [data-bars], [data-words], [data-rail]')
     .forEach((el) => observer.observe(el));
+}
+
+/* ---- Boucles décoratives : elles ne tournent qu'à l'écran ----
+   [data-loop] porte des animations sans fin (dérive des photos, pastilles
+   qui défilent, reflet des barres). `is-playing` les lance un peu avant
+   l'entrée à l'écran et les coupe à la sortie : le calque existe et l'image
+   est peinte avant d'être vue (pas de saut à l'apparition), et une section
+   déjà quittée ne coûte plus rien à chaque image. Une boucle coupée hors
+   champ repart de sa position de repos, la reprise ne se voit pas. */
+
+function initLoops() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        entry.target.classList.toggle('is-playing', entry.isIntersecting);
+      }
+    },
+    { rootMargin: '20% 0px 20% 0px' }
+  );
+  document.querySelectorAll('[data-loop]').forEach((el) => observer.observe(el));
+}
+
+/* ---- Photos : chargées en avance, posées en fondu ----
+   Le `loading="lazy"` des navigateurs se déclenche tard : une photo
+   demandée moins d'un écran avant d'être vue arrive encore en chargement,
+   d'autant que la vidéo du process occupe la bande passante au même
+   moment. Une fois la page chargée (le LCP n'est plus en jeu), toute
+   image paresseuse à moins de 2,5 écrans part tout de suite.
+   [data-fade] : la photo n'apparaît qu'une fois décodée, en fondu, sur le
+   fond sombre de son cadre - jamais d'image qui se dessine par bandes ni
+   de case vide qui saute. Sans JS, rien n'est masqué (html.js). */
+
+function initImages() {
+  for (const img of document.querySelectorAll('img[data-fade]')) {
+    const show = () => img.classList.add('is-loaded');
+    if (img.complete) {
+      show();
+      continue;
+    }
+    img.addEventListener(
+      'load',
+      () => (img.decode ? img.decode().catch(() => {}) : Promise.resolve()).then(show),
+      { once: true }
+    );
+    // Une image en erreur ne doit pas laisser un trou masqué
+    img.addEventListener('error', show, { once: true });
+  }
+
+  const early = () => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.loading = 'eager';
+          observer.unobserve(entry.target);
+        }
+      },
+      { rootMargin: '250% 0px 250% 0px' }
+    );
+    document
+      .querySelectorAll('img[loading="lazy"]')
+      .forEach((img) => observer.observe(img));
+  };
+  if (document.readyState === 'complete') early();
+  else window.addEventListener('load', early, { once: true });
 }
 
 /* ---- Onglets des capacités ---- */
@@ -530,6 +593,7 @@ function initTabs() {
   });
 }
 
+initImages();
 initNav();
 initHeroMist();
 initProcessVideo();
@@ -538,6 +602,7 @@ const pinTick = initPins();
 const readTick = initReadingProgress();
 const railTick = initRail();
 initReveals();
+initLoops();
 initTabs();
 
 /* La vague attend un instant de calme : son init est synchrone (création

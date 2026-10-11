@@ -122,7 +122,7 @@ const rangeeB = composants.slice(4);
 
     <div class="bento">
       <!-- La gamme - carte haute, pleine hauteur -->
-      <article class="card card--gamme" data-inview>
+      <article class="card card--gamme" data-loop>
         <div class="media">
           <div class="media__frame" style="--drift: 24s; --dx: -3.4%; --dy: -4.2%">
             <Image
@@ -133,6 +133,7 @@ const rangeeB = composants.slice(4);
               quality={70}
               sizes="(max-width: 900px) 100vw, 33vw"
               loading="lazy"
+              data-fade
             />
           </div>
           <div class="media__scrim" aria-hidden="true"></div>
@@ -173,7 +174,7 @@ const rangeeB = composants.slice(4);
       </article>
 
       <!-- Une ligne complète - les organes défilent sur la photo -->
-      <article class="card card--ligne" data-inview>
+      <article class="card card--ligne" data-loop>
         <div class="media">
           <div
             class="media__frame"
@@ -187,6 +188,7 @@ const rangeeB = composants.slice(4);
               quality={70}
               sizes="(max-width: 900px) 100vw, 33vw"
               loading="lazy"
+              data-fade
             />
           </div>
           <div class="media__scrim media__scrim--deep" aria-hidden="true"></div>
@@ -226,7 +228,7 @@ const rangeeB = composants.slice(4);
       </article>
 
       <!-- Depuis 1986 - le chiffre porte la carte -->
-      <article class="card card--depuis" data-inview>
+      <article class="card card--depuis" data-loop>
         <div class="media">
           <div
             class="media__frame"
@@ -240,6 +242,7 @@ const rangeeB = composants.slice(4);
               quality={70}
               sizes="(max-width: 900px) 100vw, 33vw"
               loading="lazy"
+              data-fade
             />
           </div>
           <div class="media__scrim media__scrim--even" aria-hidden="true"></div>
@@ -411,12 +414,18 @@ const rangeeB = composants.slice(4);
 
   /* ---- Média : la photo respire ----
      Le cadre dérive lentement dans la carte. Rien n'est piloté par le
-     scroll : c'est une animation composite (transform seul), démarrée
-     seulement quand la carte est entrée dans l'écran. */
+     scroll : c'est une animation composite (transform seul), lancée un
+     peu avant l'entrée à l'écran et coupée à la sortie ([data-loop],
+     scroll.js). Les délais négatifs font démarrer deux cartes en milieu
+     de cycle : ce départ se fait hors champ, il ne se voit pas. */
 
   .media {
     position: absolute;
     inset: 0;
+    /* Le fond du cadre tant que la photo n'est pas décodée : sombre, comme
+       le voile qui la couvrira. La photo s'y pose en fondu au lieu de
+       surgir d'une carte claire. */
+    background: var(--steel-900);
   }
 
   .media__frame {
@@ -427,11 +436,28 @@ const rangeeB = composants.slice(4);
     transform: scale(1.08);
   }
 
+  /* Calque prêt d'avance : la photo est peinte avant d'arriver à
+     l'écran, pas au moment où la dérive démarre. */
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .media__frame {
+      will-change: transform;
+    }
+  }
+
   .media__frame :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+
+  html.js .media__frame :global(img[data-fade]) {
+    opacity: 0;
+    transition: opacity var(--duration-slower) var(--ease-out);
+  }
+
+  html.js .media__frame :global(img[data-fade].is-loaded) {
+    opacity: 1;
   }
 
   /* La course est paramétrée par carte (--dx/--dy) : trois mouvements
@@ -452,7 +478,7 @@ const rangeeB = composants.slice(4);
      l'animation n'existe jamais quand le mouvement n'est pas voulu,
      et aucune règle n'a à en battre une autre en spécificité. */
   @media (prefers-reduced-motion: no-preference) {
-    html.js .card.is-visible .media__frame {
+    html.js .card.is-playing .media__frame {
       animation: media-drift var(--drift, 22s) var(--ease-in-out) infinite;
       animation-delay: var(--drift-delay, 0s);
     }
@@ -672,11 +698,11 @@ const rangeeB = composants.slice(4);
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    html.js .card.is-visible .marquee[data-dir='left'] .marquee__track {
+    html.js .card.is-playing .marquee[data-dir='left'] .marquee__track {
       animation: marquee-left 26s var(--ease-linear) infinite;
     }
 
-    html.js .card.is-visible .marquee[data-dir='right'] .marquee__track {
+    html.js .card.is-playing .marquee[data-dir='right'] .marquee__track {
       animation: marquee-right 33s var(--ease-linear) infinite;
     }
   }
@@ -711,15 +737,10 @@ const rangeeB = composants.slice(4);
     color: var(--steel-300);
   }
 
-  /* Le flou coûte cher à composer : réservé aux écrans larges, où la
-     carte est grande et le budget de rendu confortable. */
-  @media (min-width: 900px) {
-    .pill {
-      background: rgba(20, 26, 29, 0.34);
-      backdrop-filter: blur(14px) saturate(1.3);
-      -webkit-backdrop-filter: blur(14px) saturate(1.3);
-    }
-  }
+  /* Pas de backdrop-filter ici : seize pastilles en mouvement sur une
+     photo qui dérive, c'est seize flous à recalculer à chaque image -
+     mesuré, c'était le premier poste de rendu de la section. Le fond
+     sombre translucide lit aussi bien sur le voile dense de la carte. */
 
   /* ---- Depuis 1986 ---- */
 

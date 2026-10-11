@@ -195,6 +195,16 @@ JS livré uniquement pour les animations. Le projet vit dans **`site/`**.
 - Les animations scroll (`site/src/scripts/scroll.js`) sont progressives :
   sans JS la page reste complète (fallbacks `html:not(.js)`), et
   `prefers-reduced-motion` est respecté.
+- **Fluidité** (11/10/2026, mesuré) : une animation sans fin ne touche que
+  `transform` et `opacity`, jamais `width` ni `background-position` (le
+  reflet des barres de Capacités repeignait toute la page en continu).
+  Pas de `backdrop-filter` sur un élément qui bouge. Les boucles portent
+  `data-loop` : `scroll.js` pose `is-playing` un peu avant l'entrée à
+  l'écran et l'enlève à la sortie, le CSS n'anime que sous `.is-playing`.
+  `data-fade` sur une `<Image>` : la photo apparaît en fondu une fois
+  décodée. Les noms de `@keyframes` ne sont pas isolés par Astro : un
+  nom en double entre deux composants s'écrase (le `sheen` du hero ne
+  jouait plus).
 - Le scroll lissé (`site/src/scripts/smooth-scroll.js`) est confié à **Lenis**
   aux réglages par défaut (`lerp: 0.1`), d'après la référence
   uniprep.education. Il déplace la **vraie** position de la fenêtre :
